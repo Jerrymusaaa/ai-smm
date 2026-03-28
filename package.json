@@ -1,0 +1,10 @@
+{
+  "name": "ai-social-media-manager",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": ["frontend", "backend/*"],
+  "scripts": {
+    "dev:frontend": "cd frontend && pnpm dev",
+    "dev:backend": "cd backend && pnpm dev"
+  }
+}
