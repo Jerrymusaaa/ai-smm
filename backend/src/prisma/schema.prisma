@@ -1,0 +1,371 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AccountType {
+  INDIVIDUAL
+  STARTUP
+  CORPORATE
+  AGENCY
+}
+
+enum PlanType {
+  FREE
+  PRO
+  BUSINESS
+  ENTERPRISE
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELED
+  PAST_DUE
+  TRIALING
+  INACTIVE
+}
+
+enum PostStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+  FAILED
+  CANCELED
+}
+
+enum CampaignStatus {
+  DRAFT
+  SCHEDULED
+  ACTIVE
+  PAUSED
+  COMPLETED
+  CANCELED
+}
+
+enum Platform {
+  INSTAGRAM
+  TIKTOK
+  LINKEDIN
+  TWITTER
+  FACEBOOK
+  YOUTUBE
+  PINTEREST
+  THREADS
+  SNAPCHAT
+  REDDIT
+  DISCORD
+  TELEGRAM
+  WHATSAPP
+  BLUESKY
+  MASTODON
+  TUMBLR
+  WORDPRESS
+  NEXTDOOR
+  SLACK
+  GOOGLE_BUSINESS
+  BLOGGER
+  STOCKTWITS
+  RSS
+}
+
+model User {
+  id                String          @id @default(cuid())
+  email             String          @unique
+  password          String?
+  name              String
+  avatar            String?
+  accountType       AccountType     @default(INDIVIDUAL)
+  company           String?
+  role              String?
+  bio               String?
+  website           String?
+  twitterHandle     String?
+  linkedinUrl       String?
+  timezone          String          @default("America/New_York")
+  language          String          @default("en")
+  emailVerified     Boolean         @default(false)
+  emailVerifiedAt   DateTime?
+  twoFactorEnabled  Boolean         @default(false)
+  twoFactorSecret   String?
+  onboardingDone    Boolean         @default(false)
+  lastLoginAt       DateTime?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  organization      Organization?   @relation(fields: [organizationId], references: [id])
+  organizationId    String?
+
+  socialAccounts    SocialAccount[]
+  posts             Post[]
+  campaigns         Campaign[]
+  subscription      Subscription?
+  notifications     Notification[]
+  aiMemory          AIMemory?
+  sessions          Session[]
+  apiKeys           ApiKey[]
+  teamMemberships   TeamMember[]
+
+  @@index([email])
+  @@index([organizationId])
+}
+
+model Organization {
+  id          String       @id @default(cuid())
+  name        String
+  slug        String       @unique
+  logo        String?
+  website     String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  users       User[]
+  members     TeamMember[]
+}
+
+model TeamMember {
+  id             String       @id @default(cuid())
+  role           String       @default("member")
+  createdAt      DateTime     @default(now())
+
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId String
+
+  @@unique([userId, organizationId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  token        String   @unique
+  refreshToken String   @unique
+  device       String?
+  ipAddress    String?
+  userAgent    String?
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+
+  @@index([token])
+  @@index([userId])
+}
+
+model ApiKey {
+  id          String   @id @default(cuid())
+  name        String
+  key         String   @unique
+  permissions String[]
+  lastUsedAt  DateTime?
+  expiresAt   DateTime?
+  createdAt   DateTime @default(now())
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+
+  @@index([key])
+}
+
+model SocialAccount {
+  id              String    @id @default(cuid())
+  platform        Platform
+  platformUserId  String
+  username        String
+  displayName     String?
+  avatar          String?
+  accessToken     String
+  refreshToken    String?
+  tokenExpiresAt  DateTime?
+  followers       Int       @default(0)
+  following       Int       @default(0)
+  isActive        Boolean   @default(true)
+  connectedAt     DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String
+
+  posts           Post[]
+  analytics       Analytics[]
+
+  @@unique([userId, platform, platformUserId])
+  @@index([userId])
+}
+
+model Post {
+  id              String      @id @default(cuid())
+  title           String?
+  content         String
+  hashtags        String[]
+  mediaUrls       String[]
+  status          PostStatus  @default(DRAFT)
+  scheduledAt     DateTime?
+  publishedAt     DateTime?
+  platform        Platform
+  platformPostId  String?
+  reach           Int         @default(0)
+  likes           Int         @default(0)
+  comments        Int         @default(0)
+  shares          Int         @default(0)
+  clicks          Int         @default(0)
+  impressions     Int         @default(0)
+  engagementRate  Float       @default(0)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String
+
+  socialAccount   SocialAccount? @relation(fields: [socialAccountId], references: [id])
+  socialAccountId String?
+
+  campaign        Campaign?   @relation(fields: [campaignId], references: [id])
+  campaignId      String?
+
+  @@index([userId])
+  @@index([status])
+  @@index([scheduledAt])
+  @@index([campaignId])
+}
+
+model Campaign {
+  id          String         @id @default(cuid())
+  name        String
+  description String?
+  type        String
+  goal        String?
+  status      CampaignStatus @default(DRAFT)
+  platforms   Platform[]
+  budget      Float          @default(0)
+  spent       Float          @default(0)
+  startDate   DateTime?
+  endDate     DateTime?
+  reach       Int            @default(0)
+  clicks      Int            @default(0)
+  conversions Int            @default(0)
+  engagement  Float          @default(0)
+  progress    Int            @default(0)
+  aiAssist    Boolean        @default(true)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+
+  posts       Post[]
+
+  @@index([userId])
+  @@index([status])
+}
+
+model Analytics {
+  id              String        @id @default(cuid())
+  date            DateTime
+  platform        Platform
+  followers       Int           @default(0)
+  followersGained Int           @default(0)
+  followersLost   Int           @default(0)
+  impressions     Int           @default(0)
+  reach           Int           @default(0)
+  engagements     Int           @default(0)
+  likes           Int           @default(0)
+  comments        Int           @default(0)
+  shares          Int           @default(0)
+  clicks          Int           @default(0)
+  profileViews    Int           @default(0)
+  createdAt       DateTime      @default(now())
+
+  socialAccount   SocialAccount @relation(fields: [socialAccountId], references: [id], onDelete: Cascade)
+  socialAccountId String
+
+  @@unique([socialAccountId, date, platform])
+  @@index([socialAccountId])
+  @@index([date])
+}
+
+model Subscription {
+  id                   String             @id @default(cuid())
+  plan                 PlanType           @default(FREE)
+  status               SubscriptionStatus @default(ACTIVE)
+  stripeCustomerId     String?            @unique
+  stripeSubscriptionId String?            @unique
+  stripePriceId        String?
+  currentPeriodStart   DateTime?
+  currentPeriodEnd     DateTime?
+  cancelAtPeriodEnd    Boolean            @default(false)
+  trialEndsAt          DateTime?
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  user                 User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId               String             @unique
+
+  invoices             Invoice[]
+
+  @@index([stripeCustomerId])
+}
+
+model Invoice {
+  id             String       @id @default(cuid())
+  stripeId       String?      @unique
+  amount         Float
+  currency       String       @default("usd")
+  status         String
+  paidAt         DateTime?
+  hostedUrl      String?
+  pdfUrl         String?
+  createdAt      DateTime     @default(now())
+
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  subscriptionId String
+
+  @@index([subscriptionId])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  type      String
+  title     String
+  message   String
+  read      Boolean  @default(false)
+  data      Json?
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+
+  @@index([userId])
+  @@index([read])
+}
+
+model AIMemory {
+  id               String   @id @default(cuid())
+  captionStyle     String?
+  hashtagPatterns  String[]
+  postingPatterns  Json?
+  audienceInsights Json?
+  engagementTips   String[]
+  updatedAt        DateTime @updatedAt
+
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId           String   @unique
+}
+
+model TrendData {
+  id        String   @id @default(cuid())
+  topic     String
+  platform  Platform
+  volume    Int
+  growth    Float
+  region    String?
+  tags      String[]
+  fetchedAt DateTime @default(now())
+
+  @@index([platform])
+  @@index([fetchedAt])
+}
