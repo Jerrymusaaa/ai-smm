@@ -2,16 +2,19 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { SocialAuthButtons } from '@/components/auth/SocialAuthButtons';
 import { AuthInput } from '@/components/auth/AuthInput';
 import { Mail, Lock, ArrowRight } from 'lucide-react';
+import { useAuthStore } from '@/store/auth.store';
 
 export default function LoginPage() {
+  const router = useRouter();
+  const { login, isLoading } = useAuthStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+  const [errors, setErrors] = useState<{ email?: string; password?: string; api?: string }>({});
 
   const validate = () => {
     const newErrors: typeof errors = {};
@@ -26,18 +29,20 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-    setLoading(true);
-    await new Promise(r => setTimeout(r, 1500));
-    setLoading(false);
+    setErrors({});
+    try {
+      await login(email, password);
+      router.push('/dashboard');
+    } catch (error: any) {
+      setErrors({ api: error.message || 'Invalid email or password' });
+    }
   };
 
   return (
     <div>
       <div className="mb-8">
-        <h1
-          style={{ fontFamily: 'var(--font-display)' }}
-          className="text-3xl font-bold text-white mb-2"
-        >
+        <h1 style={{ fontFamily: 'var(--font-display)' }}
+          className="text-3xl font-bold text-white mb-2">
           Welcome back
         </h1>
         <p className="text-white/40 text-sm">
@@ -49,6 +54,12 @@ export default function LoginPage() {
       </div>
 
       <SocialAuthButtons mode="login" />
+
+      {errors.api && (
+        <div className="mb-4 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-sm text-red-400">
+          {errors.api}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <AuthInput
@@ -65,10 +76,8 @@ export default function LoginPage() {
         <div className="space-y-1.5">
           <div className="flex items-center justify-between">
             <label className="block text-sm font-medium text-white/70">Password</label>
-            <Link
-              href="/forgot-password"
-              className="text-xs text-[#0066FF] hover:text-[#3385FF] transition-colors"
-            >
+            <Link href="/forgot-password"
+              className="text-xs text-[#0066FF] hover:text-[#3385FF] transition-colors">
               Forgot password?
             </Link>
           </div>
@@ -84,34 +93,23 @@ export default function LoginPage() {
         </div>
 
         <div className="flex items-center gap-2.5">
-          <input
-            type="checkbox"
-            id="remember"
-            className="w-4 h-4 rounded border-white/20 bg-white/5 accent-[#0066FF] cursor-pointer"
-          />
+          <input type="checkbox" id="remember"
+            className="w-4 h-4 rounded border-white/20 bg-white/5 accent-[#0066FF] cursor-pointer" />
           <label htmlFor="remember" className="text-sm text-white/50 cursor-pointer select-none">
             Keep me signed in for 30 days
           </label>
         </div>
 
-        <Button type="submit" size="lg" loading={loading} className="w-full rounded-xl mt-2">
-          {!loading && (
-            <>
-              Sign in <ArrowRight className="w-4 h-4" />
-            </>
-          )}
+        <Button type="submit" size="lg" loading={isLoading} className="w-full rounded-xl mt-2">
+          {!isLoading && <>Sign in <ArrowRight className="w-4 h-4" /></>}
         </Button>
       </form>
 
       <p className="text-center text-xs text-white/25 mt-6">
         By signing in, you agree to our{' '}
-        <Link href="/terms" className="text-white/40 hover:text-white/60 underline underline-offset-2">
-          Terms
-        </Link>{' '}
-        and{' '}
-        <Link href="/privacy" className="text-white/40 hover:text-white/60 underline underline-offset-2">
-          Privacy Policy
-        </Link>
+        <Link href="/terms" className="text-white/40 hover:text-white/60 underline underline-offset-2">Terms</Link>
+        {' '}and{' '}
+        <Link href="/privacy" className="text-white/40 hover:text-white/60 underline underline-offset-2">Privacy Policy</Link>
       </p>
     </div>
   );

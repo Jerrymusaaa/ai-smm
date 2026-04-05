@@ -3,24 +3,22 @@ node_modules/
 .pnp
 .pnp.js
 
-# Next.js build output - NEVER commit this
-.next/
-out/
-build/
-dist/
+# Next.js
+frontend/.next/
+frontend/out/
 
-# Environment variables - NEVER commit these
+# Build outputs
+backend/dist/
+backend/logs/
+
+# Environment files - NEVER commit these
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
-
-# Debug logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
+frontend/.env.local
+backend/.env
 
 # OS files
 .DS_Store
@@ -30,7 +28,6 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
-*.swo
 
 # TypeScript
 *.tsbuildinfo
@@ -40,6 +37,5 @@ next-env.d.ts
 .pnpm-store/
 .pnpm-debug.log*
 
-# Turbopack / build caches
-*.sst
-*.pack
+# Prisma generated
+backend/node_modules/

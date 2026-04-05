@@ -2,10 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { SocialAuthButtons } from '@/components/auth/SocialAuthButtons';
 import { AuthInput } from '@/components/auth/AuthInput';
 import { Mail, Lock, User, Building2, ArrowRight, ArrowLeft, Check } from 'lucide-react';
+import { useAuthStore } from '@/store/auth.store';
 
 const ACCOUNT_TYPES = [
   { id: 'individual', label: 'Individual / Creator', desc: 'Personal brand, solo creator', icon: '🎨' },
@@ -17,11 +19,12 @@ const ACCOUNT_TYPES = [
 const STEPS = ['Account type', 'Your details', 'Set password'];
 
 export default function SignupPage() {
+  const router = useRouter();
+  const { register, isLoading } = useAuthStore();
   const [step, setStep] = useState(0);
   const [accountType, setAccountType] = useState('');
   const [form, setForm] = useState({ name: '', email: '', company: '', password: '', confirm: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [apiError, setApiError] = useState('');
 
@@ -51,29 +54,17 @@ export default function SignupPage() {
     if (!validateStep()) return;
     if (step < 2) { setStep(s => s + 1); return; }
 
-    setLoading(true);
     setApiError('');
-
     try {
-      const res = await fetch('/api/auth/send-verification', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: form.email, name: form.name }),
+      await register({
+        email: form.email,
+        password: form.password,
+        name: form.name,
+        accountType,
       });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setApiError(data.error || 'Failed to send verification email. Please try again.');
-        setLoading(false);
-        return;
-      }
-
       setDone(true);
-    } catch {
-      setApiError('Network error. Please check your connection and try again.');
-    } finally {
-      setLoading(false);
+    } catch (error: any) {
+      setApiError(error.message || 'Registration failed. Please try again.');
     }
   };
 
@@ -91,11 +82,13 @@ export default function SignupPage() {
         </p>
         <p className="text-white font-medium text-sm mb-6">{form.email}</p>
         <p className="text-white/30 text-xs mb-8 max-w-xs mx-auto">
-          Click the link in the email to activate your account. Check your spam folder if you don&apos;t see it.
+          Click the link to activate your account. Check your spam folder if you don&apos;t see it.
         </p>
-        <Button variant="outline" size="md" onClick={() => { setDone(false); setStep(0); }} className="rounded-xl">
-          Back to sign up
-        </Button>
+        <div className="flex gap-3 justify-center">
+          <Button variant="outline" size="md" onClick={() => router.push('/login')} className="rounded-xl">
+            Go to login
+          </Button>
+        </div>
       </div>
     );
   }
@@ -131,7 +124,7 @@ export default function SignupPage() {
         ))}
       </div>
 
-      {/* Step 0: Account type */}
+      {/* Step 0 */}
       {step === 0 && (
         <div className="space-y-4">
           <SocialAuthButtons mode="signup" />
@@ -141,17 +134,14 @@ export default function SignupPage() {
                 onClick={() => { setAccountType(type.id); setErrors({}); }}
                 className={`p-4 rounded-xl border text-left transition-all ${
                   accountType === type.id
-                    ? 'border-[#0066FF]/60 bg-[#0066FF]/10 shadow-lg shadow-blue-500/10'
-                    : 'border-white/10 bg-white/[0.04] hover:border-white/20 hover:bg-white/[0.07]'
+                    ? 'border-[#0066FF]/60 bg-[#0066FF]/10'
+                    : 'border-white/10 bg-white/[0.04] hover:border-white/20'
                 }`}>
                 <div className="text-2xl mb-2">{type.icon}</div>
-                <div className="text-sm font-medium text-white mb-0.5">{type.label}</div>
+                <div className={`text-sm font-medium mb-0.5 ${accountType === type.id ? 'text-[#0066FF]' : 'text-white'}`}>
+                  {type.label}
+                </div>
                 <div className="text-xs text-white/40">{type.desc}</div>
-                {accountType === type.id && (
-                  <div className="mt-2 flex items-center gap-1 text-xs text-[#0066FF] font-medium">
-                    <Check className="w-3 h-3" /> Selected
-                  </div>
-                )}
               </button>
             ))}
           </div>
@@ -159,7 +149,7 @@ export default function SignupPage() {
         </div>
       )}
 
-      {/* Step 1: Details */}
+      {/* Step 1 */}
       {step === 1 && (
         <div className="space-y-4">
           <AuthInput label="Full name" type="text" placeholder="Jane Smith"
@@ -176,7 +166,7 @@ export default function SignupPage() {
         </div>
       )}
 
-      {/* Step 2: Password */}
+      {/* Step 2 */}
       {step === 2 && (
         <div className="space-y-4">
           <AuthInput label="Create password" type="password" placeholder="Min. 8 characters"
@@ -203,17 +193,6 @@ export default function SignupPage() {
             </div>
           )}
 
-          <label className="flex items-start gap-2.5 cursor-pointer">
-            <input type="checkbox" className="w-4 h-4 mt-0.5 rounded border-white/20 bg-white/5 accent-[#0066FF]" />
-            <span className="text-xs text-white/40 leading-relaxed">
-              I agree to the{' '}
-              <Link href="/terms" className="text-white/60 underline underline-offset-2 hover:text-white">Terms of Service</Link>
-              {' '}and{' '}
-              <Link href="/privacy" className="text-white/60 underline underline-offset-2 hover:text-white">Privacy Policy</Link>
-            </span>
-          </label>
-
-          {/* API error */}
           {apiError && (
             <div className="px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-sm text-red-400">
               {apiError}
@@ -229,13 +208,10 @@ export default function SignupPage() {
             <ArrowLeft className="w-4 h-4" /> Back
           </Button>
         )}
-        <Button size="lg" loading={loading} onClick={handleNext}
+        <Button size="lg" loading={isLoading} onClick={handleNext}
           className={`rounded-xl gap-2 ${step === 0 ? 'w-full' : 'flex-1'}`}>
-          {!loading && (
-            <>
-              {step === 2 ? 'Create account' : 'Continue'}
-              <ArrowRight className="w-4 h-4" />
-            </>
+          {!isLoading && (
+            <>{step === 2 ? 'Create account' : 'Continue'}<ArrowRight className="w-4 h-4" /></>
           )}
         </Button>
       </div>
