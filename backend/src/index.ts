@@ -20,11 +20,11 @@ import { userRouter } from './services/user/user.routes';
 import { postsRouter } from './services/scheduling/posts.routes';
 import { campaignRouter } from './services/campaign/campaign.routes';
 import { analyticsRouter } from './services/analytics/analytics.routes';
+import { socialRouter } from './services/social/social.routes';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ── Security & parsing middleware ──────────────────────────────
 app.use(helmet());
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:3000',
@@ -39,7 +39,7 @@ app.use(cookieParser());
 app.use(morgan('combined', { stream: { write: (msg) => logger.info(msg.trim()) } }));
 app.use(globalRateLimit);
 
-// ── Health check ───────────────────────────────────────────────
+// Health check
 app.get('/health', (req, res) => {
   res.json({
     success: true,
@@ -50,22 +50,20 @@ app.get('/health', (req, res) => {
   });
 });
 
-// ── API Routes ─────────────────────────────────────────────────
+// Routes
 app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
 app.use('/api/posts', postsRouter);
 app.use('/api/campaigns', campaignRouter);
 app.use('/api/analytics', analyticsRouter);
+app.use('/api/social', socialRouter);
 
-// ── 404 & Error handlers ───────────────────────────────────────
 app.use(notFound);
 app.use(errorHandler);
 
-// ── Start server ───────────────────────────────────────────────
 async function bootstrap() {
   await connectDatabase();
   await connectRedis();
-
   app.listen(PORT, () => {
     logger.info(`🚀 Server running on http://localhost:${PORT}`);
     logger.info(`📊 Environment: ${process.env.NODE_ENV}`);

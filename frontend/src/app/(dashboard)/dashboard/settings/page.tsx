@@ -8,6 +8,7 @@ import { SecuritySettings } from '@/components/settings/SecuritySettings';
 import { AppearanceSettings } from '@/components/settings/AppearanceSettings';
 import { ApiKeysSettings } from '@/components/settings/ApiKeysSettings';
 import { DangerZone } from '@/components/settings/DangerZone';
+import { IntegrationsSettings } from '@/components/settings/IntegrationsSettings';
 
 const SECTION_TITLES: Record<string, { title: string; desc: string }> = {
   profile: { title: 'Profile', desc: 'Manage your personal information and public profile' },
@@ -48,6 +49,7 @@ export default function SettingsPage() {
       case 'security': return <SecuritySettings />;
       case 'appearance': return <AppearanceSettings />;
       case 'api': return <ApiKeysSettings />;
+      case 'integrations': return <IntegrationsSettings />;
       case 'danger': return <DangerZone />;
       default: return <PlaceholderSection title={section.title} desc={section.desc} />;
     }
