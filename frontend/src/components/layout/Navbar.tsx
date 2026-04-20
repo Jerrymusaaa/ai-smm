@@ -36,7 +36,7 @@ export function Navbar() {
             <Zap className="w-4 h-4 text-white" strokeWidth={2.5} />
           </div>
           <span style={{ fontFamily: 'var(--font-display)' }} className="text-white font-700 text-lg tracking-tight">
-            SocialAI<span className="text-[#0066FF]">.</span>
+            Yoyzie AI<span className="text-[#0066FF]">.</span>
           </span>
         </Link>
 

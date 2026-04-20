@@ -11,7 +11,7 @@ export function verificationEmailHtml({
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verify your SocialAI account</title>
+  <title>Verify your Yoyzie AI account</title>
 </head>
 <body style="margin:0;padding:0;background-color:#050A14;font-family:'DM Sans',Arial,sans-serif;">
   <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#050A14;padding:40px 20px;">
@@ -28,7 +28,7 @@ export function verificationEmailHtml({
                     <span style="color:white;font-size:18px;font-weight:bold;">⚡</span>
                   </td>
                   <td style="padding-left:12px;vertical-align:middle;">
-                    <span style="color:#ffffff;font-size:18px;font-weight:700;letter-spacing:-0.3px;">SocialAI<span style="color:#0066FF;">.</span></span>
+                    <span style="color:#ffffff;font-size:18px;font-weight:700;letter-spacing:-0.3px;">Yoyzie AI<span style="color:#0066FF;">.</span></span>
                   </td>
                 </tr>
               </table>
@@ -42,7 +42,7 @@ export function verificationEmailHtml({
                 Verify your email address
               </h1>
               <p style="margin:0 0 24px;color:rgba(255,255,255,0.5);font-size:15px;line-height:1.6;">
-                Hi ${name || 'there'}, welcome to SocialAI! Click the button below to verify your email and activate your account.
+                Hi ${name || 'there'}, welcome to Yoyzie AI! Click the button below to verify your email and activate your account.
               </p>
 
               <!-- CTA Button -->
@@ -73,7 +73,7 @@ export function verificationEmailHtml({
 
               <p style="margin:0;color:rgba(255,255,255,0.3);font-size:13px;line-height:1.6;">
                 This link expires in <strong style="color:rgba(255,255,255,0.5);">24 hours</strong>. 
-                If you didn't create a SocialAI account, you can safely ignore this email.
+                If you didn't create a Yoyzie AI account, you can safely ignore this email.
               </p>
             </td>
           </tr>
@@ -82,7 +82,7 @@ export function verificationEmailHtml({
           <tr>
             <td style="padding:20px 40px;border-top:1px solid rgba(255,255,255,0.06);">
               <p style="margin:0;color:rgba(255,255,255,0.2);font-size:12px;text-align:center;">
-                © 2025 SocialAI · All rights reserved
+                © 2025 Yoyzie AI · All rights reserved
               </p>
             </td>
           </tr>

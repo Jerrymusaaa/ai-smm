@@ -4,64 +4,99 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
-import { SocialAuthButtons } from '@/components/auth/SocialAuthButtons';
 import { AuthInput } from '@/components/auth/AuthInput';
 import { Mail, Lock, User, Building2, ArrowRight, ArrowLeft, Check } from 'lucide-react';
 import { useAuthStore } from '@/store/auth.store';
 
-const ACCOUNT_TYPES = [
-  { id: 'individual', label: 'Individual / Creator', desc: 'Personal brand, solo creator', icon: '🎨' },
-  { id: 'startup', label: 'Startup', desc: 'Early-stage team or small business', icon: '🚀' },
-  { id: 'corporate', label: 'Corporate', desc: 'Established company or enterprise', icon: '🏢' },
-  { id: 'agency', label: 'Agency', desc: 'Managing multiple clients', icon: '🏆' },
+const ACCOUNT_CATEGORIES = [
+  {
+    id: 'individual',
+    label: 'Individual',
+    desc: 'Personal brand or solo creator',
+    icon: '🎨',
+    plans: [
+      { id: 'individual_pro', label: 'Individual Pro', price: 'KES 1,999/mo', desc: 'Unlimited AI content, 10 platforms' },
+      { id: 'creator', label: 'Creator', price: 'KES 4,999/mo', desc: 'Browse influencer marketplace, A/B testing' },
+      { id: 'power_user', label: 'Power User', price: 'KES 9,999/mo', desc: 'Full marketplace access, API, 3 team seats' },
+      { id: 'free', label: 'Free Plan', price: 'KES 0', desc: '3 platforms, 3 AI posts/month' },
+    ],
+  },
+  {
+    id: 'influencer',
+    label: 'Influencer',
+    desc: 'Content creator monetizing through brand deals',
+    icon: '⭐',
+    plans: [
+      { id: 'influencer_free', label: 'Free Influencer', price: 'KES 0', desc: '25% commission, 3 platforms, 5 posts/mo' },
+      { id: 'influencer_starter', label: 'Starter', price: 'KES 1,999/mo', desc: '20% commission, standard marketplace priority' },
+      { id: 'influencer_pro', label: 'Influencer Pro', price: 'KES 4,999/mo', desc: '15% commission, high priority listing' },
+      { id: 'creator_mode', label: 'Creator Mode', price: 'KES 9,999/mo', desc: '10% commission, top priority, instant payouts' },
+    ],
+  },
+  {
+    id: 'business',
+    label: 'Business / SME',
+    desc: 'Small business or growing company',
+    icon: '🚀',
+    plans: [
+      { id: 'sme', label: 'SME Plan', price: 'KES 9,999/mo', desc: '5 seats, full marketplace access' },
+      { id: 'growing', label: 'Growing Business', price: 'KES 29,000–49,000/mo', desc: '10–25 seats, custom AI, IRM tools' },
+    ],
+  },
+  {
+    id: 'enterprise',
+    label: 'Enterprise',
+    desc: 'Large company or marketing agency',
+    icon: '🏢',
+    plans: [
+      { id: 'enterprise', label: 'Enterprise', price: 'KES 80,000–300,000/mo', desc: 'Unlimited seats, dedicated infrastructure, white-label' },
+    ],
+  },
 ];
 
-const STEPS = ['Account type', 'Your details', 'Set password'];
+const STEPS = ['Account type', 'Choose plan', 'Your details', 'Set password'];
 
 export default function SignupPage() {
   const router = useRouter();
   const { register, isLoading } = useAuthStore();
   const [step, setStep] = useState(0);
-  const [accountType, setAccountType] = useState('');
+  const [category, setCategory] = useState('');
+  const [plan, setPlan] = useState('');
   const [form, setForm] = useState({ name: '', email: '', company: '', password: '', confirm: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [done, setDone] = useState(false);
   const [apiError, setApiError] = useState('');
+  const [done, setDone] = useState(false);
 
+  const selectedCategory = ACCOUNT_CATEGORIES.find(c => c.id === category);
   const update = (field: string, value: string) => {
-    setForm(prev => ({ ...prev, [field]: value }));
-    if (errors[field]) setErrors(prev => ({ ...prev, [field]: '' }));
+    setForm(p => ({ ...p, [field]: value }));
+    if (errors[field]) setErrors(p => ({ ...p, [field]: '' }));
   };
 
   const validateStep = () => {
-    const newErrors: Record<string, string> = {};
-    if (step === 0 && !accountType) newErrors.accountType = 'Please select an account type';
-    if (step === 1) {
-      if (!form.name.trim()) newErrors.name = 'Full name is required';
-      if (!form.email) newErrors.email = 'Email is required';
-      else if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = 'Enter a valid email';
-    }
+    const e: Record<string, string> = {};
+    if (step === 0 && !category) e.category = 'Please select an account type';
+    if (step === 1 && !plan) e.plan = 'Please select a plan';
     if (step === 2) {
-      if (!form.password) newErrors.password = 'Password is required';
-      else if (form.password.length < 8) newErrors.password = 'At least 8 characters required';
-      if (form.password !== form.confirm) newErrors.confirm = 'Passwords do not match';
+      if (!form.name.trim()) e.name = 'Full name is required';
+      if (!form.email) e.email = 'Email is required';
+      else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = 'Enter a valid email';
     }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    if (step === 3) {
+      if (!form.password) e.password = 'Password is required';
+      else if (form.password.length < 8) e.password = 'At least 8 characters required';
+      if (form.password !== form.confirm) e.confirm = 'Passwords do not match';
+    }
+    setErrors(e);
+    return Object.keys(e).length === 0;
   };
 
   const handleNext = async () => {
     if (!validateStep()) return;
-    if (step < 2) { setStep(s => s + 1); return; }
-
+    if (step < 3) { setStep(s => s + 1); return; }
     setApiError('');
     try {
-      await register({
-        email: form.email,
-        password: form.password,
-        name: form.name,
-        accountType,
-      });
+      await register({ email: form.email, password: form.password, name: form.name, accountType: category });
       setDone(true);
     } catch (error: any) {
       setApiError(error.message || 'Registration failed. Please try again.');
@@ -74,21 +109,11 @@ export default function SignupPage() {
         <div className="w-16 h-16 rounded-full bg-[#00D4AA]/20 border border-[#00D4AA]/30 flex items-center justify-center mx-auto mb-6">
           <Check className="w-8 h-8 text-[#00D4AA]" />
         </div>
-        <h2 style={{ fontFamily: 'var(--font-display)' }} className="text-2xl font-bold text-white mb-3">
-          Check your email
-        </h2>
-        <p className="text-white/50 text-sm mb-2 max-w-xs mx-auto">
-          We sent a verification link to
-        </p>
+        <h2 style={{ fontFamily: 'var(--font-display)' }} className="text-2xl font-bold text-white mb-3">Check your email</h2>
+        <p className="text-white/50 text-sm mb-2">We sent a verification link to</p>
         <p className="text-white font-medium text-sm mb-6">{form.email}</p>
-        <p className="text-white/30 text-xs mb-8 max-w-xs mx-auto">
-          Click the link to activate your account. Check your spam folder if you don&apos;t see it.
-        </p>
-        <div className="flex gap-3 justify-center">
-          <Button variant="outline" size="md" onClick={() => router.push('/login')} className="rounded-xl">
-            Go to login
-          </Button>
-        </div>
+        <p className="text-white/30 text-xs mb-8 max-w-xs mx-auto">Click the link to activate your account. Check your spam folder if you don't see it.</p>
+        <Button variant="outline" size="md" onClick={() => router.push('/login')} className="rounded-xl">Go to login</Button>
       </div>
     );
   }
@@ -96,25 +121,19 @@ export default function SignupPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 style={{ fontFamily: 'var(--font-display)' }} className="text-3xl font-bold text-white mb-2">
-          Create your account
-        </h1>
+        <h1 style={{ fontFamily: 'var(--font-display)' }} className="text-3xl font-bold text-white mb-2">Create your account</h1>
         <p className="text-white/40 text-sm">
           Already have an account?{' '}
-          <Link href="/login" className="text-[#0066FF] hover:text-[#3385FF] transition-colors font-medium">
-            Sign in
-          </Link>
+          <Link href="/login" className="text-[#0066FF] hover:text-[#3385FF] font-medium">Sign in</Link>
         </p>
       </div>
 
-      {/* Progress steps */}
+      {/* Progress */}
       <div className="flex items-center gap-2 mb-8">
         {STEPS.map((s, i) => (
           <div key={s} className="flex items-center gap-2 flex-1">
             <div className={`flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold transition-all flex-shrink-0 ${
-              i < step ? 'bg-[#00D4AA] text-white'
-              : i === step ? 'bg-[#0066FF] text-white'
-              : 'bg-white/10 text-white/30'
+              i < step ? 'bg-[#00D4AA] text-white' : i === step ? 'bg-[#0066FF] text-white' : 'bg-white/10 text-white/30'
             }`}>
               {i < step ? <Check className="w-3.5 h-3.5" /> : i + 1}
             </div>
@@ -124,50 +143,69 @@ export default function SignupPage() {
         ))}
       </div>
 
-      {/* Step 0 */}
+      {/* Step 0 — Account Category */}
       {step === 0 && (
-        <div className="space-y-4">
-          <SocialAuthButtons mode="signup" />
-          <div className="grid grid-cols-2 gap-3">
-            {ACCOUNT_TYPES.map(type => (
-              <button key={type.id}
-                onClick={() => { setAccountType(type.id); setErrors({}); }}
-                className={`p-4 rounded-xl border text-left transition-all ${
-                  accountType === type.id
-                    ? 'border-[#0066FF]/60 bg-[#0066FF]/10'
-                    : 'border-white/10 bg-white/[0.04] hover:border-white/20'
-                }`}>
-                <div className="text-2xl mb-2">{type.icon}</div>
-                <div className={`text-sm font-medium mb-0.5 ${accountType === type.id ? 'text-[#0066FF]' : 'text-white'}`}>
-                  {type.label}
-                </div>
-                <div className="text-xs text-white/40">{type.desc}</div>
-              </button>
-            ))}
-          </div>
-          {errors.accountType && <p className="text-xs text-red-400">{errors.accountType}</p>}
+        <div className="space-y-3">
+          <p className="text-xs text-white/40 mb-4">What best describes you?</p>
+          {ACCOUNT_CATEGORIES.map(cat => (
+            <button key={cat.id} onClick={() => { setCategory(cat.id); setErrors({}); }}
+              className={`w-full p-4 rounded-xl border text-left transition-all flex items-center gap-4 ${
+                category === cat.id ? 'border-[#0066FF]/60 bg-[#0066FF]/10' : 'border-white/10 bg-white/[0.04] hover:border-white/20'
+              }`}>
+              <span className="text-2xl">{cat.icon}</span>
+              <div>
+                <div className={`text-sm font-semibold ${category === cat.id ? 'text-[#0066FF]' : 'text-white'}`}>{cat.label}</div>
+                <div className="text-xs text-white/40 mt-0.5">{cat.desc}</div>
+              </div>
+              {category === cat.id && <Check className="w-4 h-4 text-[#0066FF] ml-auto flex-shrink-0" />}
+            </button>
+          ))}
+          {errors.category && <p className="text-xs text-red-400">{errors.category}</p>}
         </div>
       )}
 
-      {/* Step 1 */}
-      {step === 1 && (
+      {/* Step 1 — Plan Selection */}
+      {step === 1 && selectedCategory && (
+        <div className="space-y-3">
+          <p className="text-xs text-white/40 mb-4">Choose your {selectedCategory.label} plan — upgrade anytime</p>
+          {selectedCategory.plans.map(p => (
+            <button key={p.id} onClick={() => { setPlan(p.id); setErrors({}); }}
+              className={`w-full p-4 rounded-xl border text-left transition-all ${
+                plan === p.id ? 'border-[#0066FF]/60 bg-[#0066FF]/10' : 'border-white/10 bg-white/[0.04] hover:border-white/20'
+              }`}>
+              <div className="flex items-center justify-between">
+                <div className={`text-sm font-semibold ${plan === p.id ? 'text-[#0066FF]' : 'text-white'}`}>{p.label}</div>
+                <div className="text-xs font-bold text-[#00D4AA]">{p.price}</div>
+              </div>
+              <div className="text-xs text-white/40 mt-1">{p.desc}</div>
+            </button>
+          ))}
+          <div className="pt-2">
+            <p className="text-xs text-white/30 text-center">7-day free trial available on all paid plans • No credit card required</p>
+          </div>
+          {errors.plan && <p className="text-xs text-red-400">{errors.plan}</p>}
+        </div>
+      )}
+
+      {/* Step 2 — Details */}
+      {step === 2 && (
         <div className="space-y-4">
           <AuthInput label="Full name" type="text" placeholder="Jane Smith"
             value={form.name} onChange={e => update('name', e.target.value)}
             error={errors.name} icon={<User className="w-4 h-4" />} autoComplete="name" />
-          <AuthInput label="Work email" type="email" placeholder="jane@company.com"
+          <AuthInput label="Email address" type="email" placeholder="jane@company.com"
             value={form.email} onChange={e => update('email', e.target.value)}
             error={errors.email} icon={<Mail className="w-4 h-4" />} autoComplete="email" />
-          {(accountType === 'corporate' || accountType === 'agency' || accountType === 'startup') && (
-            <AuthInput label="Company name" type="text" placeholder="Acme Inc."
+          {(category === 'business' || category === 'enterprise') && (
+            <AuthInput label="Company name" type="text" placeholder="Acme Ltd."
               value={form.company} onChange={e => update('company', e.target.value)}
               error={errors.company} icon={<Building2 className="w-4 h-4" />} />
           )}
         </div>
       )}
 
-      {/* Step 2 */}
-      {step === 2 && (
+      {/* Step 3 — Password */}
+      {step === 3 && (
         <div className="space-y-4">
           <AuthInput label="Create password" type="password" placeholder="Min. 8 characters"
             value={form.password} onChange={e => update('password', e.target.value)}
@@ -175,14 +213,13 @@ export default function SignupPage() {
           <AuthInput label="Confirm password" type="password" placeholder="Repeat your password"
             value={form.confirm} onChange={e => update('confirm', e.target.value)}
             error={errors.confirm} icon={<Lock className="w-4 h-4" />} autoComplete="new-password" />
-
           {form.password && (
             <div className="space-y-1.5">
               <div className="flex gap-1">
                 {[1,2,3,4].map(i => (
                   <div key={i} className={`flex-1 h-1 rounded-full transition-all ${
                     form.password.length >= i * 3
-                      ? i <= 1 ? 'bg-red-500' : i <= 2 ? 'bg-yellow-500' : i <= 3 ? 'bg-blue-500' : 'bg-[#00D4AA]'
+                      ? i <= 1 ? 'bg-red-500' : i <= 2 ? 'bg-yellow-500' : i <= 3 ? 'bg-[#0066FF]' : 'bg-[#00D4AA]'
                       : 'bg-white/10'
                   }`} />
                 ))}
@@ -192,11 +229,8 @@ export default function SignupPage() {
               </p>
             </div>
           )}
-
           {apiError && (
-            <div className="px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-sm text-red-400">
-              {apiError}
-            </div>
+            <div className="px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-sm text-red-400">{apiError}</div>
           )}
         </div>
       )}
@@ -210,9 +244,7 @@ export default function SignupPage() {
         )}
         <Button size="lg" loading={isLoading} onClick={handleNext}
           className={`rounded-xl gap-2 ${step === 0 ? 'w-full' : 'flex-1'}`}>
-          {!isLoading && (
-            <>{step === 2 ? 'Create account' : 'Continue'}<ArrowRight className="w-4 h-4" /></>
-          )}
+          {!isLoading && <>{step === 3 ? 'Create account' : 'Continue'}<ArrowRight className="w-4 h-4" /></>}
         </Button>
       </div>
     </div>

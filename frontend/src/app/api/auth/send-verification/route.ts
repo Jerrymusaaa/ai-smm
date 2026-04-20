@@ -18,11 +18,11 @@ export async function POST(req: NextRequest) {
     const isDev = process.env.NODE_ENV === 'development';
 
     const { data, error } = await resend.emails.send({
-      from: 'SocialAI <onboarding@resend.dev>',
+      from: 'Yoyzie AI <onboarding@resend.dev>',
       // In development, Resend only delivers to your own verified email
       // Replace the line below with your Resend account email while testing locally
       to: isDev ? process.env.RESEND_TEST_EMAIL! : email,
-      subject: 'Verify your SocialAI account',
+      subject: 'Verify your Yoyzie AI account',
       html: verificationEmailHtml({ name, verificationUrl }),
     });
 

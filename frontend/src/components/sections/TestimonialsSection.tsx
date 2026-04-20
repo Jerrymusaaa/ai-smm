@@ -6,7 +6,7 @@ const TESTIMONIALS = [
     role: 'Head of Growth, Fintech Startup',
     avatar: 'SC',
     color: '#0066FF',
-    quote: 'SocialAI saved our 3-person marketing team 40 hours a week. The AI campaign manager is like having a senior strategist on call 24/7.',
+    quote: 'Yoyzie AI saved our 3-person marketing team 40 hours a week. The AI campaign manager is like having a senior strategist on call 24/7.',
     metric: '340% engagement increase',
   },
   {
@@ -22,7 +22,7 @@ const TESTIMONIALS = [
     role: 'Digital Marketing Director, Agency',
     avatar: 'PS',
     color: '#FF6B35',
-    quote: 'Managing 47 client accounts used to require a full team. Now our 8 people handle it all through SocialAI. The multi-account campaign manager is exceptional.',
+    quote: 'Managing 47 client accounts used to require a full team. Now our 8 people handle it all through Yoyzie AI. The multi-account campaign manager is exceptional.',
     metric: '5x client retention rate',
   },
   {

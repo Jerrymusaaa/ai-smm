@@ -64,7 +64,7 @@ export function ApiKeysSettings() {
               API Keys
             </h3>
             <p className="text-xs text-white/40 mt-1 leading-relaxed max-w-lg">
-              Use API keys to authenticate requests to the SocialAI API. Keep your keys secure — treat them like passwords and never expose them in client-side code.
+              Use API keys to authenticate requests to the Yoyzie AI API. Keep your keys secure — treat them like passwords and never expose them in client-side code.
             </p>
           </div>
         </div>

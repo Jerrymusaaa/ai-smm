@@ -19,7 +19,7 @@ export function CTASection() {
           your social media?
         </h2>
         <p className="text-white/40 text-xl mb-10 max-w-lg mx-auto">
-          Join 18,000+ teams using SocialAI to grow their audience on autopilot.
+          Join 18,000+ teams using Yoyzie AI to grow their audience on autopilot.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button size="xl" className="rounded-2xl glow-blue gap-2">

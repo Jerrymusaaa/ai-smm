@@ -23,7 +23,7 @@ export function Footer() {
                 <Zap className="w-4 h-4 text-white" strokeWidth={2.5} />
               </div>
               <span style={{ fontFamily: 'var(--font-display)' }} className="text-white font-bold text-lg">
-                SocialAI<span className="text-[#0066FF]">.</span>
+                Yoyzie AI<span className="text-[#0066FF]">.</span>
               </span>
             </div>
             <p className="text-white/30 text-sm leading-relaxed max-w-[200px]">
@@ -49,7 +49,7 @@ export function Footer() {
         </div>
 
         <div className="pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-white/25 text-sm">© 2025 SocialAI. All rights reserved.</p>
+          <p className="text-white/25 text-sm">© 2025 Yoyzie AI. All rights reserved.</p>
           <p className="text-white/20 text-xs">Built with ❤ for social media marketers</p>
         </div>
       </div>

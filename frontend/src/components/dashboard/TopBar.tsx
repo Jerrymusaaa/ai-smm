@@ -45,7 +45,7 @@ export function TopBar({ onMenuClick }: TopBarProps) {
       </button>
 
       <div className="hidden sm:flex items-center gap-2 text-sm text-white/30">
-        <span>SocialAI</span>
+        <span>Yoyzie AI</span>
         <ChevronDown className="w-3.5 h-3.5 rotate-[-90deg]" />
         <span className="text-white/70 font-medium">Dashboard</span>
       </div>

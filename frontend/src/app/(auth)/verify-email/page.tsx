@@ -40,7 +40,7 @@ export default function VerifyEmailPage() {
       {/* Steps */}
       <div className="glass rounded-2xl p-5 border border-white/[0.06] mb-8 text-left space-y-4">
         {[
-          { step: '1', text: 'Open the email from SocialAI' },
+          { step: '1', text: 'Open the email from Yoyzie AI' },
           { step: '2', text: 'Click the "Verify my email" button' },
           { step: '3', text: 'You\'ll be redirected to your dashboard' },
         ].map(item => (

@@ -124,7 +124,7 @@ export function HeroSection() {
               <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
               <div className="w-3 h-3 rounded-full bg-green-500/60" />
               <div className="flex-1 mx-4 bg-white/[0.06] rounded-md px-3 py-1 text-xs text-white/30 text-center">
-                app.socialai.com/dashboard
+                app.yoyzie-ai.com/dashboard
               </div>
             </div>
             {/* Dashboard image */}

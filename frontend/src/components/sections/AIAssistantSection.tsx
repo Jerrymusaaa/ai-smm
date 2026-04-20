@@ -81,7 +81,7 @@ export function AIAssistantSection() {
                 <Sparkles className="w-4 h-4 text-white" />
               </div>
               <div>
-                <div className="text-sm font-medium text-white">SocialAI Assistant</div>
+                <div className="text-sm font-medium text-white">Yoyzie AI Assistant</div>
                 <div className="flex items-center gap-1.5 text-xs text-[#00D4AA]">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#00D4AA] pulse-dot inline-block" />
                   Active — analyzing your accounts

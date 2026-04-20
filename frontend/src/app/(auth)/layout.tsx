@@ -22,7 +22,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
               <Zap className="w-5 h-5 text-white" strokeWidth={2.5} />
             </div>
             <span style={{ fontFamily: 'var(--font-display)' }} className="text-white font-bold text-xl">
-              SocialAI<span className="text-[#0066FF]">.</span>
+              Yoyzie AI<span className="text-[#0066FF]">.</span>
             </span>
           </Link>
 
@@ -57,7 +57,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             {/* Testimonial */}
             <div className="glass rounded-2xl p-5 border border-white/[0.06]">
               <p className="text-white/60 text-sm leading-relaxed mb-4 italic">
-                &ldquo;SocialAI cut our content creation time by 80%. Our engagement tripled in the first month.&rdquo;
+                &ldquo;Yoyzie AI cut our content creation time by 80%. Our engagement tripled in the first month.&rdquo;
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#0066FF] to-[#00D4AA] flex items-center justify-center text-xs font-bold text-white">
@@ -72,7 +72,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           </div>
 
           {/* Bottom */}
-          <p className="text-white/20 text-xs">© 2025 SocialAI. All rights reserved.</p>
+          <p className="text-white/20 text-xs">© 2025 Yoyzie AI. All rights reserved.</p>
         </div>
       </div>
 
@@ -85,7 +85,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
               <Zap className="w-4 h-4 text-white" strokeWidth={2.5} />
             </div>
             <span style={{ fontFamily: 'var(--font-display)' }} className="text-white font-bold text-lg">
-              SocialAI<span className="text-[#0066FF]">.</span>
+              Yoyzie AI<span className="text-[#0066FF]">.</span>
             </span>
           </Link>
         </div>
