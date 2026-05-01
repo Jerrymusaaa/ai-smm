@@ -17,18 +17,16 @@ interface AuthState {
   accessToken: string | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-
   login: (email: string, password: string) => Promise<void>;
-  register: (data: { email: string; password: string; name: string; accountType?: string }) => Promise<{ verificationToken?: string }>;
+  register: (data: { email: string; password: string; name: string; accountType?: string }) => Promise<void>;
   logout: () => Promise<void>;
   updateUser: (user: Partial<User>) => void;
-  setTokens: (accessToken: string) => void;
   clearAuth: () => void;
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       user: null,
       accessToken: null,
       isLoading: false,
@@ -40,25 +38,28 @@ export const useAuthStore = create<AuthState>()(
           const res = await api.auth.login({ email, password });
           const { user, accessToken, refreshToken } = res.data.data;
 
-          localStorage.setItem('accessToken', accessToken);
-          if (refreshToken) localStorage.setItem('refreshToken', refreshToken);
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('accessToken', accessToken);
+            if (refreshToken) localStorage.setItem('refreshToken', refreshToken);
+          }
 
           set({ user, accessToken, isAuthenticated: true, isLoading: false });
         } catch (error: any) {
           set({ isLoading: false });
-          throw new Error(error.response?.data?.error || 'Login failed');
+          const msg = error.response?.data?.error || error.message || 'Login failed';
+          throw new Error(msg);
         }
       },
 
       register: async (data) => {
         set({ isLoading: true });
         try {
-          const res = await api.auth.register(data);
+          await api.auth.register(data);
           set({ isLoading: false });
-          return { verificationToken: res.data.verificationToken };
         } catch (error: any) {
           set({ isLoading: false });
-          throw new Error(error.response?.data?.error || 'Registration failed');
+          const msg = error.response?.data?.error || error.message || 'Registration failed';
+          throw new Error(msg);
         }
       },
 
@@ -66,27 +67,26 @@ export const useAuthStore = create<AuthState>()(
         try {
           await api.auth.logout();
         } catch { /* ignore */ }
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
+        }
         set({ user: null, accessToken: null, isAuthenticated: false });
       },
 
       updateUser: (userData) =>
         set(state => ({ user: state.user ? { ...state.user, ...userData } : null })),
 
-      setTokens: (accessToken) => {
-        localStorage.setItem('accessToken', accessToken);
-        set({ accessToken, isAuthenticated: true });
-      },
-
       clearAuth: () => {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
+        }
         set({ user: null, accessToken: null, isAuthenticated: false });
       },
     }),
     {
-      name: 'auth-storage',
+      name: 'yoyzie-auth',
       partialize: (state) => ({
         user: state.user,
         accessToken: state.accessToken,

@@ -73,31 +73,31 @@ enum Platform {
 }
 
 model User {
-  id                String          @id @default(cuid())
-  email             String          @unique
-  password          String?
-  name              String
-  avatar            String?
-  accountType       AccountType     @default(INDIVIDUAL)
-  company           String?
-  role              String?
-  bio               String?
-  website           String?
-  twitterHandle     String?
-  linkedinUrl       String?
-  timezone          String          @default("America/New_York")
-  language          String          @default("en")
-  emailVerified     Boolean         @default(false)
-  emailVerifiedAt   DateTime?
-  twoFactorEnabled  Boolean         @default(false)
-  twoFactorSecret   String?
-  onboardingDone    Boolean         @default(false)
-  lastLoginAt       DateTime?
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
+  id               String      @id @default(cuid())
+  email            String      @unique
+  password         String?
+  name             String
+  avatar           String?
+  accountType      AccountType @default(INDIVIDUAL)
+  company          String?
+  role             String?
+  bio              String?
+  website          String?
+  twitterHandle    String?
+  linkedinUrl      String?
+  timezone         String      @default("America/New_York")
+  language         String      @default("en")
+  emailVerified    Boolean     @default(false)
+  emailVerifiedAt  DateTime?
+  twoFactorEnabled Boolean     @default(false)
+  twoFactorSecret  String?
+  onboardingDone   Boolean     @default(false)
+  lastLoginAt      DateTime?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
 
-  organization      Organization?   @relation(fields: [organizationId], references: [id])
-  organizationId    String?
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  organizationId String?
 
   socialAccounts    SocialAccount[]
   posts             Post[]
@@ -108,28 +108,29 @@ model User {
   sessions          Session[]
   apiKeys           ApiKey[]
   teamMemberships   TeamMember[]
+  influencerProfile InfluencerProfile?
 
   @@index([email])
   @@index([organizationId])
 }
 
 model Organization {
-  id          String       @id @default(cuid())
-  name        String
-  slug        String       @unique
-  logo        String?
-  website     String?
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  logo      String?
+  website   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  users       User[]
-  members     TeamMember[]
+  users   User[]
+  members TeamMember[]
 }
 
 model TeamMember {
-  id             String       @id @default(cuid())
-  role           String       @default("member")
-  createdAt      DateTime     @default(now())
+  id        String   @id @default(cuid())
+  role      String   @default("member")
+  createdAt DateTime @default(now())
 
   user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId         String
@@ -149,83 +150,83 @@ model Session {
   expiresAt    DateTime
   createdAt    DateTime @default(now())
 
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId       String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
 
   @@index([token])
   @@index([userId])
 }
 
 model ApiKey {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   name        String
-  key         String   @unique
+  key         String    @unique
   permissions String[]
   lastUsedAt  DateTime?
   expiresAt   DateTime?
-  createdAt   DateTime @default(now())
+  createdAt   DateTime  @default(now())
 
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
 
   @@index([key])
 }
 
 model SocialAccount {
-  id              String    @id @default(cuid())
-  platform        Platform
-  platformUserId  String
-  username        String
-  displayName     String?
-  avatar          String?
-  accessToken     String
-  refreshToken    String?
-  tokenExpiresAt  DateTime?
-  followers       Int       @default(0)
-  following       Int       @default(0)
-  isActive        Boolean   @default(true)
-  connectedAt     DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  id             String    @id @default(cuid())
+  platform       Platform
+  platformUserId String
+  username       String
+  displayName    String?
+  avatar         String?
+  accessToken    String
+  refreshToken   String?
+  tokenExpiresAt DateTime?
+  followers      Int       @default(0)
+  following      Int       @default(0)
+  isActive       Boolean   @default(true)
+  connectedAt    DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
-  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId          String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
 
-  posts           Post[]
-  analytics       Analytics[]
+  posts     Post[]
+  analytics Analytics[]
 
   @@unique([userId, platform, platformUserId])
   @@index([userId])
 }
 
 model Post {
-  id              String      @id @default(cuid())
-  title           String?
-  content         String
-  hashtags        String[]
-  mediaUrls       String[]
-  status          PostStatus  @default(DRAFT)
-  scheduledAt     DateTime?
-  publishedAt     DateTime?
-  platform        Platform
-  platformPostId  String?
-  reach           Int         @default(0)
-  likes           Int         @default(0)
-  comments        Int         @default(0)
-  shares          Int         @default(0)
-  clicks          Int         @default(0)
-  impressions     Int         @default(0)
-  engagementRate  Float       @default(0)
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
+  id             String     @id @default(cuid())
+  title          String?
+  content        String
+  hashtags       String[]
+  mediaUrls      String[]
+  status         PostStatus @default(DRAFT)
+  scheduledAt    DateTime?
+  publishedAt    DateTime?
+  platform       Platform
+  platformPostId String?
+  reach          Int        @default(0)
+  likes          Int        @default(0)
+  comments       Int        @default(0)
+  shares         Int        @default(0)
+  clicks         Int        @default(0)
+  impressions    Int        @default(0)
+  engagementRate Float      @default(0)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
 
-  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId          String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
 
   socialAccount   SocialAccount? @relation(fields: [socialAccountId], references: [id])
   socialAccountId String?
 
-  campaign        Campaign?   @relation(fields: [campaignId], references: [id])
-  campaignId      String?
+  campaign   Campaign? @relation(fields: [campaignId], references: [id])
+  campaignId String?
 
   @@index([userId])
   @@index([status])
@@ -254,31 +255,31 @@ model Campaign {
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
 
-  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
 
-  posts       Post[]
+  posts Post[]
 
   @@index([userId])
   @@index([status])
 }
 
 model Analytics {
-  id              String        @id @default(cuid())
+  id              String   @id @default(cuid())
   date            DateTime
   platform        Platform
-  followers       Int           @default(0)
-  followersGained Int           @default(0)
-  followersLost   Int           @default(0)
-  impressions     Int           @default(0)
-  reach           Int           @default(0)
-  engagements     Int           @default(0)
-  likes           Int           @default(0)
-  comments        Int           @default(0)
-  shares          Int           @default(0)
-  clicks          Int           @default(0)
-  profileViews    Int           @default(0)
-  createdAt       DateTime      @default(now())
+  followers       Int      @default(0)
+  followersGained Int      @default(0)
+  followersLost   Int      @default(0)
+  impressions     Int      @default(0)
+  reach           Int      @default(0)
+  engagements     Int      @default(0)
+  likes           Int      @default(0)
+  comments        Int      @default(0)
+  shares          Int      @default(0)
+  clicks          Int      @default(0)
+  profileViews    Int      @default(0)
+  createdAt       DateTime @default(now())
 
   socialAccount   SocialAccount @relation(fields: [socialAccountId], references: [id], onDelete: Cascade)
   socialAccountId String
@@ -302,24 +303,24 @@ model Subscription {
   createdAt            DateTime           @default(now())
   updatedAt            DateTime           @updatedAt
 
-  user                 User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId               String             @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
 
-  invoices             Invoice[]
+  invoices Invoice[]
 
   @@index([stripeCustomerId])
 }
 
 model Invoice {
-  id             String       @id @default(cuid())
-  stripeId       String?      @unique
-  amount         Float
-  currency       String       @default("usd")
-  status         String
-  paidAt         DateTime?
-  hostedUrl      String?
-  pdfUrl         String?
-  createdAt      DateTime     @default(now())
+  id        String    @id @default(cuid())
+  stripeId  String?   @unique
+  amount    Float
+  currency  String    @default("usd")
+  status    String
+  paidAt    DateTime?
+  hostedUrl String?
+  pdfUrl    String?
+  createdAt DateTime  @default(now())
 
   subscription   Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
   subscriptionId String
@@ -336,8 +337,8 @@ model Notification {
   data      Json?
   createdAt DateTime @default(now())
 
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
 
   @@index([userId])
   @@index([read])
@@ -352,8 +353,8 @@ model AIMemory {
   engagementTips   String[]
   updatedAt        DateTime @updatedAt
 
-  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId           String   @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
 }
 
 model TrendData {
@@ -371,37 +372,37 @@ model TrendData {
 }
 
 model InfluencerProfile {
-  id                    String   @id @default(cuid())
-  botScore              Float    @default(0)
-  audienceAuthenticityPct Float  @default(0)
-  clickToViewRatio      Float    @default(0)
-  totalEarnings         Float    @default(0)
-  walletBalance         Float    @default(0)
-  pendingBalance        Float    @default(0)
-  commissionRate        Int      @default(25)
-  verifiedBadge         Boolean  @default(false)
-  priorityLevel         Int      @default(1)
-  niches                String[]
-  followerBracket       String   @default("nano")
-  avgEngagementRate     Float    @default(0)
-  totalCampaigns        Int      @default(0)
-  rating                Float    @default(0)
-  portfolioUrl          String?
-  updatedAt             DateTime @updatedAt
+  id                      String   @id @default(cuid())
+  botScore                Float    @default(0)
+  audienceAuthenticityPct Float    @default(0)
+  clickToViewRatio        Float    @default(0)
+  totalEarnings           Float    @default(0)
+  walletBalance           Float    @default(0)
+  pendingBalance          Float    @default(0)
+  commissionRate          Int      @default(25)
+  verifiedBadge           Boolean  @default(false)
+  priorityLevel           Int      @default(1)
+  niches                  String[]
+  followerBracket         String   @default("nano")
+  avgEngagementRate       Float    @default(0)
+  totalCampaigns          Int      @default(0)
+  rating                  Float    @default(0)
+  portfolioUrl            String?
+  updatedAt               DateTime @updatedAt
 
-  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId                String   @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
 
-  walletTransactions    WalletTransaction[]
-  campaignApplications  CampaignApplication[]
+  walletTransactions   WalletTransaction[]
+  campaignApplications CampaignApplication[]
 }
 
 model WalletTransaction {
-  id               String   @id @default(cuid())
+  id               String    @id @default(cuid())
   type             String
   amount           Float
-  currency         String   @default("KES")
-  status           String   @default("pending")
+  currency         String    @default("KES")
+  status           String    @default("pending")
   description      String?
   campaignId       String?
   reference        String?
@@ -409,66 +410,66 @@ model WalletTransaction {
   mpesaNumber      String?
   paypalEmail      String?
   processedAt      DateTime?
-  createdAt        DateTime @default(now())
+  createdAt        DateTime  @default(now())
 
-  influencer       InfluencerProfile @relation(fields: [influencerId], references: [id], onDelete: Cascade)
-  influencerId     String
+  influencer   InfluencerProfile @relation(fields: [influencerId], references: [id], onDelete: Cascade)
+  influencerId String
 
   @@index([influencerId])
 }
 
 model CampaignBrief {
-  id                    String   @id @default(cuid())
-  title                 String
-  description           String
-  budget                Float
-  currency              String   @default("KES")
-  platforms             String[]
-  category              String
-  niche                 String?
-  deliverables          String
-  timeline              String?
-  minFollowers          Int      @default(0)
-  targetLocation        String?
-  status                String   @default("OPEN")
-  applicationsCount     Int      @default(0)
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  id                String   @id @default(cuid())
+  title             String
+  description       String
+  budget            Float
+  currency          String   @default("KES")
+  platforms         String[]
+  category          String
+  niche             String?
+  deliverables      String
+  timeline          String?
+  minFollowers      Int      @default(0)
+  targetLocation    String?
+  status            String   @default("OPEN")
+  applicationsCount Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
-  companyUserId         String
-  applications          CampaignApplication[]
+  companyUserId String
+  applications  CampaignApplication[]
 
   @@index([status])
   @@index([category])
 }
 
 model CampaignApplication {
-  id             String   @id @default(cuid())
+  id             String    @id @default(cuid())
   proposalText   String
   proposedRate   Float
-  estimatedReach Int      @default(0)
-  status         String   @default("PENDING")
-  appliedAt      DateTime @default(now())
+  estimatedReach Int       @default(0)
+  status         String    @default("PENDING")
+  appliedAt      DateTime  @default(now())
   respondedAt    DateTime?
 
-  brief          CampaignBrief     @relation(fields: [briefId], references: [id], onDelete: Cascade)
-  briefId        String
-  influencer     InfluencerProfile @relation(fields: [influencerId], references: [id], onDelete: Cascade)
-  influencerId   String
+  brief        CampaignBrief     @relation(fields: [briefId], references: [id], onDelete: Cascade)
+  briefId      String
+  influencer   InfluencerProfile @relation(fields: [influencerId], references: [id], onDelete: Cascade)
+  influencerId String
 
   @@index([briefId])
   @@index([influencerId])
 }
 
 model BotDetectionReport {
-  id                          String   @id @default(cuid())
-  botScore                    Float
-  realFollowerPct             Float
-  engagementAuthenticityPct   Float
-  suspiciousGrowthDetected    Boolean  @default(false)
-  commentQualityScore         Float
-  reportData                  Json?
-  lastAnalyzedAt              DateTime @default(now())
+  id                        String   @id @default(cuid())
+  botScore                  Float
+  realFollowerPct           Float
+  engagementAuthenticityPct Float
+  suspiciousGrowthDetected  Boolean  @default(false)
+  commentQualityScore       Float
+  reportData                Json?
+  lastAnalyzedAt            DateTime @default(now())
 
-  socialAccountId             String   @unique
+  socialAccountId String @unique
 }

@@ -58,10 +58,10 @@ export function Sidebar({ open, collapsed, onClose, onToggleCollapse }: SidebarP
       {/* Logo */}
       <div className={cn('flex items-center border-b border-white/[0.06] flex-shrink-0', collapsed ? 'h-16 justify-center px-2' : 'h-16 px-5 gap-3')}>
         <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#0066FF] to-[#00D4AA] flex items-center justify-center flex-shrink-0">
-          <Zap className="w-4 h-4 text-white" />
+          <img src="/images/yoyzie-logo.jpg" alt="Yoyzie AI" className="w-8 h-8 object-cover rounded-lg" />
         </div>
         {!collapsed && (
-          <span style={{ fontFamily: 'var(--font-display)' }} className="text-base font-bold text-white">Yoyzie AI</span>
+          <span style={{ fontFamily: 'var(--font-display)' }} className="text-base font-bold" style={{ color: "#E8C96A" }}>Yoyzie AI</span>
         )}
         <button onClick={onClose} className="lg:hidden ml-auto p-1 text-white/30 hover:text-white">
           <X className="w-4 h-4" />

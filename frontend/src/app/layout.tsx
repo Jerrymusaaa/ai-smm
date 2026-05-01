@@ -15,20 +15,18 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'Yoyzie AI — Kenya\'s #1 AI Social Media Manager',
-  description: 'AI-powered social media management, influencer marketing, and content creation platform built for Kenya. Schedule posts, generate captions, find influencers, and grow your audience.',
+  title: "Yoyzie AI — Kenya's #1 AI Social Media Manager",
+  description: 'AI-powered social media management, influencer marketing, and content creation platform built for Kenya.',
   keywords: 'social media management Kenya, AI content creation, influencer marketing Kenya, Yoyzie AI',
+  icons: {
+    icon: '/images/yoyzie-logo.jpg',
+    apple: '/images/yoyzie-logo.jpg',
+  },
   openGraph: {
     title: 'Yoyzie AI',
-    description: 'Kenya\'s most intelligent AI-powered social media platform',
+    description: "Kenya's most intelligent AI-powered social media platform",
     type: 'website',
-    url: 'https://yoyzie.ai',
     siteName: 'Yoyzie AI',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Yoyzie AI',
-    description: 'AI-powered social media management for Kenya',
   },
 };
 
