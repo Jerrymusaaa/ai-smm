@@ -24,6 +24,16 @@ interface AuthState {
   clearAuth: () => void;
 }
 
+// Helper: set a cookie so the proxy middleware can read it
+function setCookie(name: string, value: string, days = 7) {
+  const expires = new Date(Date.now() + days * 864e5).toUTCString();
+  document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Strict`;
+}
+
+function deleteCookie(name: string) {
+  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+}
+
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
@@ -38,10 +48,12 @@ export const useAuthStore = create<AuthState>()(
           const res = await api.auth.login({ email, password });
           const { user, accessToken, refreshToken } = res.data.data;
 
-          if (typeof window !== 'undefined') {
-            localStorage.setItem('accessToken', accessToken);
-            if (refreshToken) localStorage.setItem('refreshToken', refreshToken);
-          }
+          // Save to localStorage for API client
+          localStorage.setItem('accessToken', accessToken);
+          if (refreshToken) localStorage.setItem('refreshToken', refreshToken);
+
+          // Also set cookie so proxy middleware can read it
+          setCookie('accessToken', accessToken, 7);
 
           set({ user, accessToken, isAuthenticated: true, isLoading: false });
         } catch (error: any) {
@@ -67,10 +79,9 @@ export const useAuthStore = create<AuthState>()(
         try {
           await api.auth.logout();
         } catch { /* ignore */ }
-        if (typeof window !== 'undefined') {
-          localStorage.removeItem('accessToken');
-          localStorage.removeItem('refreshToken');
-        }
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        deleteCookie('accessToken');
         set({ user: null, accessToken: null, isAuthenticated: false });
       },
 
@@ -78,10 +89,9 @@ export const useAuthStore = create<AuthState>()(
         set(state => ({ user: state.user ? { ...state.user, ...userData } : null })),
 
       clearAuth: () => {
-        if (typeof window !== 'undefined') {
-          localStorage.removeItem('accessToken');
-          localStorage.removeItem('refreshToken');
-        }
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        deleteCookie('accessToken');
         set({ user: null, accessToken: null, isAuthenticated: false });
       },
     }),

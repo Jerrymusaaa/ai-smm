@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { Sidebar } from '@/components/dashboard/Sidebar';
 import { TopBar } from '@/components/dashboard/TopBar';
 import { useAuthStore } from '@/store/auth.store';
@@ -9,20 +8,16 @@ import { useAuthStore } from '@/store/auth.store';
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const { isAuthenticated, user } = useAuthStore();
-  const router = useRouter();
+  const { isAuthenticated } = useAuthStore();
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.push('/login');
-    }
-  }, [isAuthenticated, router]);
-
+  // Proxy middleware handles unauthenticated redirect.
+  // If somehow we get here without auth, show nothing while cookie check happens.
   if (!isAuthenticated) {
     return (
-      <div className="flex h-screen items-center justify-center" style={{ background: '#070D1A' }}>
+      <div className="flex h-screen items-center justify-center" style={{ background: '#070A0F' }}>
         <div className="text-center">
-          <div className="w-10 h-10 border-2 border-[#0066FF] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <div className="w-10 h-10 border-2 border-t-transparent rounded-full animate-spin mx-auto mb-4"
+            style={{ borderColor: 'rgba(201,168,76,0.6)', borderTopColor: 'transparent' }} />
           <p className="text-white/40 text-sm">Loading...</p>
         </div>
       </div>
@@ -30,7 +25,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }
 
   return (
-    <div className="flex h-screen overflow-hidden" style={{ background: '#070D1A' }}>
+    <div className="flex h-screen overflow-hidden" style={{ background: '#070A0F' }}>
       {sidebarOpen && (
         <div className="fixed inset-0 bg-black/60 z-20 lg:hidden"
           onClick={() => setSidebarOpen(false)} />

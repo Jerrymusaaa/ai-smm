@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { AuthInput } from '@/components/auth/AuthInput';
 import { Mail, Lock, ArrowRight } from 'lucide-react';
@@ -10,6 +10,7 @@ import { useAuthStore } from '@/store/auth.store';
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { login, isLoading } = useAuthStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,7 +32,10 @@ export default function LoginPage() {
     setErrors({});
     try {
       await login(email, password);
-      router.push('/dashboard');
+      // Get redirect param or default to dashboard
+      const redirect = searchParams.get('redirect') || '/dashboard';
+      // Use window.location for a hard redirect so the cookie is picked up by middleware
+      window.location.href = redirect;
     } catch (error: any) {
       setErrors({ api: error.message || 'Invalid email or password' });
     }
@@ -57,7 +61,7 @@ export default function LoginPage() {
         </p>
       </div>
 
-      {/* Google OAuth only */}
+      {/* Google only */}
       <button onClick={handleGoogleLogin}
         className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.07] hover:border-white/20 transition-all mb-6 text-sm font-medium text-white/80">
         <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -74,7 +78,9 @@ export default function LoginPage() {
           <div className="w-full border-t border-white/[0.06]" />
         </div>
         <div className="relative flex justify-center text-xs">
-          <span className="px-3 text-white/30" style={{ background: '#0D1525' }}>or sign in with email</span>
+          <span className="px-3 text-white/30" style={{ background: '#0D1525' }}>
+            or sign in with email
+          </span>
         </div>
       </div>
 
@@ -117,7 +123,11 @@ export default function LoginPage() {
         </div>
 
         <Button type="submit" size="lg" loading={isLoading} className="w-full rounded-xl mt-2"
-          style={!isLoading ? { background: 'linear-gradient(135deg, #C9A84C, #E8C96A)', color: '#0A0A0A' } : {}}>
+          style={!isLoading ? {
+            background: 'linear-gradient(135deg, #C9A84C, #E8C96A)',
+            color: '#0A0A0A',
+            border: 'none',
+          } : {}}>
           {!isLoading && <>Sign in <ArrowRight className="w-4 h-4" /></>}
         </Button>
       </form>
