@@ -5,8 +5,8 @@ import { Check, Monitor, Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 
 const ACCENT_COLORS = [
-  { id: 'blue', label: 'Ocean blue', color: '#0066FF' },
-  { id: 'teal', label: 'Teal', color: '#00D4AA' },
+  { id: 'blue', label: 'Ocean blue', color: '#C9A84C' },
+  { id: 'teal', label: 'Teal', color: '#E8C96A' },
   { id: 'purple', label: 'Purple', color: '#A855F7' },
   { id: 'orange', label: 'Sunset', color: '#FF6B35' },
   { id: 'pink', label: 'Rose', color: '#EC4899' },
@@ -40,17 +40,17 @@ export function AppearanceSettings() {
           ].map(t => (
             <button key={t.id} onClick={() => setTheme(t.id)}
               className={`relative p-4 rounded-2xl border transition-all text-center ${
-                theme === t.id ? 'border-[#0066FF]/50 bg-[#0066FF]/08' : 'border-white/[0.06] hover:border-white/20'
+                theme === t.id ? 'border-[#C9A84C]/50 bg-[#C9A84C]/08' : 'border-white/[0.06] hover:border-white/20'
               }`}>
               {/* Preview box */}
               <div className={`w-full h-16 rounded-xl mb-3 border border-white/10 ${t.preview} flex items-center justify-center`}>
                 <t.icon className={`w-6 h-6 ${t.id === 'light' ? 'text-gray-600' : 'text-white/60'}`} />
               </div>
-              <span className={`text-xs font-medium ${theme === t.id ? 'text-[#0066FF]' : 'text-white/60'}`}>
+              <span className={`text-xs font-medium ${theme === t.id ? 'text-[#C9A84C]' : 'text-white/60'}`}>
                 {t.label}
               </span>
               {theme === t.id && (
-                <div className="absolute top-2 right-2 w-4 h-4 rounded-full bg-[#0066FF] flex items-center justify-center">
+                <div className="absolute top-2 right-2 w-4 h-4 rounded-full bg-[#C9A84C] flex items-center justify-center">
                   <Check className="w-2.5 h-2.5 text-white" />
                 </div>
               )}
@@ -68,7 +68,7 @@ export function AppearanceSettings() {
           {ACCENT_COLORS.map(c => (
             <button key={c.id} onClick={() => setAccent(c.id)}
               className="flex flex-col items-center gap-2 group">
-              <div className={`w-10 h-10 rounded-xl transition-all relative ${accent === c.id ? 'scale-110 ring-2 ring-offset-2 ring-offset-[#0D1525]' : 'hover:scale-105'}`}
+              <div className={`w-10 h-10 rounded-xl transition-all relative ${accent === c.id ? 'scale-110 ring-2 ring-offset-2 ring-offset-[#0D0D0D]' : 'hover:scale-105'}`}
                 style={{ background: c.color, ...(accent === c.id ? { boxShadow: `0 0 20px ${c.color}60`, ringColor: c.color } : {}) }}>
                 {accent === c.id && (
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -95,7 +95,7 @@ export function AppearanceSettings() {
                 <button key={size} onClick={() => setFontSize(size)}
                   className={`px-4 py-2 rounded-xl text-xs font-medium border transition-all ${
                     fontSize === size
-                      ? 'border-[#0066FF]/40 bg-[#0066FF]/15 text-[#0066FF]'
+                      ? 'border-[#C9A84C]/40 bg-[#C9A84C]/15 text-[#C9A84C]'
                       : 'border-white/[0.08] text-white/40 hover:border-white/20'
                   }`}>
                   {size}
@@ -111,7 +111,7 @@ export function AppearanceSettings() {
                 <button key={style} onClick={() => setSidebarStyle(style)}
                   className={`px-4 py-2 rounded-xl text-xs font-medium border transition-all ${
                     sidebarStyle === style
-                      ? 'border-[#0066FF]/40 bg-[#0066FF]/15 text-[#0066FF]'
+                      ? 'border-[#C9A84C]/40 bg-[#C9A84C]/15 text-[#C9A84C]'
                       : 'border-white/[0.08] text-white/40 hover:border-white/20'
                   }`}>
                   {style}
@@ -130,7 +130,7 @@ export function AppearanceSettings() {
                 <p className="text-xs text-white/35 mt-0.5">{pref.desc}</p>
               </div>
               <button onClick={pref.toggle}
-                className={`w-11 h-6 rounded-full transition-all relative flex-shrink-0 ${pref.value ? 'bg-[#0066FF]' : 'bg-white/10'}`}>
+                className={`w-11 h-6 rounded-full transition-all relative flex-shrink-0 ${pref.value ? 'bg-[#C9A84C]' : 'bg-white/10'}`}>
                 <div className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-all ${pref.value ? 'left-6' : 'left-1'}`} />
               </button>
             </div>

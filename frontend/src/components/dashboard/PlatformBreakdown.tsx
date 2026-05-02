@@ -60,7 +60,7 @@ export function PlatformBreakdown() {
                 </div>
               </div>
               <div className="text-right flex-shrink-0 min-w-[60px]">
-                <div className="text-xs font-medium text-[#00D4AA]">{p.growth}</div>
+                <div className="text-xs font-medium text-[#E8C96A]">{p.growth}</div>
                 <div className="text-[10px] text-white/30">{p.engagement} eng.</div>
               </div>
             </div>
@@ -69,7 +69,7 @@ export function PlatformBreakdown() {
       </div>
 
       <div className="px-5 py-3 border-t border-white/[0.06]">
-        <button className="text-xs text-[#0066FF] hover:text-[#3385FF] font-medium transition-colors">
+        <button className="text-xs text-[#C9A84C] hover:text-[#3385FF] font-medium transition-colors">
           + Connect more platforms
         </button>
       </div>

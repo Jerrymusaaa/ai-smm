@@ -27,7 +27,7 @@ const POSTS = [
 
 const STATUS_CONFIG = {
   scheduled: { label: 'Scheduled', icon: Clock, color: '#F59E0B', bg: 'rgba(245,158,11,0.1)' },
-  published: { label: 'Published', icon: CheckCircle2, color: '#00D4AA', bg: 'rgba(0,212,170,0.1)' },
+  published: { label: 'Published', icon: CheckCircle2, color: '#E8C96A', bg: 'rgba(0,212,170,0.1)' },
   draft: { label: 'Draft', icon: Loader2, color: '#888', bg: 'rgba(136,136,136,0.1)' },
   failed: { label: 'Failed', icon: AlertCircle, color: '#EF4444', bg: 'rgba(239,68,68,0.1)' },
 };
@@ -42,7 +42,7 @@ export function ScheduledPosts() {
           </h3>
           <p className="text-xs text-white/40 mt-0.5">Upcoming & recent</p>
         </div>
-        <button className="text-xs text-[#0066FF] hover:text-[#3385FF] font-medium transition-colors">
+        <button className="text-xs text-[#C9A84C] hover:text-[#3385FF] font-medium transition-colors">
           View all →
         </button>
       </div>

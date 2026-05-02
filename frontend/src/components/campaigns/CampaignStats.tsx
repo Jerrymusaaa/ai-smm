@@ -3,8 +3,8 @@
 import { Megaphone, TrendingUp, DollarSign, MousePointerClick, Eye, Target } from 'lucide-react';
 
 const STATS = [
-  { label: 'Active campaigns', value: '8', icon: Megaphone, color: '#0066FF', change: '+2 this month' },
-  { label: 'Total reach', value: '2.4M', icon: Eye, color: '#00D4AA', change: '+18% vs last month' },
+  { label: 'Active campaigns', value: '8', icon: Megaphone, color: '#C9A84C', change: '+2 this month' },
+  { label: 'Total reach', value: '2.4M', icon: Eye, color: '#E8C96A', change: '+18% vs last month' },
   { label: 'Avg. engagement', value: '6.8%', icon: TrendingUp, color: '#A855F7', change: '+1.2% vs last month' },
   { label: 'Total clicks', value: '84.2K', icon: MousePointerClick, color: '#FF6B35', change: '+24% vs last month' },
   { label: 'Campaign ROI', value: '280%', icon: Target, color: '#F59E0B', change: '+40% vs last month' },

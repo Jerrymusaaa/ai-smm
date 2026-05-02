@@ -143,9 +143,9 @@ export function IntegrationsSettings() {
     <div className="space-y-5">
       {/* Status messages */}
       {successMessage && (
-        <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-[#00D4AA]/10 border border-[#00D4AA]/20">
-          <Check className="w-4 h-4 text-[#00D4AA] flex-shrink-0" />
-          <p className="text-sm text-[#00D4AA]">{successMessage}</p>
+        <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-[#E8C96A]/10 border border-[#E8C96A]/20">
+          <Check className="w-4 h-4 text-[#E8C96A] flex-shrink-0" />
+          <p className="text-sm text-[#E8C96A]">{successMessage}</p>
         </div>
       )}
       {errorMessage && (
@@ -175,7 +175,7 @@ export function IntegrationsSettings() {
         {/* Progress bar */}
         <div className="mt-4">
           <div className="w-full bg-white/[0.06] rounded-full h-2">
-            <div className="h-2 rounded-full bg-gradient-to-r from-[#0066FF] to-[#00D4AA] transition-all"
+            <div className="h-2 rounded-full bg-gradient-to-r from-[#C9A84C] to-[#E8C96A] transition-all"
               style={{ width: `${(connectedAccounts.length / 4) * 100}%` }} />
           </div>
           <p className="text-xs text-white/30 mt-1.5">
@@ -195,7 +195,7 @@ export function IntegrationsSettings() {
             <div key={platform.id}
               className={`glass rounded-2xl border transition-all p-5 ${
                 connected
-                  ? 'border-[#00D4AA]/25 bg-[#00D4AA]/03'
+                  ? 'border-[#E8C96A]/25 bg-[#E8C96A]/03'
                   : platform.comingSoon
                   ? 'border-white/[0.04] opacity-60'
                   : 'border-white/[0.06] hover:border-white/15'
@@ -212,7 +212,7 @@ export function IntegrationsSettings() {
                   <div className="flex items-center gap-2 flex-wrap">
                     <h4 className="text-sm font-semibold text-white">{platform.label}</h4>
                     {connected && (
-                      <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-[#00D4AA]/15 text-[#00D4AA] font-medium">
+                      <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-[#E8C96A]/15 text-[#E8C96A] font-medium">
                         <Check className="w-2.5 h-2.5" /> Connected
                       </span>
                     )}
@@ -291,7 +291,7 @@ export function IntegrationsSettings() {
             'Permissions are limited to only what is needed to post and read analytics',
           ].map(item => (
             <div key={item} className="flex items-start gap-2.5">
-              <Check className="w-3.5 h-3.5 text-[#00D4AA] mt-0.5 flex-shrink-0" />
+              <Check className="w-3.5 h-3.5 text-[#E8C96A] mt-0.5 flex-shrink-0" />
               <p className="text-xs text-white/40">{item}</p>
             </div>
           ))}

@@ -5,8 +5,8 @@ import { ScheduledPost } from './CalendarGrid';
 import { cn } from '@/lib/utils';
 
 const STATUS_CONFIG = {
-  scheduled: { label: 'Scheduled', icon: Clock, color: '#0066FF', bg: 'rgba(0,102,255,0.1)' },
-  published: { label: 'Published', icon: CheckCircle2, color: '#00D4AA', bg: 'rgba(0,212,170,0.1)' },
+  scheduled: { label: 'Scheduled', icon: Clock, color: '#C9A84C', bg: 'rgba(0,102,255,0.1)' },
+  published: { label: 'Published', icon: CheckCircle2, color: '#E8C96A', bg: 'rgba(0,212,170,0.1)' },
   draft: { label: 'Draft', icon: FileText, color: '#888', bg: 'rgba(136,136,136,0.1)' },
   failed: { label: 'Failed', icon: AlertCircle, color: '#EF4444', bg: 'rgba(239,68,68,0.1)' },
 };

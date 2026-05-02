@@ -72,14 +72,14 @@ export function ApiKeysSettings() {
 
       {/* New key created notice */}
       {newKeyCreated && (
-        <div className="rounded-2xl border border-[#00D4AA]/30 p-4 bg-[#00D4AA]/08">
-          <p className="text-sm font-medium text-[#00D4AA] mb-2">✓ New API key created — save it now!</p>
+        <div className="rounded-2xl border border-[#E8C96A]/30 p-4 bg-[#E8C96A]/08">
+          <p className="text-sm font-medium text-[#E8C96A] mb-2">✓ New API key created — save it now!</p>
           <p className="text-xs text-white/50 mb-3">This is the only time you'll see the full key. Store it somewhere safe.</p>
           <div className="flex items-center gap-2 bg-black/30 rounded-xl px-4 py-3">
             <code className="flex-1 text-xs text-white/80 font-mono break-all">{newKeyCreated}</code>
             <button onClick={() => copy('new', newKeyCreated)}
               className="flex-shrink-0 p-1.5 rounded-lg hover:bg-white/10 transition-all text-white/50 hover:text-white">
-              {copiedId === 'new' ? <Check className="w-4 h-4 text-[#00D4AA]" /> : <Copy className="w-4 h-4" />}
+              {copiedId === 'new' ? <Check className="w-4 h-4 text-[#E8C96A]" /> : <Copy className="w-4 h-4" />}
             </button>
           </div>
           <button onClick={() => setNewKeyCreated(null)} className="text-xs text-white/30 hover:text-white mt-2 transition-colors">
@@ -105,7 +105,7 @@ export function ApiKeysSettings() {
               <label className="text-xs font-medium text-white/50 block mb-1.5">Key name</label>
               <input type="text" placeholder="e.g. My App Production"
                 value={newKeyName} onChange={e => setNewKeyName(e.target.value)}
-                className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-[#0066FF]/40 transition-all" />
+                className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-[#C9A84C]/40 transition-all" />
             </div>
             <div>
               <label className="text-xs font-medium text-white/50 block mb-2">Permissions</label>
@@ -117,7 +117,7 @@ export function ApiKeysSettings() {
                     )}
                     className={`px-3 py-1.5 rounded-xl text-xs border capitalize transition-all ${
                       newKeyPermissions.includes(perm)
-                        ? 'border-[#0066FF]/40 bg-[#0066FF]/15 text-[#0066FF]'
+                        ? 'border-[#C9A84C]/40 bg-[#C9A84C]/15 text-[#C9A84C]'
                         : 'border-white/[0.08] text-white/40 hover:border-white/20'
                     }`}>
                     {perm}
@@ -162,7 +162,7 @@ export function ApiKeysSettings() {
                   </button>
                   <button onClick={() => copy(k.id, k.key)}
                     className="p-1.5 rounded-lg hover:bg-white/10 transition-all text-white/30 hover:text-white/60">
-                    {copiedId === k.id ? <Check className="w-3.5 h-3.5 text-[#00D4AA]" /> : <Copy className="w-3.5 h-3.5" />}
+                    {copiedId === k.id ? <Check className="w-3.5 h-3.5 text-[#E8C96A]" /> : <Copy className="w-3.5 h-3.5" />}
                   </button>
                   <button onClick={() => deleteKey(k.id)}
                     className="p-1.5 rounded-lg hover:bg-red-500/10 transition-all text-white/20 hover:text-red-400">

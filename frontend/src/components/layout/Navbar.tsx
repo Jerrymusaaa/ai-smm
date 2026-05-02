@@ -32,11 +32,11 @@ export function Navbar() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#0066FF] to-[#00D4AA] flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:scale-105 transition-transform">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#C9A84C] to-[#E8C96A] flex items-center justify-center shadow-lg shadow-yellow-600/30 group-hover:scale-105 transition-transform">
             <Zap className="w-4 h-4 text-white" strokeWidth={2.5} />
           </div>
           <span style={{ fontFamily: 'var(--font-display)' }} className="text-white font-700 text-lg tracking-tight">
-            Yoyzie AI<span className="text-[#0066FF]">.</span>
+            Yoyzie AI<span className="text-[#C9A84C]">.</span>
           </span>
         </Link>
 

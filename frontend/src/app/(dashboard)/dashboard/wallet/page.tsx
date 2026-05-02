@@ -35,10 +35,10 @@ export default function WalletPage() {
 
       {/* Balance Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="glass rounded-2xl p-6 border border-[#00D4AA]/20 sm:col-span-1"
+        <div className="glass rounded-2xl p-6 border border-[#E8C96A]/20 sm:col-span-1"
           style={{ background: 'linear-gradient(135deg, rgba(0,212,170,0.08), rgba(0,102,255,0.04))' }}>
           <div className="flex items-center gap-2 mb-2">
-            <Wallet className="w-4 h-4 text-[#00D4AA]" />
+            <Wallet className="w-4 h-4 text-[#E8C96A]" />
             <span className="text-xs text-white/50">Available balance</span>
           </div>
           <div style={{ fontFamily: 'var(--font-display)' }} className="text-4xl font-bold text-white mb-1">
@@ -46,7 +46,7 @@ export default function WalletPage() {
           </div>
           <p className="text-xs text-white/30">Ready to withdraw</p>
           <button onClick={() => setWithdrawStep('form')}
-            className="mt-4 w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium bg-[#00D4AA] text-white hover:opacity-90 transition-all">
+            className="mt-4 w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium bg-[#E8C96A] text-white hover:opacity-90 transition-all">
             <ArrowDownToLine className="w-4 h-4" /> Withdraw funds
           </button>
         </div>
@@ -64,25 +64,25 @@ export default function WalletPage() {
 
         <div className="glass rounded-2xl p-6 border border-white/[0.06]">
           <div className="flex items-center gap-2 mb-2">
-            <Check className="w-4 h-4 text-[#0066FF]" />
+            <Check className="w-4 h-4 text-[#C9A84C]" />
             <span className="text-xs text-white/50">Total earned (April)</span>
           </div>
           <div style={{ fontFamily: 'var(--font-display)' }} className="text-3xl font-bold text-white mb-1">
             KES 73,000
           </div>
-          <p className="text-xs text-[#00D4AA]">↑ 34% from March</p>
+          <p className="text-xs text-[#E8C96A]">↑ 34% from March</p>
         </div>
       </div>
 
       {/* Withdraw Form */}
       {withdrawStep === 'form' && (
-        <div className="glass rounded-2xl border border-[#00D4AA]/20 p-6">
+        <div className="glass rounded-2xl border border-[#E8C96A]/20 p-6">
           <h3 style={{ fontFamily: 'var(--font-display)' }} className="text-base font-bold text-white mb-5">Withdraw funds</h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
             {WITHDRAW_METHODS.map(method => (
               <button key={method.id} onClick={() => setSelectedMethod(method.id)}
-                className={`p-4 rounded-xl border text-left transition-all ${selectedMethod === method.id ? 'border-[#00D4AA]/40 bg-[#00D4AA]/08' : 'border-white/[0.06] hover:border-white/15'}`}>
+                className={`p-4 rounded-xl border text-left transition-all ${selectedMethod === method.id ? 'border-[#E8C96A]/40 bg-[#E8C96A]/08' : 'border-white/[0.06] hover:border-white/15'}`}>
                 <div className="flex items-center gap-2 mb-2">
                   <method.icon className="w-4 h-4" style={{ color: method.color }} />
                   <span className="text-sm font-medium text-white">{method.label}</span>
@@ -97,10 +97,10 @@ export default function WalletPage() {
             <label className="text-xs text-white/50 block mb-1.5">Amount to withdraw (KES)</label>
             <input type="number" placeholder="0"
               value={withdrawAmount} onChange={e => setWithdrawAmount(e.target.value)}
-              className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-lg font-bold text-white placeholder-white/25 outline-none focus:border-[#00D4AA]/40 transition-all" />
+              className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-lg font-bold text-white placeholder-white/25 outline-none focus:border-[#E8C96A]/40 transition-all" />
             <div className="flex justify-between text-xs text-white/30 mt-1.5">
               <span>Available: KES {balance.toLocaleString()}</span>
-              <button onClick={() => setWithdrawAmount(balance.toString())} className="text-[#00D4AA] hover:text-white transition-colors">Withdraw all</button>
+              <button onClick={() => setWithdrawAmount(balance.toString())} className="text-[#E8C96A] hover:text-white transition-colors">Withdraw all</button>
             </div>
           </div>
 
@@ -110,7 +110,7 @@ export default function WalletPage() {
               Cancel
             </button>
             <button onClick={() => setWithdrawStep('otp')}
-              className="flex-1 py-3 rounded-xl text-sm font-medium bg-[#00D4AA] text-white hover:opacity-90 transition-all">
+              className="flex-1 py-3 rounded-xl text-sm font-medium bg-[#E8C96A] text-white hover:opacity-90 transition-all">
               Continue
             </button>
           </div>
@@ -118,33 +118,33 @@ export default function WalletPage() {
       )}
 
       {withdrawStep === 'otp' && (
-        <div className="glass rounded-2xl border border-[#00D4AA]/20 p-6 text-center">
-          <div className="w-12 h-12 rounded-full bg-[#00D4AA]/15 border border-[#00D4AA]/25 flex items-center justify-center mx-auto mb-4">
-            <Smartphone className="w-6 h-6 text-[#00D4AA]" />
+        <div className="glass rounded-2xl border border-[#E8C96A]/20 p-6 text-center">
+          <div className="w-12 h-12 rounded-full bg-[#E8C96A]/15 border border-[#E8C96A]/25 flex items-center justify-center mx-auto mb-4">
+            <Smartphone className="w-6 h-6 text-[#E8C96A]" />
           </div>
           <h3 className="text-base font-bold text-white mb-2">Confirm withdrawal</h3>
           <p className="text-xs text-white/40 mb-5">Enter the OTP sent to +254 712 345 678 to confirm withdrawal of KES {Number(withdrawAmount).toLocaleString()}</p>
           <div className="flex gap-2 justify-center mb-5">
             {[0,1,2,3,4,5].map(i => (
               <input key={i} type="text" maxLength={1}
-                className="w-10 h-12 text-center text-lg font-bold text-white bg-white/[0.05] border border-white/10 rounded-xl outline-none focus:border-[#00D4AA]/40 transition-all" />
+                className="w-10 h-12 text-center text-lg font-bold text-white bg-white/[0.05] border border-white/10 rounded-xl outline-none focus:border-[#E8C96A]/40 transition-all" />
             ))}
           </div>
           <button onClick={() => setWithdrawStep('success')}
-            className="w-full py-3 rounded-xl text-sm font-medium bg-[#00D4AA] text-white hover:opacity-90 transition-all">
+            className="w-full py-3 rounded-xl text-sm font-medium bg-[#E8C96A] text-white hover:opacity-90 transition-all">
             Confirm withdrawal
           </button>
         </div>
       )}
 
       {withdrawStep === 'success' && (
-        <div className="glass rounded-2xl border border-[#00D4AA]/20 p-6 text-center">
-          <div className="w-12 h-12 rounded-full bg-[#00D4AA]/20 border border-[#00D4AA]/30 flex items-center justify-center mx-auto mb-4">
-            <Check className="w-6 h-6 text-[#00D4AA]" />
+        <div className="glass rounded-2xl border border-[#E8C96A]/20 p-6 text-center">
+          <div className="w-12 h-12 rounded-full bg-[#E8C96A]/20 border border-[#E8C96A]/30 flex items-center justify-center mx-auto mb-4">
+            <Check className="w-6 h-6 text-[#E8C96A]" />
           </div>
           <h3 className="text-base font-bold text-white mb-2">Withdrawal initiated!</h3>
           <p className="text-xs text-white/40 mb-5">KES {Number(withdrawAmount).toLocaleString()} is being sent to your M-Pesa. You'll receive an SMS confirmation shortly.</p>
-          <button onClick={() => { setWithdrawStep('idle'); setWithdrawAmount(''); }} className="text-sm text-[#00D4AA] hover:text-white transition-colors">Done</button>
+          <button onClick={() => { setWithdrawStep('idle'); setWithdrawAmount(''); }} className="text-sm text-[#E8C96A] hover:text-white transition-colors">Done</button>
         </div>
       )}
 
@@ -160,9 +160,9 @@ export default function WalletPage() {
           {TRANSACTIONS.map(tx => (
             <div key={tx.id} className="flex items-center gap-4 px-5 py-4 hover:bg-white/[0.02] transition-colors">
               <div className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                tx.type === 'CREDIT' ? 'bg-[#00D4AA]/15' : tx.type === 'COMMISSION' ? 'bg-[#F59E0B]/15' : 'bg-white/[0.06]'
+                tx.type === 'CREDIT' ? 'bg-[#E8C96A]/15' : tx.type === 'COMMISSION' ? 'bg-[#F59E0B]/15' : 'bg-white/[0.06]'
               }`}>
-                {tx.type === 'CREDIT' ? <ArrowDownToLine className="w-4 h-4 text-[#00D4AA] rotate-180" />
+                {tx.type === 'CREDIT' ? <ArrowDownToLine className="w-4 h-4 text-[#E8C96A] rotate-180" />
                   : tx.type === 'COMMISSION' ? <AlertCircle className="w-4 h-4 text-[#F59E0B]" />
                   : <ArrowDownToLine className="w-4 h-4 text-white/40" />}
               </div>
@@ -171,7 +171,7 @@ export default function WalletPage() {
                 <p className="text-[10px] text-white/30 mt-0.5">{tx.date} · {tx.note}</p>
               </div>
               <div className="text-right flex-shrink-0">
-                <p className={`text-sm font-bold ${tx.amount > 0 ? 'text-[#00D4AA]' : 'text-white/50'}`}>
+                <p className={`text-sm font-bold ${tx.amount > 0 ? 'text-[#E8C96A]' : 'text-white/50'}`}>
                   {tx.amount > 0 ? '+' : ''}KES {Math.abs(tx.amount).toLocaleString()}
                 </p>
                 <p className={`text-[10px] mt-0.5 ${tx.status === 'pending' ? 'text-[#F59E0B]' : 'text-white/30'}`}>

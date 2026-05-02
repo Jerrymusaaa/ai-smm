@@ -34,7 +34,7 @@ export function PlatformSelector({ selected, onChange }: PlatformSelectorProps) 
       <div className="flex items-center justify-between mb-3">
         <label className="text-sm font-medium text-white/70">Target platforms</label>
         <div className="flex items-center gap-3">
-          <button onClick={selectAll} className="text-xs text-[#0066FF] hover:text-[#3385FF] transition-colors">
+          <button onClick={selectAll} className="text-xs text-[#C9A84C] hover:text-[#3385FF] transition-colors">
             Select all
           </button>
           <span className="text-white/20">·</span>

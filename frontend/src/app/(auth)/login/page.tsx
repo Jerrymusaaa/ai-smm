@@ -78,7 +78,7 @@ export default function LoginPage() {
           <div className="w-full border-t border-white/[0.06]" />
         </div>
         <div className="relative flex justify-center text-xs">
-          <span className="px-3 text-white/30" style={{ background: '#0D1525' }}>
+          <span className="px-3 text-white/30" style={{ background: '#0D0D0D' }}>
             or sign in with email
           </span>
         </div>

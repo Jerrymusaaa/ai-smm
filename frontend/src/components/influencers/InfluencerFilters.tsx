@@ -14,8 +14,8 @@ export interface FilterState {
 }
 
 const TIERS = [
-  { id: 'nano', label: 'Nano', range: '1K–10K', color: '#00D4AA' },
-  { id: 'micro', label: 'Micro', range: '10K–100K', color: '#0066FF' },
+  { id: 'nano', label: 'Nano', range: '1K–10K', color: '#E8C96A' },
+  { id: 'micro', label: 'Micro', range: '10K–100K', color: '#C9A84C' },
   { id: 'macro', label: 'Macro', range: '100K–1M', color: '#A855F7' },
   { id: 'mega', label: 'Mega', range: '1M+', color: '#FF6B35' },
 ];
@@ -59,7 +59,7 @@ export function InfluencerFilters({ filters, onChange, onReset }: InfluencerFilt
           <SlidersHorizontal className="w-4 h-4 text-white/50" />
           <span className="text-sm font-medium text-white">Filters</span>
           {activeCount > 0 && (
-            <span className="text-xs px-1.5 py-0.5 rounded-full bg-[#0066FF] text-white font-medium">
+            <span className="text-xs px-1.5 py-0.5 rounded-full bg-[#C9A84C] text-white font-medium">
               {activeCount}
             </span>
           )}
@@ -76,7 +76,7 @@ export function InfluencerFilters({ filters, onChange, onReset }: InfluencerFilt
         <div className="flex items-center justify-between">
           <span className="text-sm text-white/70">Verified only</span>
           <button onClick={() => update('verifiedOnly', !filters.verifiedOnly)}
-            className={`w-10 h-6 rounded-full transition-all relative flex-shrink-0 ${filters.verifiedOnly ? 'bg-[#0066FF]' : 'bg-white/10'}`}>
+            className={`w-10 h-6 rounded-full transition-all relative flex-shrink-0 ${filters.verifiedOnly ? 'bg-[#C9A84C]' : 'bg-white/10'}`}>
             <div className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-all ${filters.verifiedOnly ? 'left-5' : 'left-1'}`} />
           </button>
         </div>
@@ -133,7 +133,7 @@ export function InfluencerFilters({ filters, onChange, onReset }: InfluencerFilt
               <button key={c} onClick={() => toggleArr('categories', c)}
                 className={`px-2.5 py-1 rounded-full text-xs border transition-all ${
                   filters.categories.includes(c)
-                    ? 'border-[#0066FF]/40 bg-[#0066FF]/15 text-[#0066FF]'
+                    ? 'border-[#C9A84C]/40 bg-[#C9A84C]/15 text-[#C9A84C]'
                     : 'border-white/[0.08] text-white/40 hover:border-white/20 hover:text-white/70'
                 }`}>
                 {c}
@@ -146,11 +146,11 @@ export function InfluencerFilters({ filters, onChange, onReset }: InfluencerFilt
         <div>
           <div className="flex items-center justify-between mb-2">
             <p className="text-xs font-semibold text-white/30 uppercase tracking-wider">Min. engagement</p>
-            <span className="text-xs text-[#0066FF] font-medium">{filters.minEngagement}%</span>
+            <span className="text-xs text-[#C9A84C] font-medium">{filters.minEngagement}%</span>
           </div>
           <input type="range" min={0} max={15} step={0.5} value={filters.minEngagement}
             onChange={e => update('minEngagement', Number(e.target.value))}
-            className="w-full accent-[#0066FF]" />
+            className="w-full accent-[#C9A84C]" />
           <div className="flex justify-between text-[10px] text-white/20 mt-1">
             <span>0%</span><span>15%</span>
           </div>
@@ -160,13 +160,13 @@ export function InfluencerFilters({ filters, onChange, onReset }: InfluencerFilt
         <div>
           <div className="flex items-center justify-between mb-2">
             <p className="text-xs font-semibold text-white/30 uppercase tracking-wider">Max price / post</p>
-            <span className="text-xs text-[#0066FF] font-medium">
+            <span className="text-xs text-[#C9A84C] font-medium">
               {filters.maxPrice >= 10000 ? 'Any' : `$${filters.maxPrice.toLocaleString()}`}
             </span>
           </div>
           <input type="range" min={100} max={10000} step={100} value={filters.maxPrice}
             onChange={e => update('maxPrice', Number(e.target.value))}
-            className="w-full accent-[#0066FF]" />
+            className="w-full accent-[#C9A84C]" />
           <div className="flex justify-between text-[10px] text-white/20 mt-1">
             <span>$100</span><span>Any</span>
           </div>
@@ -176,11 +176,11 @@ export function InfluencerFilters({ filters, onChange, onReset }: InfluencerFilt
         <div>
           <div className="flex items-center justify-between mb-2">
             <p className="text-xs font-semibold text-white/30 uppercase tracking-wider">Min. audience match</p>
-            <span className="text-xs text-[#0066FF] font-medium">{filters.minMatch}%</span>
+            <span className="text-xs text-[#C9A84C] font-medium">{filters.minMatch}%</span>
           </div>
           <input type="range" min={0} max={100} step={5} value={filters.minMatch}
             onChange={e => update('minMatch', Number(e.target.value))}
-            className="w-full accent-[#0066FF]" />
+            className="w-full accent-[#C9A84C]" />
           <div className="flex justify-between text-[10px] text-white/20 mt-1">
             <span>0%</span><span>100%</span>
           </div>

@@ -20,15 +20,15 @@ const DATA_30D = [
 ];
 
 const METRICS = [
-  { key: 'followers', label: 'Followers', color: '#0066FF' },
-  { key: 'impressions', label: 'Impressions', color: '#00D4AA' },
+  { key: 'followers', label: 'Followers', color: '#C9A84C' },
+  { key: 'impressions', label: 'Impressions', color: '#E8C96A' },
   { key: 'engagements', label: 'Engagements', color: '#A855F7' },
 ];
 
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="rounded-xl border border-white/10 p-3 shadow-xl text-xs" style={{ background: '#0D1525' }}>
+    <div className="rounded-xl border border-white/10 p-3 shadow-xl text-xs" style={{ background: '#0D0D0D' }}>
       <p className="text-white/50 mb-2 font-medium">{label}</p>
       {payload.map((p: any) => (
         <div key={p.dataKey} className="flex items-center gap-2 mb-1">
@@ -74,7 +74,7 @@ export function EngagementOverTime() {
           <div className="flex items-center bg-white/[0.04] rounded-xl border border-white/[0.06] p-1">
             {RANGES.map(r => (
               <button key={r} onClick={() => setRange(r)}
-                className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${range === r ? 'bg-[#0066FF] text-white' : 'text-white/40 hover:text-white'}`}>
+                className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${range === r ? 'bg-[#C9A84C] text-white' : 'text-white/40 hover:text-white'}`}>
                 {r}
               </button>
             ))}

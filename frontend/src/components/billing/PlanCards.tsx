@@ -19,13 +19,13 @@ const INDIVIDUAL_PLANS = [
     cta: 'Get started free',
   },
   {
-    id: 'individual_pro', name: 'Individual Pro', monthlyPrice: 1999, color: '#0066FF',
+    id: 'individual_pro', name: 'Individual Pro', monthlyPrice: 1999, color: '#C9A84C',
     desc: 'For solo creators & bloggers', popular: true,
     features: ['10 social platforms', 'Unlimited AI captions', '90-day analytics', 'Unlimited scheduled posts', 'Kenyan trend detection', 'Priority support'],
     cta: 'Start 7-day trial',
   },
   {
-    id: 'creator', name: 'Creator', monthlyPrice: 4999, color: '#00D4AA',
+    id: 'creator', name: 'Creator', monthlyPrice: 4999, color: '#E8C96A',
     desc: 'For serious content creators',
     features: ['Everything in Pro', 'Browse influencer marketplace', 'Competitor analysis', 'A/B post testing', 'Custom PDF reports', '3 brand accounts'],
     cta: 'Start 7-day trial',
@@ -46,13 +46,13 @@ const INFLUENCER_PLANS = [
     cta: 'Join free',
   },
   {
-    id: 'influencer_starter', name: 'Starter', monthlyPrice: 1999, color: '#0066FF',
+    id: 'influencer_starter', name: 'Starter', monthlyPrice: 1999, color: '#C9A84C',
     desc: 'Start earning from campaigns', commission: 20,
     features: ['5 platforms', '20 posts/month', 'Standard marketplace priority', 'Mid-tier campaign access', 'Full wallet (M-Pesa, PayPal, bank)'],
     cta: 'Start 7-day trial',
   },
   {
-    id: 'influencer_pro', name: 'Influencer Pro', monthlyPrice: 4999, color: '#00D4AA',
+    id: 'influencer_pro', name: 'Influencer Pro', monthlyPrice: 4999, color: '#E8C96A',
     desc: 'High-priority placement', commission: 15, popular: true,
     features: ['10 platforms', 'Unlimited posts', 'HIGH marketplace priority', 'All campaign tiers', 'Full bot detection report', 'Click-to-view analytics', 'Verified badge eligibility'],
     cta: 'Start 7-day trial',
@@ -67,13 +67,13 @@ const INFLUENCER_PLANS = [
 
 const BUSINESS_PLANS = [
   {
-    id: 'sme', name: 'SME', monthlyPrice: 9999, color: '#0066FF',
+    id: 'sme', name: 'SME', monthlyPrice: 9999, color: '#C9A84C',
     desc: 'For small businesses in Kenya',
     features: ['All 23 platforms', '5 team seats', '5 brand profiles', 'Full influencer marketplace', 'Post campaign briefs', 'Business ROI analytics', 'Priority support (4hr SLA)'],
     cta: 'Start 10-day trial',
   },
   {
-    id: 'growing_base', name: 'Growing (10 users)', monthlyPrice: 29000, color: '#00D4AA',
+    id: 'growing_base', name: 'Growing (10 users)', monthlyPrice: 29000, color: '#E8C96A',
     desc: 'Scale your marketing team',
     features: ['Everything in SME', '10 team seats', '10 brand profiles', 'Custom AI training', 'Influencer CRM', 'Advanced campaign automation', 'CRM integrations (HubSpot)'],
     cta: 'Start 10-day trial',
@@ -129,7 +129,7 @@ export function PlanCards({ onUpgrade, view = 'individual' }: PlanCardsProps) {
             <button key={c.id} onClick={() => setCycle(c.id)}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 ${cycle === c.id ? 'bg-white/10 text-white' : 'text-white/40'}`}>
               {c.label}
-              {c.discount > 0 && <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-[#00D4AA]/20 text-[#00D4AA]">-{c.discount}%</span>}
+              {c.discount > 0 && <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-[#E8C96A]/20 text-[#E8C96A]">-{c.discount}%</span>}
             </button>
           ))}
         </div>
@@ -138,11 +138,11 @@ export function PlanCards({ onUpgrade, view = 'individual' }: PlanCardsProps) {
       <div className="p-6 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         {plans.map((plan: any) => (
           <div key={plan.id}
-            className={cn('relative rounded-2xl p-5 border flex flex-col transition-all', plan.popular ? 'border-[#0066FF]/40 shadow-lg shadow-blue-500/10' : 'border-white/[0.06] hover:border-white/15')}
+            className={cn('relative rounded-2xl p-5 border flex flex-col transition-all', plan.popular ? 'border-[#C9A84C]/40 shadow-lg shadow-yellow-600/10' : 'border-white/[0.06] hover:border-white/15')}
             style={{ background: plan.popular ? 'rgba(0,102,255,0.05)' : 'rgba(255,255,255,0.02)' }}>
 
             {plan.popular && (
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[10px] font-bold text-white bg-[#0066FF] shadow-lg shadow-blue-500/30 whitespace-nowrap">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[10px] font-bold text-white bg-[#C9A84C] shadow-lg shadow-yellow-600/30 whitespace-nowrap">
                 Most popular
               </div>
             )}
@@ -168,7 +168,7 @@ export function PlanCards({ onUpgrade, view = 'individual' }: PlanCardsProps) {
                 )}
               </div>
               {cycle !== 'monthly' && plan.monthlyPrice > 0 && (
-                <div className="text-[10px] text-[#00D4AA] mt-0.5">
+                <div className="text-[10px] text-[#E8C96A] mt-0.5">
                   Save KES {(plan.monthlyPrice * selectedCycle.discount / 100).toLocaleString()}/month
                 </div>
               )}

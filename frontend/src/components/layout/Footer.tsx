@@ -19,11 +19,11 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-2 lg:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#0066FF] to-[#00D4AA] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#C9A84C] to-[#E8C96A] flex items-center justify-center">
                 <Zap className="w-4 h-4 text-white" strokeWidth={2.5} />
               </div>
               <span style={{ fontFamily: 'var(--font-display)' }} className="text-white font-bold text-lg">
-                Yoyzie AI<span className="text-[#0066FF]">.</span>
+                Yoyzie AI<span className="text-[#C9A84C]">.</span>
               </span>
             </div>
             <p className="text-white/30 text-sm leading-relaxed max-w-[200px]">

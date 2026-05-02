@@ -63,7 +63,7 @@ export function BestTimesHeatmap() {
                     />
                     {/* Tooltip */}
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1 rounded-lg text-[10px] text-white whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-20 shadow-xl"
-                      style={{ background: '#0D1525', border: '1px solid rgba(255,255,255,0.1)' }}>
+                      style={{ background: '#0D0D0D', border: '1px solid rgba(255,255,255,0.1)' }}>
                       {day} {hour}: {score}%
                     </div>
                   </div>

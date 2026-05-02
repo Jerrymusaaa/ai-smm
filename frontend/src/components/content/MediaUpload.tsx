@@ -60,7 +60,7 @@ export function MediaUpload({ files, onChange }: MediaUploadProps) {
         className={cn(
           'border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-all',
           dragging
-            ? 'border-[#0066FF]/60 bg-[#0066FF]/10'
+            ? 'border-[#C9A84C]/60 bg-[#C9A84C]/10'
             : 'border-white/[0.08] hover:border-white/20 hover:bg-white/[0.02]'
         )}
       >
@@ -76,7 +76,7 @@ export function MediaUpload({ files, onChange }: MediaUploadProps) {
           <Upload className="w-5 h-5 text-white/40" />
         </div>
         <p className="text-sm text-white/50 mb-1">
-          Drop files here or <span className="text-[#0066FF]">browse</span>
+          Drop files here or <span className="text-[#C9A84C]">browse</span>
         </p>
         <p className="text-xs text-white/25">PNG, JPG, GIF, MP4 up to 100MB</p>
       </div>

@@ -40,7 +40,7 @@ export function PostPreview({ caption, hashtags, mediaUrl }: PostPreviewProps) {
       {/* Phone mockup */}
       <div className="mx-auto max-w-[280px]">
         <div className="rounded-3xl border border-white/[0.1] overflow-hidden"
-          style={{ background: '#0D1525' }}>
+          style={{ background: '#0D0D0D' }}>
 
           {/* Status bar */}
           <div className="flex items-center justify-between px-5 py-2">
@@ -71,7 +71,7 @@ export function PostPreview({ caption, hashtags, mediaUrl }: PostPreviewProps) {
               {mediaUrl ? (
                 <img src={mediaUrl} alt="Post" className="w-full aspect-square object-cover" />
               ) : (
-                <div className="w-full aspect-square bg-gradient-to-br from-[#0066FF]/20 to-[#00D4AA]/10 flex items-center justify-center">
+                <div className="w-full aspect-square bg-gradient-to-br from-[#C9A84C]/20 to-[#E8C96A]/10 flex items-center justify-center">
                   <div className="text-center">
                     <div className="text-3xl mb-2">🖼</div>
                     <div className="text-xs text-white/30">Your media here</div>
@@ -92,7 +92,7 @@ export function PostPreview({ caption, hashtags, mediaUrl }: PostPreviewProps) {
                   <span className="font-semibold text-white mr-1">your_brand</span>
                   {caption || 'Your caption will appear here...'}
                   {hashtags.length > 0 && (
-                    <span className="text-[#0066FF]"> {hashtags.slice(0, 3).join(' ')}</span>
+                    <span className="text-[#C9A84C]"> {hashtags.slice(0, 3).join(' ')}</span>
                   )}
                 </div>
               </div>
@@ -103,7 +103,7 @@ export function PostPreview({ caption, hashtags, mediaUrl }: PostPreviewProps) {
           {activePlatform === 'twitter' && (
             <div className="p-3 border-t border-white/[0.06]">
               <div className="flex gap-2.5">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#0066FF] to-[#00D4AA] flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
+                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#C9A84C] to-[#E8C96A] flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
                   Y
                 </div>
                 <div className="flex-1">
@@ -134,7 +134,7 @@ export function PostPreview({ caption, hashtags, mediaUrl }: PostPreviewProps) {
           {activePlatform === 'linkedin' && (
             <div className="border-t border-white/[0.06]">
               <div className="flex items-start gap-2.5 px-3 py-2">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#0066FF] to-[#00D4AA] flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
+                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#C9A84C] to-[#E8C96A] flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
                   Y
                 </div>
                 <div>

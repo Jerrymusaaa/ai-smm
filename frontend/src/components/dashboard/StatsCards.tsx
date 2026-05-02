@@ -10,7 +10,7 @@ const STATS = [
     trend: 'up',
     period: 'vs last month',
     icon: Users,
-    color: '#0066FF',
+    color: '#C9A84C',
     sparkline: [40, 55, 45, 60, 58, 72, 68, 80, 75, 90, 85, 100],
   },
   {
@@ -20,7 +20,7 @@ const STATS = [
     trend: 'up',
     period: 'vs last month',
     icon: Heart,
-    color: '#00D4AA',
+    color: '#E8C96A',
     sparkline: [30, 42, 38, 55, 52, 65, 70, 68, 82, 78, 88, 95],
   },
   {
@@ -110,7 +110,7 @@ export function StatsCards() {
               <stat.icon className="w-4 h-4" />
             </div>
             <div className={`flex items-center gap-1 text-xs font-medium ${
-              stat.trend === 'up' ? 'text-[#00D4AA]' : 'text-red-400'
+              stat.trend === 'up' ? 'text-[#E8C96A]' : 'text-red-400'
             }`}>
               {stat.trend === 'up'
                 ? <TrendingUp className="w-3 h-3" />

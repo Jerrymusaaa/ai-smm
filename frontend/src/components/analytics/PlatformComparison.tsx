@@ -53,7 +53,7 @@ export function PlatformComparison() {
           <button key={m} onClick={() => setMetric(m)}
             className={`px-4 py-3 text-xs font-medium whitespace-nowrap transition-all border-b-2 -mb-px ${
               metric === m
-                ? 'border-[#0066FF] text-[#0066FF]'
+                ? 'border-[#C9A84C] text-[#C9A84C]'
                 : 'border-transparent text-white/40 hover:text-white/70'
             }`}>
             {METRIC_LABELS[m]}
@@ -81,7 +81,7 @@ export function PlatformComparison() {
                     {p.initial}
                   </div>
                   <span className="text-sm text-white/70">{p.label}</span>
-                  {i === 0 && <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-[#00D4AA]/15 text-[#00D4AA]">Top</span>}
+                  {i === 0 && <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-[#E8C96A]/15 text-[#E8C96A]">Top</span>}
                 </div>
                 <span className="text-sm font-bold text-white">{formatted}</span>
               </div>
@@ -120,7 +120,7 @@ export function PlatformComparison() {
             <RadarChart data={RADAR_DATA}>
               <PolarGrid stroke="rgba(255,255,255,0.08)" />
               <PolarAngleAxis dataKey="metric" tick={{ fill: 'rgba(255,255,255,0.4)', fontSize: 11 }} />
-              <Tooltip contentStyle={{ background: '#0D1525', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 12 }} />
+              <Tooltip contentStyle={{ background: '#0D0D0D', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 12 }} />
               {PLATFORMS.filter(p => activeRadar.includes(p.id)).map(p => (
                 <Radar key={p.id} name={p.label} dataKey={p.id}
                   stroke={p.color} fill={p.color} fillOpacity={0.12} strokeWidth={1.5} />

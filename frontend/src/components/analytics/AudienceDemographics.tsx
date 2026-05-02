@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 
 const AGE_DATA = [
-  { name: '13–17', value: 4, color: '#0066FF' },
-  { name: '18–24', value: 28, color: '#00D4AA' },
+  { name: '13–17', value: 4, color: '#C9A84C' },
+  { name: '18–24', value: 28, color: '#E8C96A' },
   { name: '25–34', value: 35, color: '#A855F7' },
   { name: '35–44', value: 19, color: '#FF6B35' },
   { name: '45–54', value: 9, color: '#F59E0B' },
@@ -14,8 +14,8 @@ const AGE_DATA = [
 
 const GENDER_DATA = [
   { name: 'Female', value: 58, color: '#A855F7' },
-  { name: 'Male', value: 38, color: '#0066FF' },
-  { name: 'Other', value: 4, color: '#00D4AA' },
+  { name: 'Male', value: 38, color: '#C9A84C' },
+  { name: 'Other', value: 4, color: '#E8C96A' },
 ];
 
 const TOP_COUNTRIES = [
@@ -30,7 +30,7 @@ const TOP_COUNTRIES = [
 const CustomTooltip = ({ active, payload }: any) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="rounded-xl border border-white/10 px-3 py-2 shadow-xl text-xs" style={{ background: '#0D1525' }}>
+    <div className="rounded-xl border border-white/10 px-3 py-2 shadow-xl text-xs" style={{ background: '#0D0D0D' }}>
       <span className="text-white font-medium">{payload[0].name}: {payload[0].value}%</span>
     </div>
   );
@@ -53,7 +53,7 @@ export function AudienceDemographics() {
         {(['age', 'gender', 'location'] as const).map(t => (
           <button key={t} onClick={() => setTab(t)}
             className={`px-4 py-3 text-xs font-medium capitalize transition-all border-b-2 -mb-px ${
-              tab === t ? 'border-[#0066FF] text-[#0066FF]' : 'border-transparent text-white/40 hover:text-white/70'
+              tab === t ? 'border-[#C9A84C] text-[#C9A84C]' : 'border-transparent text-white/40 hover:text-white/70'
             }`}>
             {t}
           </button>
@@ -76,7 +76,7 @@ export function AudienceDemographics() {
                   </div>
                 </div>
                 <div className="w-full bg-white/[0.06] rounded-full h-1.5">
-                  <div className="h-1.5 rounded-full bg-[#0066FF] transition-all"
+                  <div className="h-1.5 rounded-full bg-[#C9A84C] transition-all"
                     style={{ width: `${c.pct}%` }} />
                 </div>
               </div>

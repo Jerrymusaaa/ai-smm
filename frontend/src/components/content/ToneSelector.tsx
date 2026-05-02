@@ -28,7 +28,7 @@ export function ToneSelector({ value, onChange }: ToneSelectorProps) {
             className={cn(
               'flex items-start gap-2.5 p-3 rounded-xl border text-left transition-all',
               value === tone.id
-                ? 'border-[#0066FF]/40 bg-[#0066FF]/10'
+                ? 'border-[#C9A84C]/40 bg-[#C9A84C]/10'
                 : 'border-white/[0.06] bg-transparent hover:border-white/20 hover:bg-white/[0.04]'
             )}
           >
@@ -36,7 +36,7 @@ export function ToneSelector({ value, onChange }: ToneSelectorProps) {
             <div>
               <div className={cn(
                 'text-xs font-medium',
-                value === tone.id ? 'text-[#0066FF]' : 'text-white/70'
+                value === tone.id ? 'text-[#C9A84C]' : 'text-white/70'
               )}>
                 {tone.label}
               </div>

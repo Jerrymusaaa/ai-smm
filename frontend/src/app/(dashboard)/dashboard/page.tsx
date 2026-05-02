@@ -24,10 +24,10 @@ export default function DashboardPage() {
         </div>
         <div className="flex items-center gap-3">
           {/* AI insight badge */}
-          <div className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl glass border border-[#00D4AA]/20">
-            <TrendingUp className="w-4 h-4 text-[#00D4AA]" />
+          <div className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl glass border border-[#E8C96A]/20">
+            <TrendingUp className="w-4 h-4 text-[#E8C96A]" />
             <span className="text-xs text-white/60">
-              <span className="text-[#00D4AA] font-medium">+28%</span> engagement this week
+              <span className="text-[#E8C96A] font-medium">+28%</span> engagement this week
             </span>
           </div>
           <Button size="sm" className="rounded-xl gap-2">
@@ -38,9 +38,9 @@ export default function DashboardPage() {
       </div>
 
       {/* AI suggestion banner */}
-      <div className="rounded-2xl border border-[#0066FF]/20 p-4 flex items-center gap-4"
+      <div className="rounded-2xl border border-[#C9A84C]/20 p-4 flex items-center gap-4"
         style={{ background: 'linear-gradient(135deg, rgba(0,102,255,0.08), rgba(0,212,170,0.05))' }}>
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#0066FF] to-[#00D4AA] flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-500/20">
+        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#C9A84C] to-[#E8C96A] flex items-center justify-center flex-shrink-0 shadow-lg shadow-yellow-600/20">
           <Zap className="w-4 h-4 text-white" />
         </div>
         <div className="flex-1 min-w-0">

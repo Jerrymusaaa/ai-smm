@@ -49,7 +49,7 @@ export function HashtagSuggestions({ selected, onChange, groups }: HashtagSugges
         <div className="flex flex-wrap gap-1.5 mb-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
           {selected.map(tag => (
             <span key={tag}
-              className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs bg-[#0066FF]/15 border border-[#0066FF]/25 text-[#0066FF]">
+              className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs bg-[#C9A84C]/15 border border-[#C9A84C]/25 text-[#C9A84C]">
               {tag}
               <button onClick={() => toggle(tag)} className="ml-0.5 hover:text-white transition-colors">
                 <X className="w-3 h-3" />
@@ -73,7 +73,7 @@ export function HashtagSuggestions({ selected, onChange, groups }: HashtagSugges
                     onClick={() => toggle(tag)}
                     className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs transition-all border ${
                       active
-                        ? 'border-[#0066FF]/40 bg-[#0066FF]/15 text-[#0066FF]'
+                        ? 'border-[#C9A84C]/40 bg-[#C9A84C]/15 text-[#C9A84C]'
                         : 'border-white/[0.08] bg-transparent text-white/50 hover:text-white/80 hover:border-white/20'
                     }`}
                   >
@@ -94,7 +94,7 @@ export function HashtagSuggestions({ selected, onChange, groups }: HashtagSugges
 
       {/* Custom hashtag input */}
       <div className="flex items-center gap-2 mt-3">
-        <div className="flex-1 flex items-center gap-2 bg-white/[0.04] border border-white/[0.08] rounded-xl px-3 py-2 focus-within:border-[#0066FF]/40 transition-colors">
+        <div className="flex-1 flex items-center gap-2 bg-white/[0.04] border border-white/[0.08] rounded-xl px-3 py-2 focus-within:border-[#C9A84C]/40 transition-colors">
           <span className="text-white/30 text-sm">#</span>
           <input
             type="text"

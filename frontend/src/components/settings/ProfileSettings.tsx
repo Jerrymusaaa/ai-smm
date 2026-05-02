@@ -32,7 +32,7 @@ export function ProfileSettings() {
         </h3>
         <div className="flex items-center gap-5">
           <div className="relative group">
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#0066FF] to-[#00D4AA] flex items-center justify-center text-2xl font-bold text-white shadow-lg shadow-blue-500/20">
+            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#C9A84C] to-[#E8C96A] flex items-center justify-center text-2xl font-bold text-white shadow-lg shadow-yellow-600/20">
               JD
             </div>
             <div className="absolute inset-0 rounded-2xl bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer">
@@ -69,7 +69,7 @@ export function ProfileSettings() {
                 placeholder={field.placeholder}
                 value={form[field.key as keyof typeof form]}
                 onChange={e => update(field.key, e.target.value)}
-                className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-[#0066FF]/40 focus:bg-white/[0.07] transition-all"
+                className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-[#C9A84C]/40 focus:bg-white/[0.07] transition-all"
               />
             </div>
           ))}
@@ -80,7 +80,7 @@ export function ProfileSettings() {
               value={form.bio}
               onChange={e => update('bio', e.target.value)}
               rows={3}
-              className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-[#0066FF]/40 transition-all resize-none"
+              className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-[#C9A84C]/40 transition-all resize-none"
             />
           </div>
         </div>
@@ -108,7 +108,7 @@ export function ProfileSettings() {
                   placeholder={field.placeholder}
                   value={form[field.key as keyof typeof form]}
                   onChange={e => update(field.key, e.target.value)}
-                  className="w-full bg-white/[0.05] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-[#0066FF]/40 transition-all"
+                  className="w-full bg-white/[0.05] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-[#C9A84C]/40 transition-all"
                 />
               </div>
             </div>
@@ -125,7 +125,7 @@ export function ProfileSettings() {
           <div>
             <label className="text-xs font-medium text-white/50 block mb-1.5">Timezone</label>
             <select value={form.timezone} onChange={e => update('timezone', e.target.value)}
-              className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white/70 outline-none focus:border-[#0066FF]/40 transition-all">
+              className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white/70 outline-none focus:border-[#C9A84C]/40 transition-all">
               {['America/New_York','America/Los_Angeles','America/Chicago','Europe/London','Europe/Paris','Asia/Tokyo','Asia/Dubai','Australia/Sydney'].map(tz => (
                 <option key={tz} value={tz}>{tz.replace('_', ' ')}</option>
               ))}
@@ -134,7 +134,7 @@ export function ProfileSettings() {
           <div>
             <label className="text-xs font-medium text-white/50 block mb-1.5">Language</label>
             <select value={form.language} onChange={e => update('language', e.target.value)}
-              className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white/70 outline-none focus:border-[#0066FF]/40 transition-all">
+              className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white/70 outline-none focus:border-[#C9A84C]/40 transition-all">
               {['English','Spanish','French','German','Portuguese','Japanese','Arabic'].map(l => (
                 <option key={l}>{l}</option>
               ))}

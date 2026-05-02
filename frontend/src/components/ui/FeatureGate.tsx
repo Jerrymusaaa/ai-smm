@@ -20,17 +20,17 @@ export function FeatureGate({ locked, message, requiredPlan, children, blurred =
     <div className="relative">
       {blurred && <div className="pointer-events-none select-none" style={{ filter: 'blur(4px)', opacity: 0.4 }}>{children}</div>}
       <div className={`${blurred ? 'absolute inset-0' : ''} flex items-center justify-center`}>
-        <div className="glass rounded-2xl border border-[#0066FF]/20 p-6 text-center max-w-xs mx-auto shadow-xl"
+        <div className="glass rounded-2xl border border-[#C9A84C]/20 p-6 text-center max-w-xs mx-auto shadow-xl"
           style={{ background: 'rgba(0,102,255,0.08)' }}>
-          <div className="w-10 h-10 rounded-full bg-[#0066FF]/15 border border-[#0066FF]/25 flex items-center justify-center mx-auto mb-3">
-            <Lock className="w-5 h-5 text-[#0066FF]" />
+          <div className="w-10 h-10 rounded-full bg-[#C9A84C]/15 border border-[#C9A84C]/25 flex items-center justify-center mx-auto mb-3">
+            <Lock className="w-5 h-5 text-[#C9A84C]" />
           </div>
           <p className="text-sm font-semibold text-white mb-1">Feature locked</p>
           <p className="text-xs text-white/50 mb-4 leading-relaxed">{message}</p>
           {requiredPlan && (
             <button
               onClick={() => router.push('/dashboard/billing')}
-              className="flex items-center justify-center gap-1.5 w-full py-2.5 rounded-xl text-xs font-medium bg-[#0066FF] text-white hover:opacity-90 transition-all">
+              className="flex items-center justify-center gap-1.5 w-full py-2.5 rounded-xl text-xs font-medium bg-[#C9A84C] text-white hover:opacity-90 transition-all">
               Upgrade to unlock <ArrowRight className="w-3.5 h-3.5" />
             </button>
           )}

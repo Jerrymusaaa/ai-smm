@@ -32,7 +32,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload?.length) return null;
   return (
     <div className="rounded-xl border border-white/10 p-3 shadow-xl text-xs"
-      style={{ background: '#0D1525' }}>
+      style={{ background: '#0D0D0D' }}>
       <p className="text-white/50 mb-2 font-medium">{label}</p>
       {payload.map((p: any) => (
         <div key={p.dataKey} className="flex items-center gap-2 mb-1">
@@ -88,7 +88,7 @@ export function EngagementChart() {
             {RANGES.map(r => (
               <button key={r} onClick={() => setRange(r)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                  range === r ? 'bg-[#0066FF] text-white shadow-lg' : 'text-white/40 hover:text-white'
+                  range === r ? 'bg-[#C9A84C] text-white shadow-lg' : 'text-white/40 hover:text-white'
                 }`}>
                 {r}
               </button>

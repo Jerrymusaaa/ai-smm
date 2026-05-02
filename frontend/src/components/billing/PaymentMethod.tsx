@@ -58,7 +58,7 @@ export function PaymentMethod() {
           <div key={card.id}
             className={`flex items-center gap-4 p-4 rounded-2xl border transition-all ${
               card.isDefault
-                ? 'border-[#0066FF]/30 bg-[#0066FF]/05'
+                ? 'border-[#C9A84C]/30 bg-[#C9A84C]/05'
                 : 'border-white/[0.06] bg-white/[0.02] hover:border-white/15'
             }`}>
             {/* Card visual */}
@@ -72,7 +72,7 @@ export function PaymentMethod() {
                 <span className="text-sm font-medium text-white">{card.brand}</span>
                 <span className="text-sm text-white/50">•••• {card.last4}</span>
                 {card.isDefault && (
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#0066FF]/20 text-[#0066FF] font-medium">
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#C9A84C]/20 text-[#C9A84C] font-medium">
                     Default
                   </span>
                 )}
@@ -83,7 +83,7 @@ export function PaymentMethod() {
             <div className="flex items-center gap-2 flex-shrink-0">
               {!card.isDefault && (
                 <button onClick={() => setDefault(card.id)}
-                  className="text-xs text-white/40 hover:text-[#0066FF] transition-colors px-2 py-1 rounded-lg hover:bg-[#0066FF]/10">
+                  className="text-xs text-white/40 hover:text-[#C9A84C] transition-colors px-2 py-1 rounded-lg hover:bg-[#C9A84C]/10">
                   Set default
                 </button>
               )}
@@ -107,7 +107,7 @@ export function PaymentMethod() {
               <input type="text" placeholder="Jane Smith"
                 value={newCard.name}
                 onChange={e => setNewCard(p => ({ ...p, name: e.target.value }))}
-                className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-[#0066FF]/40 transition-all" />
+                className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-[#C9A84C]/40 transition-all" />
             </div>
 
             <div>
@@ -116,7 +116,7 @@ export function PaymentMethod() {
                 <input type="text" placeholder="1234 5678 9012 3456"
                   value={newCard.number}
                   onChange={e => setNewCard(p => ({ ...p, number: formatCardNumber(e.target.value) }))}
-                  className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-2.5 pr-10 text-sm text-white placeholder-white/25 outline-none focus:border-[#0066FF]/40 transition-all" />
+                  className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-2.5 pr-10 text-sm text-white placeholder-white/25 outline-none focus:border-[#C9A84C]/40 transition-all" />
                 <CreditCard className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20" />
               </div>
             </div>
@@ -127,19 +127,19 @@ export function PaymentMethod() {
                 <input type="text" placeholder="MM/YY"
                   value={newCard.expiry}
                   onChange={e => setNewCard(p => ({ ...p, expiry: formatExpiry(e.target.value) }))}
-                  className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-[#0066FF]/40 transition-all" />
+                  className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-[#C9A84C]/40 transition-all" />
               </div>
               <div>
                 <label className="text-xs text-white/50 block mb-1.5">CVC</label>
                 <input type="text" placeholder="123"
                   value={newCard.cvc}
                   onChange={e => setNewCard(p => ({ ...p, cvc: e.target.value.replace(/\D/g,'').slice(0,4) }))}
-                  className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-[#0066FF]/40 transition-all" />
+                  className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-[#C9A84C]/40 transition-all" />
               </div>
             </div>
 
             <div className="flex items-center gap-2 text-xs text-white/30 mb-2">
-              <Shield className="w-3.5 h-3.5 text-[#00D4AA]" />
+              <Shield className="w-3.5 h-3.5 text-[#E8C96A]" />
               Secured by Stripe · 256-bit SSL encryption
             </div>
 
@@ -156,7 +156,7 @@ export function PaymentMethod() {
         )}
 
         <div className="flex items-center gap-2 pt-2 text-xs text-white/25">
-          <Shield className="w-3.5 h-3.5 text-[#00D4AA]" />
+          <Shield className="w-3.5 h-3.5 text-[#E8C96A]" />
           Your payment info is encrypted and never stored on our servers
         </div>
       </div>

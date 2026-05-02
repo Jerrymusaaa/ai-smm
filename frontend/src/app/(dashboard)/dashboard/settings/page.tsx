@@ -26,7 +26,7 @@ const SECTION_TITLES: Record<string, { title: string; desc: string }> = {
 function PlaceholderSection({ title, desc }: { title: string; desc: string }) {
   return (
     <div className="glass rounded-2xl border border-white/[0.06] p-12 text-center">
-      <div className="w-12 h-12 rounded-2xl bg-[#0066FF]/10 border border-[#0066FF]/20 flex items-center justify-center mx-auto mb-4">
+      <div className="w-12 h-12 rounded-2xl bg-[#C9A84C]/10 border border-[#C9A84C]/20 flex items-center justify-center mx-auto mb-4">
         <span className="text-xl">🔧</span>
       </div>
       <h3 style={{ fontFamily: 'var(--font-display)' }} className="text-lg font-bold text-white mb-2">

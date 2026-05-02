@@ -73,7 +73,7 @@ export function CreateCampaignModal({ onClose, onCreate }: CreateCampaignModalPr
       conversions: 0,
       goal: form.goal || form.type,
       progress: 0,
-      color: '#0066FF',
+      color: '#C9A84C',
     });
     setLoading(false);
     onClose();
@@ -83,7 +83,7 @@ export function CreateCampaignModal({ onClose, onCreate }: CreateCampaignModalPr
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4"
       style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)' }}>
       <div className="w-full max-w-xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden"
-        style={{ background: '#0D1525' }}>
+        style={{ background: '#0D0D0D' }}>
 
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.06]">
@@ -103,7 +103,7 @@ export function CreateCampaignModal({ onClose, onCreate }: CreateCampaignModalPr
         <div className="flex h-1">
           {STEPS.map((_, i) => (
             <div key={i} className="flex-1 transition-all"
-              style={{ background: i <= step ? '#0066FF' : 'rgba(255,255,255,0.06)' }} />
+              style={{ background: i <= step ? '#C9A84C' : 'rgba(255,255,255,0.06)' }} />
           ))}
         </div>
 
@@ -120,7 +120,7 @@ export function CreateCampaignModal({ onClose, onCreate }: CreateCampaignModalPr
                   placeholder="e.g. Summer Product Launch"
                   value={form.name}
                   onChange={e => update('name', e.target.value)}
-                  className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 outline-none focus:border-[#0066FF]/40 transition-all"
+                  className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 outline-none focus:border-[#C9A84C]/40 transition-all"
                 />
               </div>
 
@@ -132,12 +132,12 @@ export function CreateCampaignModal({ onClose, onCreate }: CreateCampaignModalPr
                       onClick={() => update('type', type.id)}
                       className={`flex items-start gap-3 p-3 rounded-xl border text-left transition-all ${
                         form.type === type.id
-                          ? 'border-[#0066FF]/50 bg-[#0066FF]/10'
+                          ? 'border-[#C9A84C]/50 bg-[#C9A84C]/10'
                           : 'border-white/[0.06] hover:border-white/20 hover:bg-white/[0.04]'
                       }`}>
                       <span className="text-xl">{type.icon}</span>
                       <div>
-                        <div className={`text-xs font-medium ${form.type === type.id ? 'text-[#0066FF]' : 'text-white/70'}`}>
+                        <div className={`text-xs font-medium ${form.type === type.id ? 'text-[#C9A84C]' : 'text-white/70'}`}>
                           {type.label}
                         </div>
                         <div className="text-[10px] text-white/30 mt-0.5">{type.desc}</div>
@@ -148,9 +148,9 @@ export function CreateCampaignModal({ onClose, onCreate }: CreateCampaignModalPr
               </div>
 
               {/* AI assist toggle */}
-              <div className="flex items-center justify-between p-4 rounded-xl bg-[#0066FF]/08 border border-[#0066FF]/20">
+              <div className="flex items-center justify-between p-4 rounded-xl bg-[#C9A84C]/08 border border-[#C9A84C]/20">
                 <div className="flex items-center gap-3">
-                  <Sparkles className="w-4 h-4 text-[#0066FF]" />
+                  <Sparkles className="w-4 h-4 text-[#C9A84C]" />
                   <div>
                     <div className="text-sm font-medium text-white">AI campaign assistant</div>
                     <div className="text-xs text-white/40">Let AI suggest strategy and content</div>
@@ -158,7 +158,7 @@ export function CreateCampaignModal({ onClose, onCreate }: CreateCampaignModalPr
                 </div>
                 <button
                   onClick={() => update('aiAssist', !form.aiAssist)}
-                  className={`w-10 h-6 rounded-full transition-all relative flex-shrink-0 ${form.aiAssist ? 'bg-[#0066FF]' : 'bg-white/10'}`}>
+                  className={`w-10 h-6 rounded-full transition-all relative flex-shrink-0 ${form.aiAssist ? 'bg-[#C9A84C]' : 'bg-white/10'}`}>
                   <div className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-all ${form.aiAssist ? 'left-5' : 'left-1'}`} />
                 </button>
               </div>
@@ -213,7 +213,7 @@ export function CreateCampaignModal({ onClose, onCreate }: CreateCampaignModalPr
                   placeholder="e.g. Get 500 new email subscribers"
                   value={form.goal}
                   onChange={e => update('goal', e.target.value)}
-                  className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 outline-none focus:border-[#0066FF]/40 transition-all"
+                  className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 outline-none focus:border-[#C9A84C]/40 transition-all"
                 />
               </div>
 
@@ -224,7 +224,7 @@ export function CreateCampaignModal({ onClose, onCreate }: CreateCampaignModalPr
                   value={form.description}
                   onChange={e => update('description', e.target.value)}
                   rows={3}
-                  className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 outline-none focus:border-[#0066FF]/40 transition-all resize-none"
+                  className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 outline-none focus:border-[#C9A84C]/40 transition-all resize-none"
                 />
               </div>
             </div>
@@ -246,7 +246,7 @@ export function CreateCampaignModal({ onClose, onCreate }: CreateCampaignModalPr
                     placeholder="1000"
                     value={form.budget}
                     onChange={e => update('budget', e.target.value)}
-                    className="w-full bg-white/[0.05] border border-white/10 rounded-xl pl-8 pr-4 py-3 text-sm text-white placeholder-white/25 outline-none focus:border-[#0066FF]/40 transition-all"
+                    className="w-full bg-white/[0.05] border border-white/10 rounded-xl pl-8 pr-4 py-3 text-sm text-white placeholder-white/25 outline-none focus:border-[#C9A84C]/40 transition-all"
                   />
                 </div>
                 {/* Quick budget chips */}
@@ -256,7 +256,7 @@ export function CreateCampaignModal({ onClose, onCreate }: CreateCampaignModalPr
                       onClick={() => update('budget', b)}
                       className={`px-3 py-1 rounded-full text-xs border transition-all ${
                         form.budget === b
-                          ? 'border-[#0066FF]/40 bg-[#0066FF]/15 text-[#0066FF]'
+                          ? 'border-[#C9A84C]/40 bg-[#C9A84C]/15 text-[#C9A84C]'
                           : 'border-white/[0.08] text-white/40 hover:border-white/20'
                       }`}>
                       ${Number(b).toLocaleString()}
@@ -276,7 +276,7 @@ export function CreateCampaignModal({ onClose, onCreate }: CreateCampaignModalPr
                     type="date"
                     value={form.startDate}
                     onChange={e => update('startDate', e.target.value)}
-                    className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-[#0066FF]/40 transition-all [color-scheme:dark]"
+                    className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-[#C9A84C]/40 transition-all [color-scheme:dark]"
                   />
                 </div>
                 <div>
@@ -289,17 +289,17 @@ export function CreateCampaignModal({ onClose, onCreate }: CreateCampaignModalPr
                     type="date"
                     value={form.endDate}
                     onChange={e => update('endDate', e.target.value)}
-                    className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-[#0066FF]/40 transition-all [color-scheme:dark]"
+                    className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-[#C9A84C]/40 transition-all [color-scheme:dark]"
                   />
                 </div>
               </div>
 
               {/* AI summary */}
               {form.aiAssist && (
-                <div className="rounded-xl border border-[#0066FF]/20 p-4"
+                <div className="rounded-xl border border-[#C9A84C]/20 p-4"
                   style={{ background: 'rgba(0,102,255,0.06)' }}>
                   <div className="flex items-start gap-3">
-                    <Sparkles className="w-4 h-4 text-[#0066FF] mt-0.5 flex-shrink-0" />
+                    <Sparkles className="w-4 h-4 text-[#C9A84C] mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="text-xs font-medium text-white/70 mb-1">AI campaign preview</p>
                       <p className="text-xs text-white/40 leading-relaxed">

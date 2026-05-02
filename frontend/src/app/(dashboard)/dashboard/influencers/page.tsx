@@ -176,7 +176,7 @@ export default function InfluencersPage() {
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <button className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl glass border border-[#0066FF]/20 text-xs text-[#0066FF] hover:bg-[#0066FF]/10 transition-all">
+          <button className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl glass border border-[#C9A84C]/20 text-xs text-[#C9A84C] hover:bg-[#C9A84C]/10 transition-all">
             <Sparkles className="w-3.5 h-3.5" /> AI match me
           </button>
           <Button size="sm" className="rounded-xl gap-2">
@@ -189,9 +189,9 @@ export default function InfluencersPage() {
       <MarketplaceStats />
 
       {/* AI recommendation banner */}
-      <div className="rounded-2xl border border-[#0066FF]/20 p-4 flex items-center gap-4"
+      <div className="rounded-2xl border border-[#C9A84C]/20 p-4 flex items-center gap-4"
         style={{ background: 'linear-gradient(135deg, rgba(0,102,255,0.08), rgba(0,212,170,0.04))' }}>
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#0066FF] to-[#00D4AA] flex items-center justify-center flex-shrink-0">
+        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#C9A84C] to-[#E8C96A] flex items-center justify-center flex-shrink-0">
           <Sparkles className="w-4 h-4 text-white" />
         </div>
         <div className="flex-1 min-w-0">
@@ -200,7 +200,7 @@ export default function InfluencersPage() {
             Based on your audience demographics and campaign history, Aria Chen, Marcus Webb, and Alex Kim have the highest audience overlap with your followers.
           </p>
         </div>
-        <button className="text-xs text-[#0066FF] hover:text-[#3385FF] font-medium transition-colors flex-shrink-0">
+        <button className="text-xs text-[#C9A84C] hover:text-[#3385FF] font-medium transition-colors flex-shrink-0">
           View matches →
         </button>
       </div>
@@ -222,7 +222,7 @@ export default function InfluencersPage() {
 
           <button onClick={() => setShowFilters(!showFilters)}
             className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border text-sm transition-all ${
-              showFilters ? 'border-[#0066FF]/40 bg-[#0066FF]/15 text-[#0066FF]' : 'glass border-white/[0.06] text-white/50 hover:text-white'
+              showFilters ? 'border-[#C9A84C]/40 bg-[#C9A84C]/15 text-[#C9A84C]' : 'glass border-white/[0.06] text-white/50 hover:text-white'
             }`}>
             <SlidersHorizontal className="w-4 h-4" />
             Filters

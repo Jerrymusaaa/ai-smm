@@ -9,7 +9,7 @@ export function CTASection() {
       <div className="absolute inset-0 grid-pattern opacity-30" />
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="w-[600px] h-[400px] rounded-full blur-[120px] opacity-15"
-          style={{ background: 'radial-gradient(circle, #0066FF, #00D4AA)' }} />
+          style={{ background: 'radial-gradient(circle, #C9A84C, #E8C96A)' }} />
       </div>
 
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center">

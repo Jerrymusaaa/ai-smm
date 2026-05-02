@@ -59,7 +59,7 @@ export function NotificationSettings() {
 
   const Toggle = ({ active, onClick }: { active: boolean; onClick: () => void }) => (
     <button onClick={onClick}
-      className={`w-9 h-5 rounded-full transition-all relative flex-shrink-0 ${active ? 'bg-[#0066FF]' : 'bg-white/10'}`}>
+      className={`w-9 h-5 rounded-full transition-all relative flex-shrink-0 ${active ? 'bg-[#C9A84C]' : 'bg-white/10'}`}>
       <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-all ${active ? 'left-4' : 'left-0.5'}`} />
     </button>
   );
@@ -73,8 +73,8 @@ export function NotificationSettings() {
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {[
-            { label: 'Email notifications', desc: 'jerry@example.com', active: true, color: '#0066FF' },
-            { label: 'Push notifications', desc: 'Browser & mobile app', active: true, color: '#00D4AA' },
+            { label: 'Email notifications', desc: 'jerry@example.com', active: true, color: '#C9A84C' },
+            { label: 'Push notifications', desc: 'Browser & mobile app', active: true, color: '#E8C96A' },
             { label: 'SMS notifications', desc: '+1 (555) 000-0000', active: false, color: '#A855F7' },
           ].map(channel => (
             <div key={channel.label}
@@ -83,7 +83,7 @@ export function NotificationSettings() {
                 <p className="text-sm font-medium text-white/80">{channel.label}</p>
                 <p className="text-xs text-white/40 mt-0.5">{channel.desc}</p>
               </div>
-              <div className={`w-2 h-2 rounded-full ${channel.active ? 'bg-[#00D4AA]' : 'bg-white/20'}`} />
+              <div className={`w-2 h-2 rounded-full ${channel.active ? 'bg-[#E8C96A]' : 'bg-white/20'}`} />
             </div>
           ))}
         </div>

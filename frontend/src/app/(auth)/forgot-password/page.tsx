@@ -26,8 +26,8 @@ export default function ForgotPasswordPage() {
   if (sent) {
     return (
       <div className="text-center py-8">
-        <div className="w-16 h-16 rounded-full bg-[#0066FF]/20 border border-[#0066FF]/30 flex items-center justify-center mx-auto mb-6">
-          <Check className="w-8 h-8 text-[#0066FF]" />
+        <div className="w-16 h-16 rounded-full bg-[#C9A84C]/20 border border-[#C9A84C]/30 flex items-center justify-center mx-auto mb-6">
+          <Check className="w-8 h-8 text-[#C9A84C]" />
         </div>
         <h2 style={{ fontFamily: 'var(--font-display)' }} className="text-2xl font-bold text-white mb-3">
           Reset link sent
@@ -38,7 +38,7 @@ export default function ForgotPasswordPage() {
         <p className="text-white font-medium text-sm mb-6">{email}</p>
         <p className="text-white/30 text-xs mb-8 max-w-xs mx-auto">
           Didn&apos;t receive it? Check your spam folder or{' '}
-          <button onClick={() => setSent(false)} className="text-[#0066FF] hover:underline">
+          <button onClick={() => setSent(false)} className="text-[#C9A84C] hover:underline">
             try another email
           </button>
         </p>
@@ -86,7 +86,7 @@ export default function ForgotPasswordPage() {
 
       <p className="text-center text-xs text-white/25 mt-6">
         Remember your password?{' '}
-        <Link href="/login" className="text-[#0066FF] hover:text-[#3385FF] transition-colors">
+        <Link href="/login" className="text-[#C9A84C] hover:text-[#3385FF] transition-colors">
           Sign in
         </Link>
       </p>

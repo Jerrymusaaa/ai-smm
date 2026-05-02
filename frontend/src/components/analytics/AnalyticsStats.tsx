@@ -3,9 +3,9 @@
 import { TrendingUp, TrendingDown, Users, Heart, Eye, MousePointerClick, Share2, MessageCircle } from 'lucide-react';
 
 const STATS = [
-  { label: 'Total followers', value: '29,431', change: '+2,847', pct: '+10.7%', trend: 'up', icon: Users, color: '#0066FF',
+  { label: 'Total followers', value: '29,431', change: '+2,847', pct: '+10.7%', trend: 'up', icon: Users, color: '#C9A84C',
     sparkline: [40,55,45,60,58,72,68,80,75,90,85,100] },
-  { label: 'Total impressions', value: '1.24M', change: '+184K', pct: '+17.4%', trend: 'up', icon: Eye, color: '#00D4AA',
+  { label: 'Total impressions', value: '1.24M', change: '+184K', pct: '+17.4%', trend: 'up', icon: Eye, color: '#E8C96A',
     sparkline: [60,55,70,65,75,72,80,78,85,82,90,88] },
   { label: 'Engagements', value: '84,210', change: '+18,420', pct: '+28.0%', trend: 'up', icon: Heart, color: '#A855F7',
     sparkline: [30,42,38,55,52,65,70,68,82,78,88,95] },
@@ -39,7 +39,7 @@ export function AnalyticsStats() {
               style={{ background: `${s.color}18`, color: s.color }}>
               <s.icon className="w-4 h-4" />
             </div>
-            <div className={`flex items-center gap-1 text-xs font-medium ${s.trend === 'up' ? 'text-[#00D4AA]' : 'text-red-400'}`}>
+            <div className={`flex items-center gap-1 text-xs font-medium ${s.trend === 'up' ? 'text-[#E8C96A]' : 'text-red-400'}`}>
               {s.trend === 'up' ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
               {s.pct}
             </div>

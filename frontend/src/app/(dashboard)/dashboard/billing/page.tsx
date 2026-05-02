@@ -41,10 +41,10 @@ export default function BillingPage() {
       <BillingOverview />
 
       {/* AI upsell banner */}
-      <div className="rounded-2xl border border-[#00D4AA]/20 p-4 flex items-center gap-4"
+      <div className="rounded-2xl border border-[#E8C96A]/20 p-4 flex items-center gap-4"
         style={{ background: 'linear-gradient(135deg, rgba(0,212,170,0.07), rgba(0,102,255,0.05))' }}>
-        <div className="w-9 h-9 rounded-xl bg-[#00D4AA]/20 border border-[#00D4AA]/30 flex items-center justify-center flex-shrink-0">
-          <Sparkles className="w-4 h-4 text-[#00D4AA]" />
+        <div className="w-9 h-9 rounded-xl bg-[#E8C96A]/20 border border-[#E8C96A]/30 flex items-center justify-center flex-shrink-0">
+          <Sparkles className="w-4 h-4 text-[#E8C96A]" />
         </div>
         <div className="flex-1 min-w-0">
           <p className="text-sm font-medium text-white">
@@ -57,7 +57,7 @@ export default function BillingPage() {
           </p>
         </div>
         <button onClick={() => setUpgradePlan('business')}
-          className="flex-shrink-0 text-xs font-medium text-[#00D4AA] hover:text-white transition-colors whitespace-nowrap">
+          className="flex-shrink-0 text-xs font-medium text-[#E8C96A] hover:text-white transition-colors whitespace-nowrap">
           Upgrade →
         </button>
       </div>

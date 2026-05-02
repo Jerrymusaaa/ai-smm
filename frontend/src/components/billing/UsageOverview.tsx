@@ -4,11 +4,11 @@ import { Zap, Calendar, Users, Brain, BarChart3, Globe } from 'lucide-react';
 
 const USAGE_ITEMS = [
   {
-    label: 'Social platforms', icon: Globe, color: '#0066FF',
+    label: 'Social platforms', icon: Globe, color: '#C9A84C',
     used: 4, limit: 10, unit: 'platforms',
   },
   {
-    label: 'Scheduled posts', icon: Calendar, color: '#00D4AA',
+    label: 'Scheduled posts', icon: Calendar, color: '#E8C96A',
     used: 847, limit: -1, unit: 'posts',
   },
   {
@@ -59,7 +59,7 @@ export function UsageOverview() {
                   {isUnavailable ? (
                     <span className="text-white/25">Not included</span>
                   ) : isUnlimited ? (
-                    <span className="text-[#00D4AA]">{item.used.toLocaleString()} · Unlimited</span>
+                    <span className="text-[#E8C96A]">{item.used.toLocaleString()} · Unlimited</span>
                   ) : (
                     <span className={isNearLimit ? 'text-[#F59E0B]' : 'text-white/60'}>
                       {item.used} / {item.limit} {item.unit}

@@ -9,9 +9,9 @@ export function DangerZone() {
 
   const DANGER_ACTIONS = [
     {
-      id: 'export', title: 'Export your data', icon: Download, color: '#0066FF',
+      id: 'export', title: 'Export your data', icon: Download, color: '#C9A84C',
       desc: 'Download a full export of all your account data including posts, analytics, campaigns, and settings.',
-      action: 'Export data', actionStyle: 'border border-[#0066FF]/30 text-[#0066FF] hover:bg-[#0066FF]/10',
+      action: 'Export data', actionStyle: 'border border-[#C9A84C]/30 text-[#C9A84C] hover:bg-[#C9A84C]/10',
       onClick: () => alert('Preparing data export... You will receive an email when ready.'),
     },
     {

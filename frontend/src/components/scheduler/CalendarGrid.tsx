@@ -28,8 +28,8 @@ const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
 const STATUS_COLORS = {
-  scheduled: '#0066FF',
-  published: '#00D4AA',
+  scheduled: '#C9A84C',
+  published: '#E8C96A',
   draft: '#888888',
   failed: '#EF4444',
 };
@@ -130,14 +130,14 @@ export function CalendarGrid({ posts, onDayClick, onPostClick, onAddPost }: Cale
               <div className="flex items-center justify-between mb-1.5">
                 <span className={cn(
                   'text-xs font-medium w-6 h-6 flex items-center justify-center rounded-full',
-                  isToday ? 'bg-[#0066FF] text-white' : isCurrent ? 'text-white/60' : 'text-white/20'
+                  isToday ? 'bg-[#C9A84C] text-white' : isCurrent ? 'text-white/60' : 'text-white/20'
                 )}>
                   {cell.day}
                 </span>
                 {isCurrent && (
                   <button
                     onClick={e => { e.stopPropagation(); onAddPost(cell.dateStr); }}
-                    className="w-5 h-5 rounded-md bg-white/[0.06] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-[#0066FF]/20 hover:text-[#0066FF] text-white/40">
+                    className="w-5 h-5 rounded-md bg-white/[0.06] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-[#C9A84C]/20 hover:text-[#C9A84C] text-white/40">
                     <Plus className="w-3 h-3" />
                   </button>
                 )}

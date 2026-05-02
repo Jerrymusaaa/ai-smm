@@ -27,7 +27,7 @@ export function ReportGenerator() {
   return (
     <div className="glass rounded-2xl border border-white/[0.06] p-5">
       <div className="flex items-center gap-3 mb-5">
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#0066FF] to-[#00D4AA] flex items-center justify-center flex-shrink-0">
+        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#C9A84C] to-[#E8C96A] flex items-center justify-center flex-shrink-0">
           <FileText className="w-4 h-4 text-white" />
         </div>
         <div>
@@ -43,12 +43,12 @@ export function ReportGenerator() {
           <button key={type.id} onClick={() => setSelected(type.id)}
             className={`flex items-start gap-2.5 p-3 rounded-xl border text-left transition-all ${
               selected === type.id
-                ? 'border-[#0066FF]/40 bg-[#0066FF]/10'
+                ? 'border-[#C9A84C]/40 bg-[#C9A84C]/10'
                 : 'border-white/[0.06] hover:border-white/20 hover:bg-white/[0.04]'
             }`}>
             <span className="text-lg">{type.icon}</span>
             <div>
-              <div className={`text-xs font-medium ${selected === type.id ? 'text-[#0066FF]' : 'text-white/70'}`}>
+              <div className={`text-xs font-medium ${selected === type.id ? 'text-[#C9A84C]' : 'text-white/70'}`}>
                 {type.label}
               </div>
               <div className="text-[10px] text-white/30 mt-0.5 leading-relaxed">{type.desc}</div>

@@ -448,7 +448,7 @@ function Pricing() {
                 }}>
                 Annual
                 <span className="text-[10px] px-1.5 py-0.5 rounded-full font-bold"
-                  style={{ background: 'rgba(0,212,170,0.2)', color: '#00D4AA' }}>
+                  style={{ background: 'rgba(0,212,170,0.2)', color: '#E8C96A' }}>
                   Save 25%
                 </span>
               </button>
@@ -487,7 +487,7 @@ function Pricing() {
                   )}
                 </div>
                 {cycle === 'annual' && plan.price.monthly > 0 && (
-                  <div className="text-[11px] mt-1" style={{ color: '#00D4AA' }}>
+                  <div className="text-[11px] mt-1" style={{ color: '#E8C96A' }}>
                     Save KES {(plan.price.monthly - plan.price.annual).toLocaleString()}/month
                   </div>
                 )}

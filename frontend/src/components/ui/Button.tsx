@@ -14,8 +14,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const base = 'inline-flex items-center justify-center gap-2 font-medium rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed select-none';
 
     const variants = {
-      primary: 'bg-[#0066FF] hover:bg-[#0052CC] text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:scale-[1.02] active:scale-[0.98]',
-      secondary: 'bg-[#00D4AA] hover:bg-[#00B894] text-white shadow-lg shadow-teal-500/20',
+      primary: 'bg-[#C9A84C] hover:bg-[#0052CC] text-white shadow-lg shadow-yellow-600/25 hover:shadow-yellow-600/40 hover:scale-[1.02] active:scale-[0.98]',
+      secondary: 'bg-[#E8C96A] hover:bg-[#00B894] text-white shadow-lg shadow-teal-500/20',
       ghost: 'bg-transparent hover:bg-white/5 text-white/70 hover:text-white',
       outline: 'border border-white/15 hover:border-white/30 bg-transparent text-white hover:bg-white/5',
     };

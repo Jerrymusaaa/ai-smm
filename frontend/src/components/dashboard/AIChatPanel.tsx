@@ -4,8 +4,8 @@ import { useState, useRef, useEffect } from 'react';
 import { Send, Sparkles, Wand2, BarChart3, CalendarDays, Megaphone, Copy, ThumbsUp, ThumbsDown } from 'lucide-react';
 
 const QUICK_ACTIONS = [
-  { label: 'Generate captions', icon: Wand2, color: '#0066FF', prompt: 'Generate 5 Instagram captions for my latest product update' },
-  { label: 'Analyze performance', icon: BarChart3, color: '#00D4AA', prompt: 'Analyze my top performing posts from last 30 days' },
+  { label: 'Generate captions', icon: Wand2, color: '#C9A84C', prompt: 'Generate 5 Instagram captions for my latest product update' },
+  { label: 'Analyze performance', icon: BarChart3, color: '#E8C96A', prompt: 'Analyze my top performing posts from last 30 days' },
   { label: 'Schedule week', icon: CalendarDays, color: '#A855F7', prompt: 'Create a posting schedule for this week across all platforms' },
   { label: 'New campaign', icon: Megaphone, color: '#FF6B35', prompt: 'Help me create a new marketing campaign' },
 ];
@@ -76,22 +76,22 @@ export function AIChatPanel() {
     <div className="glass rounded-2xl border border-white/[0.06] flex flex-col h-[600px] overflow-hidden">
       {/* Header */}
       <div className="flex items-center gap-3 px-5 py-4 border-b border-white/[0.06] flex-shrink-0">
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#0066FF] to-[#00D4AA] flex items-center justify-center shadow-lg shadow-blue-500/20">
+        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#C9A84C] to-[#E8C96A] flex items-center justify-center shadow-lg shadow-yellow-600/20">
           <Sparkles className="w-4.5 h-4.5 text-white" />
         </div>
         <div>
           <h3 style={{ fontFamily: 'var(--font-display)' }} className="text-sm font-bold text-white">
             AI Assistant
           </h3>
-          <div className="flex items-center gap-1.5 text-xs text-[#00D4AA]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#00D4AA] inline-block pulse-dot" />
+          <div className="flex items-center gap-1.5 text-xs text-[#E8C96A]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#E8C96A] inline-block pulse-dot" />
             Online · 4 platforms connected
           </div>
         </div>
         <div className="ml-auto flex items-center gap-1">
           {['GPT-4o', 'Claude'].map((m, i) => (
             <div key={m} className={`px-2 py-1 rounded-lg text-[10px] font-medium transition-all cursor-pointer ${
-              i === 0 ? 'bg-[#0066FF]/20 text-[#0066FF] border border-[#0066FF]/20' : 'text-white/30 hover:text-white/60'
+              i === 0 ? 'bg-[#C9A84C]/20 text-[#C9A84C] border border-[#C9A84C]/20' : 'text-white/30 hover:text-white/60'
             }`}>{m}</div>
           ))}
         </div>
@@ -115,14 +115,14 @@ export function AIChatPanel() {
         {messages.map(msg => (
           <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             {msg.role === 'ai' && (
-              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#0066FF] to-[#00D4AA] flex items-center justify-center flex-shrink-0 mr-2 mt-1 shadow-md">
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#C9A84C] to-[#E8C96A] flex items-center justify-center flex-shrink-0 mr-2 mt-1 shadow-md">
                 <Sparkles className="w-3.5 h-3.5 text-white" />
               </div>
             )}
             <div className="max-w-[85%] space-y-1">
               <div className={`rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-line ${
                 msg.role === 'user'
-                  ? 'bg-[#0066FF] text-white rounded-br-sm'
+                  ? 'bg-[#C9A84C] text-white rounded-br-sm'
                   : 'bg-white/[0.06] text-white/80 rounded-bl-sm border border-white/[0.06]'
               }`}>
                 {msg.text}
@@ -132,7 +132,7 @@ export function AIChatPanel() {
                   <button className="p-1 rounded text-white/20 hover:text-white/50 transition-colors">
                     <Copy className="w-3 h-3" />
                   </button>
-                  <button className="p-1 rounded text-white/20 hover:text-[#00D4AA] transition-colors">
+                  <button className="p-1 rounded text-white/20 hover:text-[#E8C96A] transition-colors">
                     <ThumbsUp className="w-3 h-3" />
                   </button>
                   <button className="p-1 rounded text-white/20 hover:text-red-400 transition-colors">
@@ -148,7 +148,7 @@ export function AIChatPanel() {
         {/* Typing indicator */}
         {isTyping && (
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#0066FF] to-[#00D4AA] flex items-center justify-center flex-shrink-0 shadow-md">
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#C9A84C] to-[#E8C96A] flex items-center justify-center flex-shrink-0 shadow-md">
               <Sparkles className="w-3.5 h-3.5 text-white" />
             </div>
             <div className="bg-white/[0.06] border border-white/[0.06] rounded-2xl rounded-bl-sm px-4 py-3 flex items-center gap-1.5">
@@ -164,7 +164,7 @@ export function AIChatPanel() {
 
       {/* Input */}
       <div className="px-4 pb-4 pt-2 flex-shrink-0 border-t border-white/[0.04]">
-        <div className="flex items-end gap-2 bg-white/[0.05] rounded-2xl border border-white/10 px-4 py-3 focus-within:border-[#0066FF]/40 transition-colors">
+        <div className="flex items-end gap-2 bg-white/[0.05] rounded-2xl border border-white/10 px-4 py-3 focus-within:border-[#C9A84C]/40 transition-colors">
           <textarea
             placeholder="Ask your AI anything — create content, analyze data, schedule posts..."
             value={input}
@@ -177,7 +177,7 @@ export function AIChatPanel() {
           <button
             onClick={() => sendMessage(input)}
             disabled={!input.trim()}
-            className="w-8 h-8 rounded-xl bg-[#0066FF] flex items-center justify-center hover:bg-[#0052CC] transition-all disabled:opacity-30 disabled:cursor-not-allowed flex-shrink-0 shadow-lg shadow-blue-500/20">
+            className="w-8 h-8 rounded-xl bg-[#C9A84C] flex items-center justify-center hover:bg-[#0052CC] transition-all disabled:opacity-30 disabled:cursor-not-allowed flex-shrink-0 shadow-lg shadow-yellow-600/20">
             <Send className="w-3.5 h-3.5 text-white" />
           </button>
         </div>

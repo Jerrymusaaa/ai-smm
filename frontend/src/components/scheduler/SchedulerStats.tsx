@@ -3,8 +3,8 @@
 import { CalendarDays, Clock, CheckCircle2, TrendingUp, Zap, AlertCircle } from 'lucide-react';
 
 const STATS = [
-  { label: 'Scheduled', value: '24', icon: CalendarDays, color: '#0066FF' },
-  { label: 'Published today', value: '3', icon: CheckCircle2, color: '#00D4AA' },
+  { label: 'Scheduled', value: '24', icon: CalendarDays, color: '#C9A84C' },
+  { label: 'Published today', value: '3', icon: CheckCircle2, color: '#E8C96A' },
   { label: 'Pending approval', value: '7', icon: Clock, color: '#F59E0B' },
   { label: 'Best time accuracy', value: '94%', icon: TrendingUp, color: '#A855F7' },
   { label: 'Auto-posted', value: '142', icon: Zap, color: '#FF6B35' },

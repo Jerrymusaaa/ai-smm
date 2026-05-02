@@ -14,7 +14,7 @@ const DATA = [
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="rounded-xl border border-white/10 p-3 shadow-xl text-xs" style={{ background: '#0D1525' }}>
+    <div className="rounded-xl border border-white/10 p-3 shadow-xl text-xs" style={{ background: '#0D0D0D' }}>
       <p className="text-white/50 mb-2 font-medium">{label}</p>
       {payload.map((p: any) => (
         <div key={p.dataKey} className="flex items-center gap-2 mb-1">
@@ -51,16 +51,16 @@ export function CampaignChart() {
             <YAxis tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 11 }} axisLine={false} tickLine={false}
               tickFormatter={v => v >= 1000 ? `${(v/1000).toFixed(0)}K` : v} />
             <Tooltip content={<CustomTooltip />} />
-            <Bar dataKey="reach" fill="#0066FF" radius={[4,4,0,0]} opacity={0.8} />
-            <Bar dataKey="clicks" fill="#00D4AA" radius={[4,4,0,0]} opacity={0.8} />
+            <Bar dataKey="reach" fill="#C9A84C" radius={[4,4,0,0]} opacity={0.8} />
+            <Bar dataKey="clicks" fill="#E8C96A" radius={[4,4,0,0]} opacity={0.8} />
             <Bar dataKey="conversions" fill="#A855F7" radius={[4,4,0,0]} opacity={0.8} />
           </BarChart>
         </ResponsiveContainer>
       </div>
       <div className="flex items-center gap-6 mt-3 justify-center">
         {[
-          { label: 'Reach', color: '#0066FF' },
-          { label: 'Clicks', color: '#00D4AA' },
+          { label: 'Reach', color: '#C9A84C' },
+          { label: 'Clicks', color: '#E8C96A' },
           { label: 'Conversions', color: '#A855F7' },
         ].map(l => (
           <div key={l.label} className="flex items-center gap-1.5">

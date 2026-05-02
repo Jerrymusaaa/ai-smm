@@ -23,7 +23,7 @@ export function SecuritySettings() {
     : passwords.newPass.length < 10 ? 2
     : 3;
 
-  const strengthColors = ['#EF4444', '#F59E0B', '#0066FF', '#00D4AA'];
+  const strengthColors = ['#EF4444', '#F59E0B', '#C9A84C', '#E8C96A'];
   const strengthLabels = ['Too short', 'Weak', 'Good', 'Strong'];
 
   return (
@@ -47,7 +47,7 @@ export function SecuritySettings() {
                   placeholder="••••••••"
                   value={passwords[field.key as keyof typeof passwords]}
                   onChange={e => setPasswords(p => ({ ...p, [field.key]: e.target.value }))}
-                  className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-2.5 pr-11 text-sm text-white placeholder-white/25 outline-none focus:border-[#0066FF]/40 transition-all"
+                  className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-2.5 pr-11 text-sm text-white placeholder-white/25 outline-none focus:border-[#C9A84C]/40 transition-all"
                 />
                 <button onClick={field.toggle}
                   className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors">
@@ -82,8 +82,8 @@ export function SecuritySettings() {
       <div className="glass rounded-2xl border border-white/[0.06] p-6">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-start gap-4">
-            <div className="w-10 h-10 rounded-xl bg-[#00D4AA]/15 border border-[#00D4AA]/25 flex items-center justify-center flex-shrink-0">
-              <Smartphone className="w-5 h-5 text-[#00D4AA]" />
+            <div className="w-10 h-10 rounded-xl bg-[#E8C96A]/15 border border-[#E8C96A]/25 flex items-center justify-center flex-shrink-0">
+              <Smartphone className="w-5 h-5 text-[#E8C96A]" />
             </div>
             <div>
               <h3 style={{ fontFamily: 'var(--font-display)' }} className="text-base font-bold text-white">
@@ -93,14 +93,14 @@ export function SecuritySettings() {
                 Add an extra layer of security. Use an authenticator app to generate one-time codes when signing in.
               </p>
               {twoFAEnabled && (
-                <div className="flex items-center gap-1.5 mt-2 text-xs text-[#00D4AA]">
+                <div className="flex items-center gap-1.5 mt-2 text-xs text-[#E8C96A]">
                   <Shield className="w-3.5 h-3.5" /> 2FA is enabled and protecting your account
                 </div>
               )}
             </div>
           </div>
           <button onClick={() => setTwoFAEnabled(!twoFAEnabled)}
-            className={`w-12 h-7 rounded-full transition-all relative flex-shrink-0 mt-1 ${twoFAEnabled ? 'bg-[#00D4AA]' : 'bg-white/10'}`}>
+            className={`w-12 h-7 rounded-full transition-all relative flex-shrink-0 mt-1 ${twoFAEnabled ? 'bg-[#E8C96A]' : 'bg-white/10'}`}>
             <div className={`absolute top-1.5 w-4 h-4 rounded-full bg-white shadow transition-all ${twoFAEnabled ? 'left-7' : 'left-1.5'}`} />
           </button>
         </div>
@@ -122,14 +122,14 @@ export function SecuritySettings() {
         <div className="divide-y divide-white/[0.04]">
           {SESSIONS.map(session => (
             <div key={session.id} className="flex items-center gap-4 px-5 py-4 hover:bg-white/[0.02] transition-colors">
-              <div className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 ${session.current ? 'bg-[#0066FF]/20 border border-[#0066FF]/30' : 'bg-white/[0.06] border border-white/10'}`}>
-                <Smartphone className={`w-4 h-4 ${session.current ? 'text-[#0066FF]' : 'text-white/40'}`} />
+              <div className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 ${session.current ? 'bg-[#C9A84C]/20 border border-[#C9A84C]/30' : 'bg-white/[0.06] border border-white/10'}`}>
+                <Smartphone className={`w-4 h-4 ${session.current ? 'text-[#C9A84C]' : 'text-white/40'}`} />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="text-sm font-medium text-white/80">{session.device}</span>
                   {session.current && (
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#0066FF]/20 text-[#0066FF] font-medium">
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#C9A84C]/20 text-[#C9A84C] font-medium">
                       This device
                     </span>
                   )}
@@ -161,9 +161,9 @@ export function SecuritySettings() {
             { label: 'Recovery codes saved', done: false },
           ].map(item => (
             <div key={item.label} className="flex items-center gap-3">
-              <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${item.done ? 'bg-[#00D4AA]/20 border border-[#00D4AA]/40' : 'bg-white/[0.06] border border-white/15'}`}>
+              <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${item.done ? 'bg-[#E8C96A]/20 border border-[#E8C96A]/40' : 'bg-white/[0.06] border border-white/15'}`}>
                 {item.done
-                  ? <Check className="w-3 h-3 text-[#00D4AA]" />
+                  ? <Check className="w-3 h-3 text-[#E8C96A]" />
                   : <AlertTriangle className="w-3 h-3 text-white/30" />}
               </div>
               <span className={`text-sm ${item.done ? 'text-white/70' : 'text-white/40'}`}>{item.label}</span>

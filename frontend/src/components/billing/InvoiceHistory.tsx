@@ -12,7 +12,7 @@ const INVOICES = [
 ];
 
 const STATUS_CONFIG = {
-  paid: { label: 'Paid', icon: CheckCircle2, color: '#00D4AA', bg: 'rgba(0,212,170,0.1)' },
+  paid: { label: 'Paid', icon: CheckCircle2, color: '#E8C96A', bg: 'rgba(0,212,170,0.1)' },
   failed: { label: 'Failed', icon: XCircle, color: '#EF4444', bg: 'rgba(239,68,68,0.1)' },
   pending: { label: 'Pending', icon: Clock, color: '#F59E0B', bg: 'rgba(245,158,11,0.1)' },
 };
@@ -27,7 +27,7 @@ export function InvoiceHistory() {
           </h3>
           <p className="text-xs text-white/40 mt-0.5">{INVOICES.length} invoices</p>
         </div>
-        <button className="text-xs text-[#0066FF] hover:text-[#3385FF] transition-colors font-medium">
+        <button className="text-xs text-[#C9A84C] hover:text-[#3385FF] transition-colors font-medium">
           Download all
         </button>
       </div>

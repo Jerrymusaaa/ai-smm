@@ -94,7 +94,7 @@ export function PostModal({ post, defaultDate, onClose, onSave, onDelete }: Post
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4"
       style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)' }}>
       <div className="w-full max-w-2xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
-        style={{ background: '#0D1525' }}>
+        style={{ background: '#0D0D0D' }}>
 
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.06] flex-shrink-0">
@@ -141,7 +141,7 @@ export function PostModal({ post, defaultDate, onClose, onSave, onDelete }: Post
               placeholder="What is this post about?"
               value={form.title}
               onChange={e => update('title', e.target.value)}
-              className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 outline-none focus:border-[#0066FF]/40 transition-all"
+              className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 outline-none focus:border-[#C9A84C]/40 transition-all"
             />
           </div>
 
@@ -150,7 +150,7 @@ export function PostModal({ post, defaultDate, onClose, onSave, onDelete }: Post
             <div className="flex items-center justify-between mb-2">
               <label className="text-sm font-medium text-white/70">Caption</label>
               <button onClick={generateAI} disabled={!form.title || aiGenerating}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-[#0066FF]/15 text-[#0066FF] border border-[#0066FF]/25 hover:bg-[#0066FF]/25 transition-all disabled:opacity-40">
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-[#C9A84C]/15 text-[#C9A84C] border border-[#C9A84C]/25 hover:bg-[#C9A84C]/25 transition-all disabled:opacity-40">
                 {aiGenerating
                   ? <><Sparkles className="w-3.5 h-3.5 animate-pulse" /> Generating...</>
                   : <><Wand2 className="w-3.5 h-3.5" /> AI write</>}
@@ -161,7 +161,7 @@ export function PostModal({ post, defaultDate, onClose, onSave, onDelete }: Post
               value={form.content}
               onChange={e => update('content', e.target.value)}
               rows={5}
-              className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 outline-none focus:border-[#0066FF]/40 transition-all resize-none leading-relaxed"
+              className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 outline-none focus:border-[#C9A84C]/40 transition-all resize-none leading-relaxed"
             />
             <div className="flex items-center justify-between mt-1.5">
               <div className="flex items-center gap-2 flex-1 mr-3">
@@ -169,7 +169,7 @@ export function PostModal({ post, defaultDate, onClose, onSave, onDelete }: Post
                   <div className="h-1 rounded-full transition-all"
                     style={{
                       width: `${Math.min(charPct, 100)}%`,
-                      background: charPct > 90 ? '#EF4444' : charPct > 70 ? '#F59E0B' : '#0066FF'
+                      background: charPct > 90 ? '#EF4444' : charPct > 70 ? '#F59E0B' : '#C9A84C'
                     }} />
                 </div>
               </div>
@@ -186,14 +186,14 @@ export function PostModal({ post, defaultDate, onClose, onSave, onDelete }: Post
                 <div className="flex items-center gap-2"><Calendar className="w-3.5 h-3.5" /> Date</div>
               </label>
               <input type="date" value={form.date} onChange={e => update('date', e.target.value)}
-                className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-[#0066FF]/40 transition-all [color-scheme:dark]" />
+                className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-[#C9A84C]/40 transition-all [color-scheme:dark]" />
             </div>
             <div>
               <label className="text-sm font-medium text-white/70 block mb-2">
                 <div className="flex items-center gap-2"><Clock className="w-3.5 h-3.5" /> Time</div>
               </label>
               <select value={form.time} onChange={e => update('time', e.target.value)}
-                className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-[#0066FF]/40 transition-all">
+                className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-[#C9A84C]/40 transition-all">
                 {['6:00 AM','8:00 AM','9:00 AM','10:00 AM','12:00 PM','2:00 PM','4:00 PM','6:00 PM','7:00 PM','8:00 PM','9:00 PM','10:00 PM'].map(t => (
                   <option key={t} value={t}>{t}</option>
                 ))}
@@ -205,7 +205,7 @@ export function PostModal({ post, defaultDate, onClose, onSave, onDelete }: Post
           <div>
             <label className="text-sm font-medium text-white/70 block mb-2">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-3.5 h-3.5 text-[#0066FF]" />
+                <Sparkles className="w-3.5 h-3.5 text-[#C9A84C]" />
                 AI recommended times for {form.platform}
               </div>
             </label>
@@ -214,7 +214,7 @@ export function PostModal({ post, defaultDate, onClose, onSave, onDelete }: Post
                 <button key={t.time} onClick={() => update('time', t.time)}
                   className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs border transition-all ${
                     form.time === t.time
-                      ? 'border-[#0066FF]/40 bg-[#0066FF]/15 text-[#0066FF]'
+                      ? 'border-[#C9A84C]/40 bg-[#C9A84C]/15 text-[#C9A84C]'
                       : 'border-white/[0.08] text-white/40 hover:border-white/20 hover:text-white/70'
                   }`}>
                   <span>{t.time}</span>
@@ -237,7 +237,7 @@ export function PostModal({ post, defaultDate, onClose, onSave, onDelete }: Post
               </div>
             </div>
             <button onClick={() => update('hasMedia', !form.hasMedia)}
-              className={`w-10 h-6 rounded-full transition-all relative flex-shrink-0 ${form.hasMedia ? 'bg-[#0066FF]' : 'bg-white/10'}`}>
+              className={`w-10 h-6 rounded-full transition-all relative flex-shrink-0 ${form.hasMedia ? 'bg-[#C9A84C]' : 'bg-white/10'}`}>
               <div className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-all ${form.hasMedia ? 'left-5' : 'left-1'}`} />
             </button>
           </div>
@@ -250,7 +250,7 @@ export function PostModal({ post, defaultDate, onClose, onSave, onDelete }: Post
                 <button key={s} onClick={() => update('status', s)}
                   className={`px-4 py-2 rounded-xl text-xs font-medium border transition-all capitalize ${
                     form.status === s
-                      ? 'border-[#0066FF]/40 bg-[#0066FF]/15 text-[#0066FF]'
+                      ? 'border-[#C9A84C]/40 bg-[#C9A84C]/15 text-[#C9A84C]'
                       : 'border-white/[0.08] text-white/40 hover:border-white/20'
                   }`}>
                   {s}

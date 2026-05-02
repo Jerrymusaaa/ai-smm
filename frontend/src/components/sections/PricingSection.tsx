@@ -24,7 +24,7 @@ const PLANS = [
     name: 'Pro',
     price: { monthly: 49, annual: 39 },
     description: 'For creators & small teams',
-    color: '#0066FF',
+    color: '#C9A84C',
     popular: true,
     features: [
       '10 social platforms',
@@ -42,7 +42,7 @@ const PLANS = [
     name: 'Business',
     price: { monthly: 149, annual: 119 },
     description: 'For growing marketing teams',
-    color: '#00D4AA',
+    color: '#E8C96A',
     features: [
       'All 23 platforms',
       'Team collaboration (5 seats)',
@@ -106,7 +106,7 @@ export function PricingSection() {
               className={`px-5 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${annual ? 'bg-white/10 text-white' : 'text-white/40'}`}
             >
               Annual
-              <span className="text-xs px-2 py-0.5 rounded-full bg-[#00D4AA]/20 text-[#00D4AA]">Save 20%</span>
+              <span className="text-xs px-2 py-0.5 rounded-full bg-[#E8C96A]/20 text-[#E8C96A]">Save 20%</span>
             </button>
           </div>
         </div>
@@ -117,12 +117,12 @@ export function PricingSection() {
               key={plan.name}
               className={`relative glass rounded-2xl p-6 border feature-card flex flex-col ${
                 plan.popular
-                  ? 'border-[#0066FF]/40 shadow-lg shadow-blue-500/10'
+                  ? 'border-[#C9A84C]/40 shadow-lg shadow-yellow-600/10'
                   : 'border-white/[0.06]'
               }`}
             >
               {plan.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-[#0066FF] text-white text-xs font-medium">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-[#C9A84C] text-white text-xs font-medium">
                   Most popular
                 </div>
               )}

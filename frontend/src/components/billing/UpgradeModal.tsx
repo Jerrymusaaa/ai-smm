@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/Button';
 
 const PLAN_DETAILS: Record<string, { name: string; price: number; color: string; features: string[] }> = {
   business: {
-    name: 'Business', price: 119, color: '#00D4AA',
+    name: 'Business', price: 119, color: '#E8C96A',
     features: ['All 23 platforms', 'Team collaboration (5 seats)', 'Influencer marketplace', 'Advanced AI agents', 'Custom report builder', 'API access'],
   },
   enterprise: {
@@ -38,9 +38,9 @@ export function UpgradeModal({ planId, onClose }: UpgradeModalProps) {
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4"
         style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)' }}>
         <div className="w-full max-w-md rounded-2xl border border-white/10 p-8 text-center shadow-2xl"
-          style={{ background: '#0D1525' }}>
-          <div className="w-16 h-16 rounded-full bg-[#00D4AA]/20 border border-[#00D4AA]/30 flex items-center justify-center mx-auto mb-5">
-            <Check className="w-8 h-8 text-[#00D4AA]" />
+          style={{ background: '#0D0D0D' }}>
+          <div className="w-16 h-16 rounded-full bg-[#E8C96A]/20 border border-[#E8C96A]/30 flex items-center justify-center mx-auto mb-5">
+            <Check className="w-8 h-8 text-[#E8C96A]" />
           </div>
           <h3 style={{ fontFamily: 'var(--font-display)' }} className="text-xl font-bold text-white mb-2">
             Upgraded to {plan.name}!
@@ -60,7 +60,7 @@ export function UpgradeModal({ planId, onClose }: UpgradeModalProps) {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4"
       style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)' }}>
       <div className="w-full max-w-md rounded-2xl border border-white/10 shadow-2xl overflow-hidden"
-        style={{ background: '#0D1525' }}>
+        style={{ background: '#0D0D0D' }}>
 
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.06]">
           <h2 style={{ fontFamily: 'var(--font-display)' }} className="text-lg font-bold text-white">
@@ -84,7 +84,7 @@ export function UpgradeModal({ planId, onClose }: UpgradeModalProps) {
             </div>
             <div className="flex items-center justify-between text-xs text-white/40">
               <span>Billed ${plan.price * 12}/year</span>
-              <span className="text-[#00D4AA]">Save 20% vs monthly</span>
+              <span className="text-[#E8C96A]">Save 20% vs monthly</span>
             </div>
           </div>
 
@@ -119,7 +119,7 @@ export function UpgradeModal({ planId, onClose }: UpgradeModalProps) {
 
           {/* Security note */}
           <div className="flex items-center gap-2 text-xs text-white/30">
-            <Shield className="w-3.5 h-3.5 text-[#00D4AA]" />
+            <Shield className="w-3.5 h-3.5 text-[#E8C96A]" />
             Secured by Stripe · Cancel anytime · Prorated billing
           </div>
 

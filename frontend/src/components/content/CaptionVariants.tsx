@@ -41,7 +41,7 @@ function VariantCard({ variant, onRegenerate, onSchedule }: {
   return (
     <div className={cn(
       'glass rounded-2xl border transition-all',
-      liked ? 'border-[#00D4AA]/30' : 'border-white/[0.06]'
+      liked ? 'border-[#E8C96A]/30' : 'border-white/[0.06]'
     )}>
       {/* Card header */}
       <div className="flex items-center gap-3 px-4 py-3 border-b border-white/[0.04]">
@@ -62,11 +62,11 @@ function VariantCard({ variant, onRegenerate, onSchedule }: {
 
         {/* Score */}
         <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full"
-          style={{ background: `${variant.score >= 80 ? '#00D4AA' : variant.score >= 60 ? '#F59E0B' : '#EF4444'}15` }}>
+          style={{ background: `${variant.score >= 80 ? '#E8C96A' : variant.score >= 60 ? '#F59E0B' : '#EF4444'}15` }}>
           <div className="w-1.5 h-1.5 rounded-full"
-            style={{ background: variant.score >= 80 ? '#00D4AA' : variant.score >= 60 ? '#F59E0B' : '#EF4444' }} />
+            style={{ background: variant.score >= 80 ? '#E8C96A' : variant.score >= 60 ? '#F59E0B' : '#EF4444' }} />
           <span className="text-[11px] font-medium"
-            style={{ color: variant.score >= 80 ? '#00D4AA' : variant.score >= 60 ? '#F59E0B' : '#EF4444' }}>
+            style={{ color: variant.score >= 80 ? '#E8C96A' : variant.score >= 60 ? '#F59E0B' : '#EF4444' }}>
             {variant.score}%
           </span>
         </div>
@@ -106,7 +106,7 @@ function VariantCard({ variant, onRegenerate, onSchedule }: {
           <div className="flex items-center gap-2 px-4 py-3 border-t border-white/[0.04]">
             <button onClick={copy}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-white/50 hover:text-white hover:bg-white/[0.06] transition-all">
-              {copied ? <Check className="w-3.5 h-3.5 text-[#00D4AA]" /> : <Copy className="w-3.5 h-3.5" />}
+              {copied ? <Check className="w-3.5 h-3.5 text-[#E8C96A]" /> : <Copy className="w-3.5 h-3.5" />}
               {copied ? 'Copied!' : 'Copy'}
             </button>
 
@@ -119,7 +119,7 @@ function VariantCard({ variant, onRegenerate, onSchedule }: {
             <button onClick={() => setLiked(!liked)}
               className={cn(
                 'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all',
-                liked ? 'text-[#00D4AA] bg-[#00D4AA]/10' : 'text-white/50 hover:text-white hover:bg-white/[0.06]'
+                liked ? 'text-[#E8C96A] bg-[#E8C96A]/10' : 'text-white/50 hover:text-white hover:bg-white/[0.06]'
               )}>
               <ThumbsUp className="w-3.5 h-3.5" />
               {liked ? 'Saved' : 'Save'}
@@ -127,7 +127,7 @@ function VariantCard({ variant, onRegenerate, onSchedule }: {
 
             <button
               onClick={() => onSchedule(variant)}
-              className="ml-auto flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-medium bg-[#0066FF] text-white hover:bg-[#0052CC] transition-all shadow-lg shadow-blue-500/20">
+              className="ml-auto flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-medium bg-[#C9A84C] text-white hover:bg-[#0052CC] transition-all shadow-lg shadow-yellow-600/20">
               Schedule →
             </button>
           </div>
@@ -159,7 +159,7 @@ export function CaptionVariants({ variants, loading, onRegenerate, onSchedule }:
           </div>
         ))}
         <div className="flex items-center justify-center gap-2 py-4 text-sm text-white/40">
-          <Sparkles className="w-4 h-4 text-[#0066FF] animate-pulse" />
+          <Sparkles className="w-4 h-4 text-[#C9A84C] animate-pulse" />
           AI is crafting your captions...
         </div>
       </div>
@@ -169,8 +169,8 @@ export function CaptionVariants({ variants, loading, onRegenerate, onSchedule }:
   if (variants.length === 0) {
     return (
       <div className="glass rounded-2xl border border-white/[0.06] p-10 text-center">
-        <div className="w-12 h-12 rounded-2xl bg-[#0066FF]/10 border border-[#0066FF]/20 flex items-center justify-center mx-auto mb-4">
-          <Sparkles className="w-6 h-6 text-[#0066FF]" />
+        <div className="w-12 h-12 rounded-2xl bg-[#C9A84C]/10 border border-[#C9A84C]/20 flex items-center justify-center mx-auto mb-4">
+          <Sparkles className="w-6 h-6 text-[#C9A84C]" />
         </div>
         <p className="text-white/50 text-sm mb-2">No captions yet</p>
         <p className="text-white/25 text-xs">

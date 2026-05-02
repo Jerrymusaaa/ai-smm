@@ -81,3 +81,34 @@ body {
 
 /* Selection */
 ::selection { background: rgba(201, 168, 76, 0.3); }
+
+/* ── Dashboard gold overrides ──────────────────────────────────── */
+
+/* Inputs in dashboard */
+input:focus, textarea:focus, select:focus {
+  border-color: rgba(201, 168, 76, 0.45) !important;
+  outline: none;
+}
+
+/* Toggle switches — gold when active */
+.toggle-active {
+  background: linear-gradient(135deg, #C9A84C, #E8C96A) !important;
+}
+
+/* Stat cards */
+.stat-card:hover {
+  border-color: rgba(201, 168, 76, 0.25) !important;
+  box-shadow: 0 8px 32px rgba(201, 168, 76, 0.08) !important;
+}
+
+/* Chart tooltip */
+.recharts-tooltip-wrapper .recharts-default-tooltip {
+  background: #0D0D0F !important;
+  border: 1px solid rgba(201, 168, 76, 0.2) !important;
+  border-radius: 12px !important;
+}
+
+/* Active nav item glow */
+.nav-active {
+  box-shadow: 0 0 20px rgba(201, 168, 76, 0.1);
+}

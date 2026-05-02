@@ -7,7 +7,7 @@ const FEATURES = [
   {
     id: 'analytics',
     icon: <BarChart3 className="w-6 h-6" />,
-    color: '#0066FF',
+    color: '#C9A84C',
     title: 'Social Media Analytics',
     subtitle: 'Unified cross-platform intelligence',
     description: 'Real-time dashboards tracking engagement, follower growth, reach, and ROI across all connected platforms in one place.',
@@ -18,7 +18,7 @@ const FEATURES = [
   {
     id: 'content',
     icon: <Brain className="w-6 h-6" />,
-    color: '#00D4AA',
+    color: '#E8C96A',
     title: 'AI Content Studio',
     subtitle: 'Platform-native content at scale',
     description: 'Generate captions, hashtags, and post variations optimized for each platform\'s unique algorithm and audience behavior.',
@@ -119,8 +119,8 @@ export function FeaturesSection() {
 
         {/* Section header */}
         <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-[#0066FF]/20 mb-6">
-            <TrendingUp className="w-4 h-4 text-[#0066FF]" />
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-[#C9A84C]/20 mb-6">
+            <TrendingUp className="w-4 h-4 text-[#C9A84C]" />
             <span className="text-sm text-white/60">Everything you need</span>
           </div>
           <h2 style={{ fontFamily: 'var(--font-display)' }}

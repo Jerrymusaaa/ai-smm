@@ -17,8 +17,8 @@ const PLATFORMS = [
 ];
 
 const METRICS = [
-  { label: 'Posts Scheduled', value: '2.4M+', icon: <BarChart3 className="w-4 h-4" />, color: '#0066FF' },
-  { label: 'Active Users', value: '18K+', icon: <Users className="w-4 h-4" />, color: '#00D4AA' },
+  { label: 'Posts Scheduled', value: '2.4M+', icon: <BarChart3 className="w-4 h-4" />, color: '#C9A84C' },
+  { label: 'Active Users', value: '18K+', icon: <Users className="w-4 h-4" />, color: '#E8C96A' },
   { label: 'Avg. Engagement Lift', value: '+340%', icon: <TrendingUp className="w-4 h-4" />, color: '#FF6B35' },
 ];
 
@@ -31,18 +31,18 @@ export function HeroSection() {
       
       {/* Glowing orbs */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-[120px] opacity-20"
-        style={{ background: 'radial-gradient(circle, #0066FF, transparent)' }} />
+        style={{ background: 'radial-gradient(circle, #C9A84C, transparent)' }} />
       <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full blur-[100px] opacity-15"
-        style={{ background: 'radial-gradient(circle, #00D4AA, transparent)' }} />
+        style={{ background: 'radial-gradient(circle, #E8C96A, transparent)' }} />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-20">
         <div className="text-center mb-16">
           
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-[#0066FF]/20 mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-[#C9A84C]/20 mb-8">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00D4AA] opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00D4AA]" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E8C96A] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E8C96A]" />
             </span>
             <span className="text-sm text-white/70">Now supporting 23+ social platforms</span>
           </div>
@@ -144,15 +144,15 @@ export function HeroSection() {
           {/* Floating UI cards */}
           <div className="absolute -left-6 top-1/3 glass rounded-xl p-3 border border-white/10 float hidden lg:block">
             <div className="flex items-center gap-2 mb-1">
-              <div className="w-2 h-2 rounded-full bg-[#00D4AA] pulse-dot" />
+              <div className="w-2 h-2 rounded-full bg-[#E8C96A] pulse-dot" />
               <span className="text-xs text-white/60">AI generating...</span>
             </div>
             <p className="text-xs text-white font-medium w-32">"Create 5 variations for Instagram Reels"</p>
           </div>
 
-          <div className="absolute -right-6 bottom-1/3 glass rounded-xl p-3 border border-[#0066FF]/20 float-delayed hidden lg:block">
+          <div className="absolute -right-6 bottom-1/3 glass rounded-xl p-3 border border-[#C9A84C]/20 float-delayed hidden lg:block">
             <div className="text-xs text-white/50 mb-1">Engagement rate</div>
-            <div style={{ fontFamily: 'var(--font-display)' }} className="text-2xl font-bold text-[#00D4AA]">+127%</div>
+            <div style={{ fontFamily: 'var(--font-display)' }} className="text-2xl font-bold text-[#E8C96A]">+127%</div>
             <div className="text-xs text-white/30">vs last month</div>
           </div>
         </div>

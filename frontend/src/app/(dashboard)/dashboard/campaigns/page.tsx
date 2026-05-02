@@ -20,7 +20,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     startDate: 'Apr 1', endDate: 'Apr 30',
     budget: 5000, spent: 3240,
     reach: 284000, clicks: 18400, engagement: 7.2, conversions: 1240,
-    progress: 65, color: '#0066FF',
+    progress: 65, color: '#C9A84C',
   },
   {
     id: '2', name: 'Q2 Lead Generation', status: 'active',
@@ -32,7 +32,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     startDate: 'Apr 10', endDate: 'May 10',
     budget: 3000, spent: 980,
     reach: 92000, clicks: 7800, engagement: 4.8, conversions: 420,
-    progress: 33, color: '#00D4AA',
+    progress: 33, color: '#E8C96A',
   },
   {
     id: '3', name: 'Creator Collab Series', status: 'paused',
@@ -138,7 +138,7 @@ export default function CampaignsPage() {
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <button className="flex items-center gap-2 px-3 py-2 rounded-xl glass border border-[#0066FF]/20 text-xs text-[#0066FF] hover:bg-[#0066FF]/10 transition-all">
+          <button className="flex items-center gap-2 px-3 py-2 rounded-xl glass border border-[#C9A84C]/20 text-xs text-[#C9A84C] hover:bg-[#C9A84C]/10 transition-all">
             <Sparkles className="w-3.5 h-3.5" />
             AI Strategy
           </button>
@@ -176,7 +176,7 @@ export default function CampaignsPage() {
               onClick={() => setStatusFilter(f)}
               className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
                 statusFilter === f
-                  ? 'bg-[#0066FF] text-white shadow-lg shadow-blue-500/20'
+                  ? 'bg-[#C9A84C] text-white shadow-lg shadow-yellow-600/20'
                   : 'glass border border-white/[0.06] text-white/50 hover:text-white'
               }`}>
               {f}
@@ -198,8 +198,8 @@ export default function CampaignsPage() {
       {/* Campaign grid */}
       {filtered.length === 0 ? (
         <div className="glass rounded-2xl border border-white/[0.06] p-16 text-center">
-          <div className="w-14 h-14 rounded-2xl bg-[#0066FF]/10 border border-[#0066FF]/20 flex items-center justify-center mx-auto mb-4">
-            <Filter className="w-7 h-7 text-[#0066FF]" />
+          <div className="w-14 h-14 rounded-2xl bg-[#C9A84C]/10 border border-[#C9A84C]/20 flex items-center justify-center mx-auto mb-4">
+            <Filter className="w-7 h-7 text-[#C9A84C]" />
           </div>
           <p className="text-white/50 text-sm mb-2">No campaigns found</p>
           <p className="text-white/25 text-xs mb-6">

@@ -8,12 +8,12 @@ export function BillingOverview() {
       {[
         {
           label: 'Current plan', value: 'Pro Plan', sub: 'Billed annually',
-          icon: Zap, color: '#0066FF',
-          extra: <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#0066FF]/20 text-[#0066FF] font-medium">Active</span>,
+          icon: Zap, color: '#C9A84C',
+          extra: <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#C9A84C]/20 text-[#C9A84C] font-medium">Active</span>,
         },
         {
           label: 'Next billing date', value: 'May 1, 2025', sub: '$39.00 due',
-          icon: Calendar, color: '#00D4AA', extra: null,
+          icon: Calendar, color: '#E8C96A', extra: null,
         },
         {
           label: 'Payment method', value: 'Visa •••• 4242', sub: 'Expires 04/27',

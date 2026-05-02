@@ -29,8 +29,8 @@ export interface Influencer {
 }
 
 const TIER_CONFIG = {
-  nano: { label: 'Nano', color: '#00D4AA', bg: 'rgba(0,212,170,0.12)', range: '1K–10K' },
-  micro: { label: 'Micro', color: '#0066FF', bg: 'rgba(0,102,255,0.12)', range: '10K–100K' },
+  nano: { label: 'Nano', color: '#E8C96A', bg: 'rgba(0,212,170,0.12)', range: '1K–10K' },
+  micro: { label: 'Micro', color: '#C9A84C', bg: 'rgba(0,102,255,0.12)', range: '10K–100K' },
   macro: { label: 'Macro', color: '#A855F7', bg: 'rgba(168,85,247,0.12)', range: '100K–1M' },
   mega: { label: 'Mega', color: '#FF6B35', bg: 'rgba(255,107,53,0.12)', range: '1M+' },
 };
@@ -57,8 +57,8 @@ export function InfluencerCard({ influencer, onContact, onView }: InfluencerCard
               {influencer.avatar}
             </div>
             {influencer.verified && (
-              <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#0066FF] border-2 flex items-center justify-center"
-                style={{ borderColor: '#0D1525' }}>
+              <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#C9A84C] border-2 flex items-center justify-center"
+                style={{ borderColor: '#0D0D0D' }}>
                 <Verified className="w-2.5 h-2.5 text-white" />
               </div>
             )}
@@ -82,7 +82,7 @@ export function InfluencerCard({ influencer, onContact, onView }: InfluencerCard
 
           <button onClick={() => setSaved(!saved)}
             className={cn('p-1.5 rounded-lg transition-all flex-shrink-0',
-              saved ? 'text-[#0066FF] bg-[#0066FF]/10' : 'text-white/30 hover:text-white/60 hover:bg-white/[0.06]')}>
+              saved ? 'text-[#C9A84C] bg-[#C9A84C]/10' : 'text-white/30 hover:text-white/60 hover:bg-white/[0.06]')}>
             {saved ? <BookmarkCheck className="w-4 h-4" /> : <BookmarkPlus className="w-4 h-4" />}
           </button>
         </div>
@@ -107,7 +107,7 @@ export function InfluencerCard({ influencer, onContact, onView }: InfluencerCard
         {/* Metrics grid */}
         <div className="grid grid-cols-3 gap-2 mb-4">
           <div className="bg-white/[0.03] rounded-xl p-2.5 text-center border border-white/[0.04]">
-            <div style={{ fontFamily: 'var(--font-display)' }} className="text-sm font-bold text-[#0066FF]">
+            <div style={{ fontFamily: 'var(--font-display)' }} className="text-sm font-bold text-[#C9A84C]">
               {influencer.totalFollowers}
             </div>
             <div className="text-[10px] text-white/40 mt-0.5 flex items-center justify-center gap-1">
@@ -115,7 +115,7 @@ export function InfluencerCard({ influencer, onContact, onView }: InfluencerCard
             </div>
           </div>
           <div className="bg-white/[0.03] rounded-xl p-2.5 text-center border border-white/[0.04]">
-            <div style={{ fontFamily: 'var(--font-display)' }} className="text-sm font-bold text-[#00D4AA]">
+            <div style={{ fontFamily: 'var(--font-display)' }} className="text-sm font-bold text-[#E8C96A]">
               {influencer.engagementRate}%
             </div>
             <div className="text-[10px] text-white/40 mt-0.5 flex items-center justify-center gap-1">
@@ -143,7 +143,7 @@ export function InfluencerCard({ influencer, onContact, onView }: InfluencerCard
             </div>
             <span className="text-xs text-white/50">{influencer.rating} ({influencer.reviews})</span>
           </div>
-          <div className="flex items-center gap-1 text-[#00D4AA] text-xs">
+          <div className="flex items-center gap-1 text-[#E8C96A] text-xs">
             <TrendingUp className="w-3 h-3" />
             <span>{influencer.recentGrowth} this month</span>
           </div>
@@ -178,7 +178,7 @@ export function InfluencerCard({ influencer, onContact, onView }: InfluencerCard
           <ExternalLink className="w-3.5 h-3.5" /> View profile
         </button>
         <button onClick={() => onContact(influencer)}
-          className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-medium bg-[#0066FF] text-white hover:bg-[#0052CC] transition-all shadow-lg shadow-blue-500/20">
+          className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-medium bg-[#C9A84C] text-white hover:bg-[#0052CC] transition-all shadow-lg shadow-yellow-600/20">
           <MessageCircle className="w-3.5 h-3.5" /> Contact
         </button>
       </div>

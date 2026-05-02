@@ -23,7 +23,7 @@ const HASHTAG_GROUPS = [
   },
   {
     label: 'Your niche',
-    color: '#0066FF',
+    color: '#C9A84C',
     tags: [
       { tag: '#MarketingAutomation', volume: '1.2M', trending: false },
       { tag: '#GrowthHacking', volume: '3.8M', trending: true },
@@ -34,7 +34,7 @@ const HASHTAG_GROUPS = [
   },
   {
     label: 'High engagement',
-    color: '#00D4AA',
+    color: '#E8C96A',
     tags: [
       { tag: '#Entrepreneur', volume: '89M', trending: false },
       { tag: '#BusinessTips', volume: '22M', trending: false },
@@ -119,10 +119,10 @@ export default function ContentStudioPage() {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-2 px-3 py-2 rounded-xl glass border border-[#0066FF]/20">
-            <Zap className="w-4 h-4 text-[#0066FF]" />
+          <div className="flex items-center gap-2 px-3 py-2 rounded-xl glass border border-[#C9A84C]/20">
+            <Zap className="w-4 h-4 text-[#C9A84C]" />
             <span className="text-xs text-white/60">
-              <span className="text-[#0066FF] font-medium">247</span> captions generated today
+              <span className="text-[#C9A84C] font-medium">247</span> captions generated today
             </span>
           </div>
         </div>
@@ -143,7 +143,7 @@ export default function ContentStudioPage() {
                 onChange={e => setPrompt(e.target.value)}
                 placeholder="Describe your post, product, announcement, or just give a topic... e.g. 'We just launched a new AI feature that automatically schedules posts at peak engagement times'"
                 rows={4}
-                className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 outline-none focus:border-[#0066FF]/40 focus:bg-white/[0.06] transition-all resize-none leading-relaxed"
+                className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 outline-none focus:border-[#C9A84C]/40 focus:bg-white/[0.06] transition-all resize-none leading-relaxed"
               />
               <div className="absolute bottom-3 right-3 text-xs text-white/20">
                 {prompt.length} chars
@@ -205,12 +205,12 @@ export default function ContentStudioPage() {
                 {/* Variants count */}
                 <div>
                   <label className="text-sm font-medium text-white/70 block mb-3">
-                    Variants per platform: <span className="text-[#0066FF]">{postCount}</span>
+                    Variants per platform: <span className="text-[#C9A84C]">{postCount}</span>
                   </label>
                   <input
                     type="range" min={1} max={5} value={postCount}
                     onChange={e => setPostCount(Number(e.target.value))}
-                    className="w-full accent-[#0066FF]"
+                    className="w-full accent-[#C9A84C]"
                   />
                   <div className="flex justify-between text-xs text-white/25 mt-1">
                     <span>1 variant</span>
@@ -258,10 +258,10 @@ export default function ContentStudioPage() {
           </div>
 
           {/* AI tip */}
-          <div className="rounded-2xl border border-[#00D4AA]/20 p-4"
+          <div className="rounded-2xl border border-[#E8C96A]/20 p-4"
             style={{ background: 'linear-gradient(135deg, rgba(0,212,170,0.06), rgba(0,102,255,0.04))' }}>
             <div className="flex items-start gap-3">
-              <Wand2 className="w-4 h-4 text-[#00D4AA] mt-0.5 flex-shrink-0" />
+              <Wand2 className="w-4 h-4 text-[#E8C96A] mt-0.5 flex-shrink-0" />
               <div>
                 <p className="text-xs font-medium text-white/70 mb-1">AI tip</p>
                 <p className="text-xs text-white/40 leading-relaxed">
@@ -281,7 +281,7 @@ export default function ContentStudioPage() {
               Generated captions
             </h2>
             {variants.length > 0 && (
-              <span className="text-xs px-2.5 py-1 rounded-full bg-[#00D4AA]/15 text-[#00D4AA] border border-[#00D4AA]/20">
+              <span className="text-xs px-2.5 py-1 rounded-full bg-[#E8C96A]/15 text-[#E8C96A] border border-[#E8C96A]/20">
                 {variants.length} variants ready
               </span>
             )}

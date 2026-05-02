@@ -21,10 +21,10 @@ export default function VerifyEmailPage() {
     <div className="text-center">
       {/* Icon */}
       <div className="relative w-20 h-20 mx-auto mb-8">
-        <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#0066FF]/20 to-[#00D4AA]/20 border border-white/10 flex items-center justify-center">
+        <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#C9A84C]/20 to-[#E8C96A]/20 border border-white/10 flex items-center justify-center">
           <Mail className="w-9 h-9 text-white/80" />
         </div>
-        <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#00D4AA] border-2 border-[#050A14] flex items-center justify-center">
+        <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#E8C96A] border-2 border-[#050A14] flex items-center justify-center">
           <span className="text-white text-xs font-bold">1</span>
         </div>
       </div>
@@ -45,8 +45,8 @@ export default function VerifyEmailPage() {
           { step: '3', text: 'You\'ll be redirected to your dashboard' },
         ].map(item => (
           <div key={item.step} className="flex items-center gap-3">
-            <div className="w-7 h-7 rounded-full bg-[#0066FF]/20 border border-[#0066FF]/30 flex items-center justify-center flex-shrink-0">
-              <span className="text-xs font-bold text-[#0066FF]">{item.step}</span>
+            <div className="w-7 h-7 rounded-full bg-[#C9A84C]/20 border border-[#C9A84C]/30 flex items-center justify-center flex-shrink-0">
+              <span className="text-xs font-bold text-[#C9A84C]">{item.step}</span>
             </div>
             <span className="text-sm text-white/60">{item.text}</span>
           </div>
@@ -54,7 +54,7 @@ export default function VerifyEmailPage() {
       </div>
 
       {resent && (
-        <div className="mb-4 px-4 py-3 rounded-xl bg-[#00D4AA]/10 border border-[#00D4AA]/20 text-sm text-[#00D4AA] text-center">
+        <div className="mb-4 px-4 py-3 rounded-xl bg-[#E8C96A]/10 border border-[#E8C96A]/20 text-sm text-[#E8C96A] text-center">
           ✓ Verification email resent successfully
         </div>
       )}
@@ -65,7 +65,7 @@ export default function VerifyEmailPage() {
 
       <p className="text-xs text-white/25">
         Wrong email?{' '}
-        <Link href="/signup" className="text-[#0066FF] hover:text-[#3385FF] transition-colors">
+        <Link href="/signup" className="text-[#C9A84C] hover:text-[#3385FF] transition-colors">
           Go back and change it
         </Link>
       </p>

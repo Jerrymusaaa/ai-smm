@@ -56,9 +56,9 @@ export function ContactModal({ influencer, onClose }: ContactModalProps) {
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4"
         style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)' }}>
         <div className="w-full max-w-md rounded-2xl border border-white/10 p-8 text-center shadow-2xl"
-          style={{ background: '#0D1525' }}>
-          <div className="w-16 h-16 rounded-full bg-[#00D4AA]/20 border border-[#00D4AA]/30 flex items-center justify-center mx-auto mb-5">
-            <Send className="w-8 h-8 text-[#00D4AA]" />
+          style={{ background: '#0D0D0D' }}>
+          <div className="w-16 h-16 rounded-full bg-[#E8C96A]/20 border border-[#E8C96A]/30 flex items-center justify-center mx-auto mb-5">
+            <Send className="w-8 h-8 text-[#E8C96A]" />
           </div>
           <h3 style={{ fontFamily: 'var(--font-display)' }} className="text-xl font-bold text-white mb-2">
             Proposal sent!
@@ -79,7 +79,7 @@ export function ContactModal({ influencer, onClose }: ContactModalProps) {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4"
       style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)' }}>
       <div className="w-full max-w-lg rounded-2xl border border-white/10 shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
-        style={{ background: '#0D1525' }}>
+        style={{ background: '#0D0D0D' }}>
 
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.06] flex-shrink-0">
@@ -105,7 +105,7 @@ export function ContactModal({ influencer, onClose }: ContactModalProps) {
         <div className="flex h-0.5">
           {STEPS.map((_, i) => (
             <div key={i} className="flex-1 transition-all"
-              style={{ background: i <= step ? '#0066FF' : 'rgba(255,255,255,0.06)' }} />
+              style={{ background: i <= step ? '#C9A84C' : 'rgba(255,255,255,0.06)' }} />
           ))}
         </div>
 
@@ -122,11 +122,11 @@ export function ContactModal({ influencer, onClose }: ContactModalProps) {
                       onClick={() => update('collabType', type.id)}
                       className={`flex items-center gap-2.5 p-3 rounded-xl border text-left transition-all ${
                         form.collabType === type.id
-                          ? 'border-[#0066FF]/50 bg-[#0066FF]/10'
+                          ? 'border-[#C9A84C]/50 bg-[#C9A84C]/10'
                           : 'border-white/[0.06] hover:border-white/20 hover:bg-white/[0.04]'
                       }`}>
                       <span className="text-xl">{type.icon}</span>
-                      <span className={`text-xs font-medium ${form.collabType === type.id ? 'text-[#0066FF]' : 'text-white/70'}`}>
+                      <span className={`text-xs font-medium ${form.collabType === type.id ? 'text-[#C9A84C]' : 'text-white/70'}`}>
                         {type.label}
                       </span>
                     </button>
@@ -142,7 +142,7 @@ export function ContactModal({ influencer, onClose }: ContactModalProps) {
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 text-sm">$</span>
                   <input type="number" placeholder={influencer.pricePerPost.replace('$', '').replace(',', '')}
                     value={form.budget} onChange={e => update('budget', e.target.value)}
-                    className="w-full bg-white/[0.05] border border-white/10 rounded-xl pl-8 pr-4 py-3 text-sm text-white placeholder-white/25 outline-none focus:border-[#0066FF]/40 transition-all" />
+                    className="w-full bg-white/[0.05] border border-white/10 rounded-xl pl-8 pr-4 py-3 text-sm text-white placeholder-white/25 outline-none focus:border-[#C9A84C]/40 transition-all" />
                 </div>
                 <p className="text-xs text-white/30 mt-1.5">
                   {influencer.name} typically charges {influencer.pricePerPost} per post
@@ -154,7 +154,7 @@ export function ContactModal({ influencer, onClose }: ContactModalProps) {
                   <div className="flex items-center gap-2"><Calendar className="w-4 h-4" /> Desired start date</div>
                 </label>
                 <input type="date" value={form.startDate} onChange={e => update('startDate', e.target.value)}
-                  className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-[#0066FF]/40 transition-all [color-scheme:dark]" />
+                  className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-[#C9A84C]/40 transition-all [color-scheme:dark]" />
               </div>
             </>
           )}
@@ -169,14 +169,14 @@ export function ContactModal({ influencer, onClose }: ContactModalProps) {
                 </label>
                 <input type="text" placeholder="What product or service are you promoting?"
                   value={form.productDesc} onChange={e => update('productDesc', e.target.value)}
-                  className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 outline-none focus:border-[#0066FF]/40 transition-all" />
+                  className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 outline-none focus:border-[#C9A84C]/40 transition-all" />
               </div>
 
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <label className="text-sm font-medium text-white/70">Outreach message</label>
                   <button onClick={aiWrite} disabled={aiWriting}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-[#0066FF]/15 text-[#0066FF] border border-[#0066FF]/25 hover:bg-[#0066FF]/25 transition-all disabled:opacity-40">
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-[#C9A84C]/15 text-[#C9A84C] border border-[#C9A84C]/25 hover:bg-[#C9A84C]/25 transition-all disabled:opacity-40">
                     {aiWriting
                       ? <><Sparkles className="w-3.5 h-3.5 animate-pulse" /> Writing...</>
                       : <><Sparkles className="w-3.5 h-3.5" /> AI write</>}
@@ -186,7 +186,7 @@ export function ContactModal({ influencer, onClose }: ContactModalProps) {
                   placeholder={`Write a personalized message to ${influencer.name}...`}
                   value={form.message} onChange={e => update('message', e.target.value)}
                   rows={8}
-                  className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 outline-none focus:border-[#0066FF]/40 transition-all resize-none leading-relaxed"
+                  className="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 outline-none focus:border-[#C9A84C]/40 transition-all resize-none leading-relaxed"
                 />
                 <p className="text-[11px] text-white/25 mt-1.5 text-right">{form.message.length} chars</p>
               </div>

@@ -40,14 +40,14 @@ export function SettingsNav({ active, onChange }: SettingsNavProps) {
               active === item.id
                 ? item.danger
                   ? 'bg-red-500/10 text-red-400'
-                  : 'bg-[#0066FF]/15 text-white border border-[#0066FF]/20'
+                  : 'bg-[#C9A84C]/15 text-white border border-[#C9A84C]/20'
                 : item.danger
                 ? 'text-red-400/60 hover:bg-red-500/10 hover:text-red-400'
                 : 'text-white/50 hover:text-white hover:bg-white/[0.06]'
             )}
           >
             <item.icon className={cn('w-4 h-4 flex-shrink-0',
-              active === item.id && !item.danger ? 'text-[#0066FF]' : ''
+              active === item.id && !item.danger ? 'text-[#C9A84C]' : ''
             )} />
             {item.label}
           </button>

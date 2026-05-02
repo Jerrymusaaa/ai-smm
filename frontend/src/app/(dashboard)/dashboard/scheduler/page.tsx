@@ -82,7 +82,7 @@ export default function SchedulerPage() {
         </div>
         <div className="flex items-center gap-3">
           {/* AI bulk schedule button */}
-          <button className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl glass border border-[#00D4AA]/20 text-xs text-[#00D4AA] hover:bg-[#00D4AA]/10 transition-all">
+          <button className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl glass border border-[#E8C96A]/20 text-xs text-[#E8C96A] hover:bg-[#E8C96A]/10 transition-all">
             <Zap className="w-3.5 h-3.5" />
             AI bulk schedule
           </button>
@@ -109,9 +109,9 @@ export default function SchedulerPage() {
       <SchedulerStats />
 
       {/* AI suggestion banner */}
-      <div className="rounded-2xl border border-[#0066FF]/20 p-4 flex items-center gap-4"
+      <div className="rounded-2xl border border-[#C9A84C]/20 p-4 flex items-center gap-4"
         style={{ background: 'linear-gradient(135deg, rgba(0,102,255,0.08), rgba(0,212,170,0.04))' }}>
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#0066FF] to-[#00D4AA] flex items-center justify-center flex-shrink-0">
+        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#C9A84C] to-[#E8C96A] flex items-center justify-center flex-shrink-0">
           <Sparkles className="w-4 h-4 text-white" />
         </div>
         <div className="flex-1 min-w-0">

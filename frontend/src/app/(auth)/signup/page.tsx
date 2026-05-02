@@ -106,8 +106,8 @@ export default function SignupPage() {
   if (done) {
     return (
       <div className="text-center py-8">
-        <div className="w-16 h-16 rounded-full bg-[#00D4AA]/20 border border-[#00D4AA]/30 flex items-center justify-center mx-auto mb-6">
-          <Check className="w-8 h-8 text-[#00D4AA]" />
+        <div className="w-16 h-16 rounded-full bg-[#E8C96A]/20 border border-[#E8C96A]/30 flex items-center justify-center mx-auto mb-6">
+          <Check className="w-8 h-8 text-[#E8C96A]" />
         </div>
         <h2 style={{ fontFamily: 'var(--font-display)' }} className="text-2xl font-bold text-white mb-3">Check your email</h2>
         <p className="text-white/50 text-sm mb-2">We sent a verification link to</p>
@@ -124,7 +124,7 @@ export default function SignupPage() {
         <h1 style={{ fontFamily: 'var(--font-display)' }} className="text-3xl font-bold text-white mb-2">Create your account</h1>
         <p className="text-white/40 text-sm">
           Already have an account?{' '}
-          <Link href="/login" className="text-[#0066FF] hover:text-[#3385FF] font-medium">Sign in</Link>
+          <Link href="/login" className="text-[#C9A84C] hover:text-[#3385FF] font-medium">Sign in</Link>
         </p>
       </div>
 
@@ -133,7 +133,7 @@ export default function SignupPage() {
         {STEPS.map((s, i) => (
           <div key={s} className="flex items-center gap-2 flex-1">
             <div className={`flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold transition-all flex-shrink-0 ${
-              i < step ? 'bg-[#00D4AA] text-white' : i === step ? 'bg-[#0066FF] text-white' : 'bg-white/10 text-white/30'
+              i < step ? 'bg-[#E8C96A] text-white' : i === step ? 'bg-[#C9A84C] text-white' : 'bg-white/10 text-white/30'
             }`}>
               {i < step ? <Check className="w-3.5 h-3.5" /> : i + 1}
             </div>
@@ -150,14 +150,14 @@ export default function SignupPage() {
           {ACCOUNT_CATEGORIES.map(cat => (
             <button key={cat.id} onClick={() => { setCategory(cat.id); setErrors({}); }}
               className={`w-full p-4 rounded-xl border text-left transition-all flex items-center gap-4 ${
-                category === cat.id ? 'border-[#0066FF]/60 bg-[#0066FF]/10' : 'border-white/10 bg-white/[0.04] hover:border-white/20'
+                category === cat.id ? 'border-[#C9A84C]/60 bg-[#C9A84C]/10' : 'border-white/10 bg-white/[0.04] hover:border-white/20'
               }`}>
               <span className="text-2xl">{cat.icon}</span>
               <div>
-                <div className={`text-sm font-semibold ${category === cat.id ? 'text-[#0066FF]' : 'text-white'}`}>{cat.label}</div>
+                <div className={`text-sm font-semibold ${category === cat.id ? 'text-[#C9A84C]' : 'text-white'}`}>{cat.label}</div>
                 <div className="text-xs text-white/40 mt-0.5">{cat.desc}</div>
               </div>
-              {category === cat.id && <Check className="w-4 h-4 text-[#0066FF] ml-auto flex-shrink-0" />}
+              {category === cat.id && <Check className="w-4 h-4 text-[#C9A84C] ml-auto flex-shrink-0" />}
             </button>
           ))}
           {errors.category && <p className="text-xs text-red-400">{errors.category}</p>}
@@ -171,11 +171,11 @@ export default function SignupPage() {
           {selectedCategory.plans.map(p => (
             <button key={p.id} onClick={() => { setPlan(p.id); setErrors({}); }}
               className={`w-full p-4 rounded-xl border text-left transition-all ${
-                plan === p.id ? 'border-[#0066FF]/60 bg-[#0066FF]/10' : 'border-white/10 bg-white/[0.04] hover:border-white/20'
+                plan === p.id ? 'border-[#C9A84C]/60 bg-[#C9A84C]/10' : 'border-white/10 bg-white/[0.04] hover:border-white/20'
               }`}>
               <div className="flex items-center justify-between">
-                <div className={`text-sm font-semibold ${plan === p.id ? 'text-[#0066FF]' : 'text-white'}`}>{p.label}</div>
-                <div className="text-xs font-bold text-[#00D4AA]">{p.price}</div>
+                <div className={`text-sm font-semibold ${plan === p.id ? 'text-[#C9A84C]' : 'text-white'}`}>{p.label}</div>
+                <div className="text-xs font-bold text-[#E8C96A]">{p.price}</div>
               </div>
               <div className="text-xs text-white/40 mt-1">{p.desc}</div>
             </button>
@@ -219,7 +219,7 @@ export default function SignupPage() {
                 {[1,2,3,4].map(i => (
                   <div key={i} className={`flex-1 h-1 rounded-full transition-all ${
                     form.password.length >= i * 3
-                      ? i <= 1 ? 'bg-red-500' : i <= 2 ? 'bg-yellow-500' : i <= 3 ? 'bg-[#0066FF]' : 'bg-[#00D4AA]'
+                      ? i <= 1 ? 'bg-red-500' : i <= 2 ? 'bg-yellow-500' : i <= 3 ? 'bg-[#C9A84C]' : 'bg-[#E8C96A]'
                       : 'bg-white/10'
                   }`} />
                 ))}

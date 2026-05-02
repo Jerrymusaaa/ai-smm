@@ -26,17 +26,17 @@ export default function InfluencerDashboard() {
           </h1>
           <p className="text-white/40 text-sm mt-1">Your campaigns, earnings, and marketplace</p>
         </div>
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#00D4AA]/15 border border-[#00D4AA]/25">
-          <Star className="w-3.5 h-3.5 text-[#00D4AA]" />
-          <span className="text-xs font-medium text-[#00D4AA]">Influencer Pro</span>
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#E8C96A]/15 border border-[#E8C96A]/25">
+          <Star className="w-3.5 h-3.5 text-[#E8C96A]" />
+          <span className="text-xs font-medium text-[#E8C96A]">Influencer Pro</span>
         </div>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
         {[
-          { label: 'Wallet balance', value: 'KES 24,500', sub: 'Available to withdraw', icon: Wallet, color: '#00D4AA' },
-          { label: 'This month earnings', value: 'KES 73,000', sub: 'After 15% commission', icon: TrendingUp, color: '#0066FF' },
+          { label: 'Wallet balance', value: 'KES 24,500', sub: 'Available to withdraw', icon: Wallet, color: '#E8C96A' },
+          { label: 'This month earnings', value: 'KES 73,000', sub: 'After 15% commission', icon: TrendingUp, color: '#C9A84C' },
           { label: 'Active campaigns', value: '2', sub: '1 pending review', icon: Zap, color: '#A855F7' },
           { label: 'Audience score', value: '94%', sub: 'Human followers', icon: Shield, color: '#FF6B35' },
         ].map(stat => (
@@ -54,14 +54,14 @@ export default function InfluencerDashboard() {
       </div>
 
       {/* Commission info */}
-      <div className="glass rounded-2xl border border-[#00D4AA]/20 p-4 flex items-center gap-4"
+      <div className="glass rounded-2xl border border-[#E8C96A]/20 p-4 flex items-center gap-4"
         style={{ background: 'linear-gradient(135deg, rgba(0,212,170,0.07), rgba(0,102,255,0.04))' }}>
-        <Zap className="w-5 h-5 text-[#00D4AA] flex-shrink-0" />
+        <Zap className="w-5 h-5 text-[#E8C96A] flex-shrink-0" />
         <div className="flex-1">
           <p className="text-sm font-medium text-white">You're on the Influencer Pro plan — 15% commission</p>
           <p className="text-xs text-white/50">Upgrade to Creator Mode and reduce commission to 10% — save KES 7,500 on a KES 50,000 campaign</p>
         </div>
-        <button className="text-xs font-medium text-[#00D4AA] hover:text-white transition-colors whitespace-nowrap">Upgrade →</button>
+        <button className="text-xs font-medium text-[#E8C96A] hover:text-white transition-colors whitespace-nowrap">Upgrade →</button>
       </div>
 
       {/* Tabs */}
@@ -89,7 +89,7 @@ export default function InfluencerDashboard() {
                       <p className="text-sm font-medium text-white">{c.title}</p>
                       <p className="text-xs text-white/40 mt-0.5">{c.brand} · {c.platform}</p>
                     </div>
-                    <span className={`text-[10px] px-2 py-1 rounded-full font-medium ${c.status === 'In progress' ? 'bg-[#0066FF]/20 text-[#0066FF]' : 'bg-[#F59E0B]/20 text-[#F59E0B]'}`}>
+                    <span className={`text-[10px] px-2 py-1 rounded-full font-medium ${c.status === 'In progress' ? 'bg-[#C9A84C]/20 text-[#C9A84C]' : 'bg-[#F59E0B]/20 text-[#F59E0B]'}`}>
                       {c.status}
                     </span>
                   </div>
@@ -98,7 +98,7 @@ export default function InfluencerDashboard() {
                     <span>Due {c.deadline}</span>
                   </div>
                   <div className="w-full bg-white/[0.06] rounded-full h-1.5">
-                    <div className="h-1.5 rounded-full bg-[#00D4AA] transition-all" style={{ width: `${c.progress}%` }} />
+                    <div className="h-1.5 rounded-full bg-[#E8C96A] transition-all" style={{ width: `${c.progress}%` }} />
                   </div>
                 </div>
               ))}
@@ -112,7 +112,7 @@ export default function InfluencerDashboard() {
               <div className="relative w-20 h-20 flex-shrink-0">
                 <svg viewBox="0 0 36 36" className="w-20 h-20 -rotate-90">
                   <circle cx="18" cy="18" r="15.9" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="3.8" />
-                  <circle cx="18" cy="18" r="15.9" fill="none" stroke="#00D4AA" strokeWidth="3.8" strokeDasharray="94 6" strokeLinecap="round" />
+                  <circle cx="18" cy="18" r="15.9" fill="none" stroke="#E8C96A" strokeWidth="3.8" strokeDasharray="94 6" strokeLinecap="round" />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <span style={{ fontFamily: 'var(--font-display)' }} className="text-lg font-bold text-white">94%</span>
@@ -124,8 +124,8 @@ export default function InfluencerDashboard() {
               </div>
             </div>
             {[
-              { label: 'Real followers', value: '94%', color: '#00D4AA' },
-              { label: 'Engagement authenticity', value: '91%', color: '#0066FF' },
+              { label: 'Real followers', value: '94%', color: '#E8C96A' },
+              { label: 'Engagement authenticity', value: '91%', color: '#C9A84C' },
               { label: 'Comment quality score', value: '88%', color: '#A855F7' },
             ].map(m => (
               <div key={m.label} className="mb-3">
@@ -146,7 +146,7 @@ export default function InfluencerDashboard() {
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <p className="text-sm text-white/50">{AVAILABLE_JOBS.length} jobs available matching your profile</p>
-            <button className="text-xs text-[#0066FF]">Filter by category</button>
+            <button className="text-xs text-[#C9A84C]">Filter by category</button>
           </div>
           {AVAILABLE_JOBS.map(job => (
             <div key={job.id} className="glass rounded-2xl border border-white/[0.06] p-5 hover:border-white/15 transition-all">
@@ -159,17 +159,17 @@ export default function InfluencerDashboard() {
                   <p className="text-xs text-white/40">{job.brand}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm font-bold text-[#00D4AA]">KES {job.budget}</p>
+                  <p className="text-sm font-bold text-[#E8C96A]">KES {job.budget}</p>
                   <p className="text-[10px] text-white/30 mt-0.5">{job.deadline}</p>
                 </div>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex gap-1.5">
                   {job.platforms.map(p => (
-                    <span key={p} className="text-[10px] px-2 py-0.5 rounded-full bg-[#0066FF]/15 text-[#0066FF]">{p}</span>
+                    <span key={p} className="text-[10px] px-2 py-0.5 rounded-full bg-[#C9A84C]/15 text-[#C9A84C]">{p}</span>
                   ))}
                 </div>
-                <button className="flex items-center gap-1 text-xs font-medium text-[#0066FF] hover:text-white transition-colors">
+                <button className="flex items-center gap-1 text-xs font-medium text-[#C9A84C] hover:text-white transition-colors">
                   View & apply <ChevronRight className="w-3.5 h-3.5" />
                 </button>
               </div>
@@ -187,7 +187,7 @@ export default function InfluencerDashboard() {
                   <p className="text-sm font-semibold text-white">{c.title}</p>
                   <p className="text-xs text-white/40 mt-0.5">{c.brand} · Due {c.deadline}</p>
                 </div>
-                <span className={`text-[10px] px-2 py-1 rounded-full font-medium ${c.status === 'In progress' ? 'bg-[#0066FF]/20 text-[#0066FF]' : 'bg-[#00D4AA]/20 text-[#00D4AA]'}`}>
+                <span className={`text-[10px] px-2 py-1 rounded-full font-medium ${c.status === 'In progress' ? 'bg-[#C9A84C]/20 text-[#C9A84C]' : 'bg-[#E8C96A]/20 text-[#E8C96A]'}`}>
                   {c.status}
                 </span>
               </div>
@@ -196,10 +196,10 @@ export default function InfluencerDashboard() {
                 <span>Budget: KES {c.budget.toLocaleString()}</span>
               </div>
               <div className="w-full bg-white/[0.06] rounded-full h-2 mb-4">
-                <div className="h-2 rounded-full bg-gradient-to-r from-[#0066FF] to-[#00D4AA]" style={{ width: `${c.progress}%` }} />
+                <div className="h-2 rounded-full bg-gradient-to-r from-[#C9A84C] to-[#E8C96A]" style={{ width: `${c.progress}%` }} />
               </div>
               {c.progress === 100 && (
-                <div className="flex items-center gap-2 text-xs text-[#00D4AA]">
+                <div className="flex items-center gap-2 text-xs text-[#E8C96A]">
                   <Check className="w-3.5 h-3.5" /> Content delivered — awaiting brand approval and payment release
                 </div>
               )}

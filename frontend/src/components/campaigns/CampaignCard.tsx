@@ -23,11 +23,11 @@ export interface Campaign {
 }
 
 const STATUS_CONFIG = {
-  active: { label: 'Active', bg: 'rgba(0,212,170,0.12)', color: '#00D4AA', dot: '#00D4AA' },
+  active: { label: 'Active', bg: 'rgba(0,212,170,0.12)', color: '#E8C96A', dot: '#E8C96A' },
   paused: { label: 'Paused', bg: 'rgba(245,158,11,0.12)', color: '#F59E0B', dot: '#F59E0B' },
   draft: { label: 'Draft', bg: 'rgba(136,136,136,0.12)', color: '#888', dot: '#888' },
   completed: { label: 'Completed', bg: 'rgba(168,85,247,0.12)', color: '#A855F7', dot: '#A855F7' },
-  scheduled: { label: 'Scheduled', bg: 'rgba(0,102,255,0.12)', color: '#0066FF', dot: '#0066FF' },
+  scheduled: { label: 'Scheduled', bg: 'rgba(0,102,255,0.12)', color: '#C9A84C', dot: '#C9A84C' },
 };
 
 interface CampaignCardProps {
@@ -75,7 +75,7 @@ export function CampaignCard({ campaign, onEdit, onDelete, onToggle }: CampaignC
             </button>
             {menuOpen && (
               <div className="absolute right-0 top-full mt-1 w-40 rounded-xl border border-white/10 shadow-2xl z-20 overflow-hidden"
-                style={{ background: '#0D1525' }}>
+                style={{ background: '#0D0D0D' }}>
                 <button onClick={() => { onEdit(campaign); setMenuOpen(false); }}
                   className="w-full flex items-center gap-2.5 px-3 py-2.5 text-xs text-white/60 hover:text-white hover:bg-white/[0.06] transition-all">
                   <Edit className="w-3.5 h-3.5" /> Edit campaign
@@ -110,8 +110,8 @@ export function CampaignCard({ campaign, onEdit, onDelete, onToggle }: CampaignC
         {/* Metrics grid */}
         <div className="grid grid-cols-2 gap-3 mb-4">
           {[
-            { label: 'Reach', value: campaign.reach >= 1000 ? `${(campaign.reach/1000).toFixed(1)}K` : campaign.reach, icon: Eye, color: '#0066FF' },
-            { label: 'Clicks', value: campaign.clicks >= 1000 ? `${(campaign.clicks/1000).toFixed(1)}K` : campaign.clicks, icon: MousePointerClick, color: '#00D4AA' },
+            { label: 'Reach', value: campaign.reach >= 1000 ? `${(campaign.reach/1000).toFixed(1)}K` : campaign.reach, icon: Eye, color: '#C9A84C' },
+            { label: 'Clicks', value: campaign.clicks >= 1000 ? `${(campaign.clicks/1000).toFixed(1)}K` : campaign.clicks, icon: MousePointerClick, color: '#E8C96A' },
             { label: 'Engagement', value: `${campaign.engagement}%`, icon: TrendingUp, color: '#A855F7' },
             { label: 'Conversions', value: campaign.conversions, icon: Users, color: '#FF6B35' },
           ].map(m => (

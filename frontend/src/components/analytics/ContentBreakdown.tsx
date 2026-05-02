@@ -3,8 +3,8 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
 const DATA = [
-  { type: 'Reels / Video', engagement: 8.4, reach: 94, color: '#0066FF' },
-  { type: 'Carousels', engagement: 6.8, reach: 78, color: '#00D4AA' },
+  { type: 'Reels / Video', engagement: 8.4, reach: 94, color: '#C9A84C' },
+  { type: 'Carousels', engagement: 6.8, reach: 78, color: '#E8C96A' },
   { type: 'Static image', engagement: 4.2, reach: 62, color: '#A855F7' },
   { type: 'Stories', engagement: 3.8, reach: 71, color: '#FF6B35' },
   { type: 'Text only', engagement: 2.9, reach: 48, color: '#F59E0B' },
@@ -14,7 +14,7 @@ const DATA = [
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="rounded-xl border border-white/10 p-3 shadow-xl text-xs" style={{ background: '#0D1525' }}>
+    <div className="rounded-xl border border-white/10 p-3 shadow-xl text-xs" style={{ background: '#0D0D0D' }}>
       <p className="text-white font-medium mb-2">{label}</p>
       {payload.map((p: any) => (
         <div key={p.dataKey} className="flex items-center gap-2 mb-1">
@@ -39,7 +39,7 @@ export function ContentBreakdown() {
         </div>
         <div className="flex items-center gap-3 text-xs">
           <div className="flex items-center gap-1.5">
-            <div className="w-2.5 h-2.5 rounded-sm bg-[#0066FF]" />
+            <div className="w-2.5 h-2.5 rounded-sm bg-[#C9A84C]" />
             <span className="text-white/40">Engagement</span>
           </div>
           <div className="flex items-center gap-1.5">
@@ -65,9 +65,9 @@ export function ContentBreakdown() {
       </div>
 
       {/* Insight */}
-      <div className="mt-4 p-3 rounded-xl bg-[#0066FF]/08 border border-[#0066FF]/20">
+      <div className="mt-4 p-3 rounded-xl bg-[#C9A84C]/08 border border-[#C9A84C]/20">
         <p className="text-xs text-white/60 leading-relaxed">
-          <span className="text-[#0066FF] font-medium">AI insight:</span> Reels and video content outperform static images by{' '}
+          <span className="text-[#C9A84C] font-medium">AI insight:</span> Reels and video content outperform static images by{' '}
           <span className="text-white font-medium">2x</span> on engagement. Consider shifting 30% of your static posts to short-form video.
         </p>
       </div>
