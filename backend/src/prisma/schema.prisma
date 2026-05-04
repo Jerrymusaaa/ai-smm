@@ -473,3 +473,48 @@ model BotDetectionReport {
 
   socialAccountId String @unique
 }
+
+model InfluencerProfile {
+  id                   String   @id @default(cuid())
+  botScore             Float    @default(0)
+  audienceAuthPct      Float    @default(0)
+  clickToViewRatio     Float    @default(0)
+  totalEarnings        Float    @default(0)
+  walletBalance        Float    @default(0)
+  pendingBalance       Float    @default(0)
+  commissionRate       Int      @default(25)
+  verifiedBadge        Boolean  @default(false)
+  priorityLevel        Int      @default(1)
+  niches               String[]
+  avgEngagementRate    Float    @default(0)
+  totalCampaigns       Int      @default(0)
+  rating               Float    @default(0)
+  portfolioUrl         String?
+  updatedAt            DateTime @updatedAt
+
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId               String   @unique
+
+  walletTransactions   WalletTransaction[]
+}
+
+model WalletTransaction {
+  id               String    @id @default(cuid())
+  type             String
+  amount           Float
+  currency         String    @default("KES")
+  status           String    @default("pending")
+  description      String?
+  campaignId       String?
+  reference        String?
+  withdrawalMethod String?
+  mpesaNumber      String?
+  paypalEmail      String?
+  processedAt      DateTime?
+  createdAt        DateTime  @default(now())
+
+  influencer       InfluencerProfile @relation(fields: [influencerId], references: [id], onDelete: Cascade)
+  influencerId     String
+
+  @@index([influencerId])
+}
