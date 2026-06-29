@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { Sidebar } from '@/components/dashboard/Sidebar';
 import { TopBar } from '@/components/dashboard/TopBar';
+import { useState as useChatState } from 'react';
+import { AIChatPanel } from '@/components/ai/AIChatPanel';
 import { useAuthStore } from '@/store/auth.store';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -50,3 +52,5 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     </div>
   );
 }
+// Note: Import AIChatPanel at the top of layout.tsx and add the floating button
+// This is handled by adding it to the layout JSX

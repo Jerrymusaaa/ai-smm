@@ -125,3 +125,41 @@ class ApiClient {
 
 export const api = new ApiClient();
 export default api;
+
+// Add this inside the ApiClient class or export separately
+export const aiApi = {
+  generateCaption: (data: any) =>
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/ai/caption`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+      body: JSON.stringify(data),
+    }).then(r => r.json()),
+
+  suggestHashtags: (data: any) =>
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/ai/hashtags`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+      body: JSON.stringify(data),
+    }).then(r => r.json()),
+
+  chat: (messages: any[], userContext?: any) =>
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/ai/chat`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+      body: JSON.stringify({ messages, userContext }),
+    }).then(r => r.json()),
+
+  getTrends: (platform: string, niche?: string) =>
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/ai/trends?platform=${platform}${niche ? `&niche=${niche}` : ''}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+    }).then(r => r.json()),
+};
