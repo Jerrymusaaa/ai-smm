@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { z } from 'zod';
 import passport from 'passport';
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 import { authService } from './auth.service';
 import { authenticate } from '../../shared/middleware/auth.middleware';
 import { authRateLimit } from '../../shared/middleware/rateLimit.middleware';
@@ -11,24 +11,24 @@ import jwt from 'jsonwebtoken';
 import { logger } from '../../shared/utils/logger';
 
 const router = Router();
-const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000'\;
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000';
 
-// ── Google OAuth setup ────────────────────────────────────────────────────────
 passport.use(new GoogleStrategy(
   {
     clientID:     process.env.GOOGLE_CLIENT_ID!,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     callbackURL:  `${process.env.API_URL || 'http://localhost:5000'}/api/auth/google/callback`,
   },
-  async (accessToken, refreshToken, profile, done) => {
+  async (accessToken: string, refreshToken: string, profile: any, done: any) => {
     try {
       const email = profile.emails?.[0]?.value;
       if (!email) return done(new Error('No email from Google'));
 
-      // Find or create user
       let user = await prisma.user.findUnique({ where: { email } });
+      let isNewUser = false;
 
       if (!user) {
+        isNewUser = true;
         user = await prisma.user.create({
           data: {
             email,
@@ -37,13 +37,13 @@ passport.use(new GoogleStrategy(
             emailVerified: true,
             emailVerifiedAt: new Date(),
             accountType: 'INDIVIDUAL',
+            onboardingDone: false,
             subscription: { create: { plan: 'FREE', status: 'ACTIVE' } },
             aiMemory: { create: {} },
           },
         });
         logger.info(`New user created via Google OAuth: ${email}`);
       } else {
-        // Update avatar if not set
         if (!user.avatar && profile.photos?.[0]?.value) {
           await prisma.user.update({
             where: { id: user.id },
@@ -52,7 +52,7 @@ passport.use(new GoogleStrategy(
         }
       }
 
-      return done(null, user);
+      return done(null, { ...user, isNewUser });
     } catch (error) {
       return done(error as Error);
     }
@@ -61,15 +61,10 @@ passport.use(new GoogleStrategy(
 
 router.use(passport.initialize());
 
-// GET /api/auth/google — redirect to Google
 router.get('/google',
-  passport.authenticate('google', {
-    scope: ['profile', 'email'],
-    session: false,
-  })
+  passport.authenticate('google', { scope: ['profile', 'email'], session: false })
 );
 
-// GET /api/auth/google/callback — Google redirects here
 router.get('/google/callback',
   passport.authenticate('google', { session: false, failureRedirect: `${FRONTEND_URL}/login?error=google_failed` }),
   async (req: Request, res: Response) => {
@@ -80,12 +75,8 @@ router.get('/google/callback',
         return;
       }
 
-      // Get subscription info
-      const subscription = await prisma.subscription.findUnique({
-        where: { userId: user.id },
-      });
+      const subscription = await prisma.subscription.findUnique({ where: { userId: user.id } });
 
-      // Generate JWT tokens
       const accessToken = jwt.sign(
         { userId: user.id, email: user.email },
         process.env.JWT_SECRET!,
@@ -97,7 +88,6 @@ router.get('/google/callback',
         { expiresIn: '7d' }
       );
 
-      // Save session
       await prisma.session.create({
         data: {
           userId: user.id,
@@ -109,7 +99,6 @@ router.get('/google/callback',
         },
       });
 
-      // Build user object to pass to frontend
       const userData = encodeURIComponent(JSON.stringify({
         id: user.id,
         email: user.email,
@@ -118,11 +107,15 @@ router.get('/google/callback',
         accountType: user.accountType,
         emailVerified: user.emailVerified,
         plan: subscription?.plan || 'FREE',
+        onboardingDone: user.onboardingDone,
       }));
 
-      // Redirect to frontend with tokens in URL (frontend will store them)
+      // New users go to account-type selection. Existing users go straight to dashboard.
+      const needsOnboarding = user.isNewUser || !user.onboardingDone;
+      const destination = needsOnboarding ? 'choose-account-type' : 'dashboard';
+
       res.redirect(
-        `${FRONTEND_URL}/auth/callback?accessToken=${accessToken}&refreshToken=${refreshToken}&user=${userData}`
+        `${FRONTEND_URL}/auth/callback?accessToken=${accessToken}&refreshToken=${refreshToken}&user=${userData}&next=${destination}`
       );
     } catch (error) {
       logger.error('Google OAuth callback error:', error);
@@ -131,15 +124,13 @@ router.get('/google/callback',
   }
 );
 
-// ── Standard auth routes ──────────────────────────────────────────────────────
-
 router.post('/register', authRateLimit, async (req: Request, res: Response) => {
   try {
     const data = z.object({
-      email:       z.string().email('Invalid email'),
-      password:    z.string().min(8, 'Password must be at least 8 characters'),
-      name:        z.string().min(1, 'Name is required').max(100),
-      accountType: z.enum(['individual','influencer','business','enterprise']).optional(),
+      email: z.string().email('Invalid email'),
+      password: z.string().min(8, 'Password must be at least 8 characters'),
+      name: z.string().min(1, 'Name is required').max(100),
+      accountType: z.enum(['individual', 'influencer', 'business', 'enterprise']).optional(),
     }).parse(req.body);
 
     const result = await authService.register(data);
@@ -153,25 +144,14 @@ router.post('/register', authRateLimit, async (req: Request, res: Response) => {
       res.status(400).json({ success: false, error: error.errors[0]?.message || 'Validation error' });
       return;
     }
-    res.status(error.statusCode || 500).json({
-      success: false,
-      error: error.message || 'Registration failed',
-    });
+    res.status(error.statusCode || 500).json({ success: false, error: error.message || 'Registration failed' });
   }
 });
 
 router.post('/login', authRateLimit, async (req: Request, res: Response) => {
   try {
-    const data = z.object({
-      email:    z.string().email(),
-      password: z.string().min(1),
-    }).parse(req.body);
-
-    const result = await authService.login({
-      ...data,
-      device: req.headers['user-agent'],
-      ip: req.ip,
-    });
+    const data = z.object({ email: z.string().email(), password: z.string().min(1) }).parse(req.body);
+    const result = await authService.login({ ...data, device: req.headers['user-agent'], ip: req.ip });
 
     res.cookie('refreshToken', result.refreshToken, {
       httpOnly: true,
@@ -186,20 +166,14 @@ router.post('/login', authRateLimit, async (req: Request, res: Response) => {
       res.status(400).json({ success: false, error: 'Invalid email or password format' });
       return;
     }
-    res.status(error.statusCode || 401).json({
-      success: false,
-      error: error.message || 'Login failed',
-    });
+    res.status(error.statusCode || 401).json({ success: false, error: error.message || 'Login failed' });
   }
 });
 
 router.post('/refresh', async (req: Request, res: Response) => {
   try {
     const token = req.cookies?.refreshToken || req.body.refreshToken;
-    if (!token) {
-      res.status(401).json({ success: false, error: 'Refresh token required' });
-      return;
-    }
+    if (!token) { res.status(401).json({ success: false, error: 'Refresh token required' }); return; }
     const result = await authService.refreshToken(token);
     res.json({ success: true, data: result });
   } catch (error: any) {
@@ -239,14 +213,57 @@ router.post('/forgot-password', authRateLimit, async (req: Request, res: Respons
 
 router.post('/reset-password', authRateLimit, async (req: Request, res: Response) => {
   try {
-    const { token, password } = z.object({
-      token:    z.string(),
-      password: z.string().min(8, 'Password must be at least 8 characters'),
-    }).parse(req.body);
+    const { token, password } = z.object({ token: z.string(), password: z.string().min(8) }).parse(req.body);
     const result = await authService.resetPassword(token, password);
     res.json({ success: true, ...result });
   } catch (error: any) {
     res.status(400).json({ success: false, error: error.message });
+  }
+});
+
+// POST /api/auth/complete-onboarding — set account type after Google signup
+router.post('/complete-onboarding', authenticate, async (req: AuthRequest, res: Response) => {
+  try {
+    const { accountType, businessName, niche } = z.object({
+      accountType: z.enum(['individual', 'influencer', 'business', 'enterprise']),
+      businessName: z.string().optional(),
+      niche: z.string().optional(),
+    }).parse(req.body);
+
+    const user = await prisma.user.update({
+      where: { id: req.user!.id },
+      data: {
+        accountType: accountType.toUpperCase() as any,
+        company: businessName,
+        onboardingDone: true,
+      },
+      select: {
+        id: true, email: true, name: true, avatar: true,
+        accountType: true, company: true, onboardingDone: true,
+        emailVerified: true,
+      },
+    });
+
+    // If influencer, create their InfluencerProfile
+    if (accountType === 'influencer') {
+      await prisma.influencerProfile.upsert({
+        where: { userId: user.id },
+        update: {},
+        create: {
+          userId: user.id,
+          niches: niche ? [niche] : [],
+          commissionRate: 25,
+        },
+      });
+    }
+
+    res.json({ success: true, data: user });
+  } catch (error: any) {
+    if (error.name === 'ZodError') {
+      res.status(400).json({ success: false, error: error.errors[0]?.message });
+      return;
+    }
+    res.status(500).json({ success: false, error: 'Failed to complete onboarding' });
   }
 });
 
@@ -256,18 +273,13 @@ router.get('/me', authenticate, async (req: AuthRequest, res: Response) => {
       where: { id: req.user!.id },
       include: {
         subscription: true,
-        socialAccounts: {
-          where: { isActive: true },
-          select: { id: true, platform: true, username: true, followers: true },
-        },
+        influencerProfile: true,
+        socialAccounts: { where: { isActive: true }, select: { id: true, platform: true, username: true, followers: true } },
       },
     });
-    if (!user) {
-      res.status(404).json({ success: false, error: 'User not found' });
-      return;
-    }
+    if (!user) { res.status(404).json({ success: false, error: 'User not found' }); return; }
     res.json({ success: true, data: user });
-  } catch (error: any) {
+  } catch {
     res.status(500).json({ success: false, error: 'Failed to fetch user' });
   }
 });

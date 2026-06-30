@@ -9,9 +9,9 @@ datasource db {
 
 enum AccountType {
   INDIVIDUAL
-  STARTUP
-  CORPORATE
-  AGENCY
+  INFLUENCER
+  BUSINESS
+  ENTERPRISE
 }
 
 enum PlanType {

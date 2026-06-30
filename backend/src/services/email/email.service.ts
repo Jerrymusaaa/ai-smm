@@ -4,7 +4,7 @@ import { logger } from '../../shared/utils/logger';
 const resend = new Resend(process.env.RESEND_API_KEY);
 const FROM = process.env.FROM_EMAIL || 'noreply@yoyzie.ai';
 const APP_NAME = process.env.APP_NAME || 'Yoyzie AI';
-const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000'\;
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000';
 
 export class EmailService {
 
