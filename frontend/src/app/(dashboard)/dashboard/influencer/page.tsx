@@ -1,4 +1,5 @@
 'use client';
+import { usePlan } from '@/hooks/usePlan';
 
 import { useState } from 'react';
 import { Wallet, TrendingUp, Star, Zap, Shield, Check, ChevronRight, ArrowUpRight } from 'lucide-react';

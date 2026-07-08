@@ -10,6 +10,8 @@ interface User {
   emailVerified: boolean;
   plan: string;
   avatar?: string;
+  onboardingDone?: boolean;
+  company?: string;
 }
 
 interface AuthState {
@@ -24,13 +26,14 @@ interface AuthState {
   clearAuth: () => void;
 }
 
-// Helper: set a cookie so the proxy middleware can read it
 function setCookie(name: string, value: string, days = 7) {
+  if (typeof document === 'undefined') return;
   const expires = new Date(Date.now() + days * 864e5).toUTCString();
   document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Strict`;
 }
 
 function deleteCookie(name: string) {
+  if (typeof document === 'undefined') return;
   document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 }
 
@@ -48,18 +51,14 @@ export const useAuthStore = create<AuthState>()(
           const res = await api.auth.login({ email, password });
           const { user, accessToken, refreshToken } = res.data.data;
 
-          // Save to localStorage for API client
           localStorage.setItem('accessToken', accessToken);
           if (refreshToken) localStorage.setItem('refreshToken', refreshToken);
-
-          // Also set cookie so proxy middleware can read it
           setCookie('accessToken', accessToken, 7);
 
           set({ user, accessToken, isAuthenticated: true, isLoading: false });
         } catch (error: any) {
           set({ isLoading: false });
-          const msg = error.response?.data?.error || error.message || 'Login failed';
-          throw new Error(msg);
+          throw new Error(error.response?.data?.error || error.message || 'Login failed');
         }
       },
 
@@ -70,15 +69,12 @@ export const useAuthStore = create<AuthState>()(
           set({ isLoading: false });
         } catch (error: any) {
           set({ isLoading: false });
-          const msg = error.response?.data?.error || error.message || 'Registration failed';
-          throw new Error(msg);
+          throw new Error(error.response?.data?.error || error.message || 'Registration failed');
         }
       },
 
       logout: async () => {
-        try {
-          await api.auth.logout();
-        } catch { /* ignore */ }
+        try { await api.auth.logout(); } catch { }
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         deleteCookie('accessToken');

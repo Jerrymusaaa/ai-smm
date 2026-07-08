@@ -21,8 +21,11 @@ import { postsRouter } from './services/scheduling/posts.routes';
 import { campaignRouter } from './services/campaign/campaign.routes';
 import { analyticsRouter } from './services/analytics/analytics.routes';
 import { socialRouter } from './services/social/social.routes';
+import { influencerRouter } from './services/influencer/influencer.routes';
 import { aiRouter } from './services/ai/ai.routes';
+import { influencerRouter } from './services/influencer/influencer.routes';
 import { aiRouter } from './services/ai/ai.routes';
+import { influencerRouter } from './services/influencer/influencer.routes';
 import { aiRouter } from './services/ai/ai.routes';
 import { walletRouter } from './services/wallet/wallet.routes';
 
@@ -54,6 +57,7 @@ app.use('/api/campaigns', campaignRouter);
 app.use('/api/analytics', analyticsRouter);
 app.use('/api/social',    socialRouter);
 app.use('/api/wallet',    walletRouter);
+app.use('/api/influencers', influencerRouter);
 app.use('/api/ai',        aiRouter);
 
 app.use(notFound);

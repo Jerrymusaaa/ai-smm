@@ -385,3 +385,27 @@
 2026-07-08 13:56:52 [[32minfo[39m]: ::ffff:127.0.0.1 - - [08/Jul/2026:10:56:52 +0000] "POST /api/ai/caption HTTP/1.1" 500 284 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
 2026-07-08 13:56:52 [[32minfo[39m]: ::ffff:127.0.0.1 - - [08/Jul/2026:10:56:52 +0000] "POST /api/ai/caption HTTP/1.1" 500 284 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
 2026-07-08 13:56:52 [[32minfo[39m]: ::ffff:127.0.0.1 - - [08/Jul/2026:10:56:52 +0000] "POST /api/ai/caption HTTP/1.1" 500 284 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-08 21:41:57 [[32minfo[39m]: ✅ Database connected successfully
+2026-07-08 21:41:57 [[32minfo[39m]: ✅ Redis connected
+2026-07-08 21:41:57 [[32minfo[39m]: 🚀 Yoyzie AI API running on http://localhost:5000
+2026-07-08 21:41:57 [[32minfo[39m]: 📊 Environment: development
+2026-07-08 21:51:24 [[32minfo[39m]: ✅ Database connected successfully
+2026-07-08 21:51:24 [[32minfo[39m]: ✅ Redis connected
+2026-07-08 21:51:24 [[32minfo[39m]: 🚀 Yoyzie AI API running on http://localhost:5000
+2026-07-08 21:51:24 [[32minfo[39m]: 📊 Environment: development
+2026-07-08 21:53:09 [[32minfo[39m]: ✅ Database connected successfully
+2026-07-08 21:53:09 [[32minfo[39m]: ✅ Redis connected
+2026-07-08 21:53:09 [[32minfo[39m]: 🚀 Yoyzie AI API running on http://localhost:5000
+2026-07-08 21:53:09 [[32minfo[39m]: 📊 Environment: development
+2026-07-08 21:55:21 [[32minfo[39m]: ::1 - - [08/Jul/2026:18:55:21 +0000] "GET /api/influencers HTTP/1.1" 200 915 "-" "curl/8.5.0"
+2026-07-08 21:55:54 [[32minfo[39m]: ::ffff:127.0.0.1 - - [08/Jul/2026:18:55:54 +0000] "POST /api/auth/logout HTTP/1.1" 401 41 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-08 21:55:55 [[32minfo[39m]: ::ffff:127.0.0.1 - - [08/Jul/2026:18:55:55 +0000] "POST /api/auth/refresh HTTP/1.1" 200 514 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-08 21:55:55 [[32minfo[39m]: ::ffff:127.0.0.1 - - [08/Jul/2026:18:55:55 +0000] "POST /api/auth/logout HTTP/1.1" 200 52 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-08 21:55:57 [[32minfo[39m]: ::ffff:127.0.0.1 - - [08/Jul/2026:18:55:57 +0000] "GET /api/auth/google HTTP/1.1" 302 0 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-08 21:56:10 [[32minfo[39m]: ::ffff:127.0.0.1 - - [08/Jul/2026:18:56:10 +0000] "GET /api/auth/google/callback?iss=https%3A%2F%2Faccounts.google.com&code=4%2F0AdkVLPzRdyBH_-XXlEXdWVWnQ__BKlVlUUoIDmXuC-PmhJ-EI5GilusVWRmhv-0md2Uj0w&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&authuser=2&prompt=none HTTP/1.1" 302 968 "https://accounts.google.com/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-08 21:56:58 [[32minfo[39m]: ::ffff:127.0.0.1 - - [08/Jul/2026:18:56:58 +0000] "POST /api/auth/logout HTTP/1.1" 200 52 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-08 21:59:17 [[32minfo[39m]: ::ffff:127.0.0.1 - - [08/Jul/2026:18:59:17 +0000] "GET /api/auth/google HTTP/1.1" 302 0 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-08 21:59:22 [[32minfo[39m]: ::ffff:127.0.0.1 - - [08/Jul/2026:18:59:22 +0000] "GET /api/auth/google/callback?iss=https%3A%2F%2Faccounts.google.com&code=4%2F0AdkVLPzJNCama65uoyUeclHbUm4t-xfDN1iZBZ3jFDpRUlqF5mqR_pLoKVWXquKR1W6bHQ&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid&authuser=0&prompt=none HTTP/1.1" 302 972 "https://accounts.google.com/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-08 21:59:29 [[32minfo[39m]: ::ffff:127.0.0.1 - - [08/Jul/2026:18:59:29 +0000] "POST /api/auth/logout HTTP/1.1" 200 52 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-08 21:59:31 [[32minfo[39m]: ::ffff:127.0.0.1 - - [08/Jul/2026:18:59:31 +0000] "GET /api/auth/google HTTP/1.1" 302 0 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-08 21:59:37 [[32minfo[39m]: ::ffff:127.0.0.1 - - [08/Jul/2026:18:59:37 +0000] "GET /api/auth/google/callback?iss=https%3A%2F%2Faccounts.google.com&code=4%2F0AdkVLPyYEBCM_ti_GMLhGQ9F8PpL27BkNlYaeh7akCR-CHTDSQW5DbqU3nifrtUhPvoOgw&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&authuser=1&prompt=none HTTP/1.1" 302 953 "https://accounts.google.com/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
