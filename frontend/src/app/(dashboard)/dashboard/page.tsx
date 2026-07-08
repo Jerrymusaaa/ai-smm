@@ -1,4 +1,6 @@
 'use client';
+import { TrialBanner } from '@/components/ui/TrialBanner';
+import { usePlan } from '@/hooks/usePlan';
 
 import { StatsCards } from '@/components/dashboard/StatsCards';
 import { EngagementChart } from '@/components/dashboard/EngagementChart';

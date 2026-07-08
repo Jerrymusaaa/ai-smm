@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Sparkles, Wand2, Settings2, ChevronDown, ChevronUp, Zap } from 'lucide-react';
+import { Sparkles, Wand2, Settings2, ChevronDown, ChevronUp, Zap, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { PlatformSelector, PLATFORMS } from '@/components/content/PlatformSelector';
 import { MediaUpload } from '@/components/content/MediaUpload';
@@ -9,291 +9,505 @@ import { CaptionVariants } from '@/components/content/CaptionVariants';
 import { PostPreview } from '@/components/content/PostPreview';
 import { HashtagSuggestions } from '@/components/content/HashtagSuggestions';
 import { ToneSelector } from '@/components/content/ToneSelector';
+import api from '@/lib/api';
 
-const HASHTAG_GROUPS = [
-  {
-    label: 'Trending now',
-    color: '#FF6B35',
-    tags: [
-      { tag: '#AIMarketing', volume: '2.4M', trending: true },
-      { tag: '#SocialMediaTips', volume: '8.1M', trending: true },
-      { tag: '#ContentCreator', volume: '45M', trending: true },
-      { tag: '#DigitalMarketing', volume: '32M', trending: false },
-    ],
-  },
-  {
-    label: 'Your niche',
-    color: '#C9A84C',
-    tags: [
-      { tag: '#MarketingAutomation', volume: '1.2M', trending: false },
-      { tag: '#GrowthHacking', volume: '3.8M', trending: true },
-      { tag: '#StartupMarketing', volume: '890K', trending: false },
-      { tag: '#B2BMarketing', volume: '4.2M', trending: false },
-      { tag: '#BrandStrategy', volume: '2.1M', trending: false },
-    ],
-  },
-  {
-    label: 'High engagement',
-    color: '#E8C96A',
-    tags: [
-      { tag: '#Entrepreneur', volume: '89M', trending: false },
-      { tag: '#BusinessTips', volume: '22M', trending: false },
-      { tag: '#Success', volume: '120M', trending: false },
-      { tag: '#Innovation', volume: '15M', trending: true },
-    ],
-  },
-];
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
-const MOCK_CAPTIONS = (platforms: string[], tone: string, prompt: string) =>
-  platforms.slice(0, 4).map(pid => {
-    const p = PLATFORMS.find(x => x.id === pid)!;
-    const captions: Record<string, string> = {
-      instagram: `${prompt ? `${prompt}\n\n` : ''}✨ Elevating your social media game with AI-powered precision. Every post, every platform, every time — optimized for maximum impact.\n\nOur users see an average 340% engagement increase. Ready to join them?`,
-      tiktok: `POV: Your AI just wrote better captions than your entire marketing team 😭✨ ${prompt || 'This is the future of content creation and it\'s wild'}`,
-      linkedin: `${prompt ? `${prompt}\n\n` : ''}Excited to share a milestone: after implementing AI-driven content strategy, our clients are seeing unprecedented engagement growth.\n\nKey findings from our latest data:\n→ 340% average engagement increase\n→ 85% reduction in content creation time\n→ 6.2x average campaign ROI\n\nThe future of social media management is here.`,
-      twitter: `${prompt || 'The future of social media is AI-first.'} And the results speak for themselves 📊 +340% engagement. Zero extra effort. Thread below 👇`,
-      facebook: `${prompt ? `${prompt}\n\n` : ''}We're revolutionizing how businesses manage their social media presence. AI-powered tools that work around the clock, so you don't have to.\n\nJoin 18,000+ teams already growing faster with Yoyzie AI.`,
-      threads: `${prompt || 'Hot take: most brands spend 80% of their time on content creation and 20% on strategy.'} It should be the other way around. That's what we're fixing ✨`,
-      youtube: `${prompt ? `${prompt}\n\n` : ''}In this video, we're diving deep into how AI is transforming social media management. From automated content creation to intelligent scheduling and real-time analytics — we'll show you exactly how to 10x your social media performance.`,
-      pinterest: `${prompt ? `${prompt} | ` : ''}AI-Powered Social Media Tips & Strategies | Digital Marketing Tools | Content Creation Automation`,
-    };
-    return {
-      id: `${pid}-${Date.now()}`,
-      platform: p.label,
-      platformColor: p.color,
-      platformInitial: p.initial,
-      caption: captions[pid] || captions.instagram,
-      hashtags: ['#AIMarketing', '#SocialMediaTips', '#ContentCreator', '#DigitalMarketing', '#GrowthHacking'].slice(0, 5),
-      tone: tone.charAt(0).toUpperCase() + tone.slice(1),
-      charCount: (captions[pid] || '').length,
-      score: Math.floor(72 + Math.random() * 26),
-    };
+async function fetchCaption(params: {
+  platform: string; topic: string; tone: string;
+  includeHashtags: boolean; includeEmojis: boolean; language: string;
+}): Promise<string> {
+  const res = await api.instance.post('/api/ai/caption', params);
+  return res.data?.data?.caption || '';
+}
+
+async function fetchHashtags(topic: string, platform: string): Promise<string[]> {
+  const res = await api.instance.post('/api/ai/hashtags', {
+    topic,
+    platform,
+    includeKenyan: true,
   });
+  return res.data?.data?.hashtags || [];
+}
+
+async function fetchTrends(platform: string): Promise<any> {
+  const res = await api.instance.get(`/api/ai/trends?platform=${platform}`);
+  return res.data?.data || {};
+}
+
+// ── Main page ─────────────────────────────────────────────────────────────────
 
 export default function ContentStudioPage() {
-  const [prompt, setPrompt] = useState('');
+  const [prompt, setPrompt]                   = useState('');
   const [selectedPlatforms, setSelectedPlatforms] = useState(['instagram', 'tiktok', 'linkedin', 'twitter']);
-  const [tone, setTone] = useState('casual');
-  const [mediaFiles, setMediaFiles] = useState<any[]>([]);
-  const [selectedHashtags, setSelectedHashtags] = useState<string[]>(['#AIMarketing', '#SocialMediaTips']);
-  const [variants, setVariants] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [showAdvanced, setShowAdvanced] = useState(false);
-  const [postCount, setPostCount] = useState(1);
+  const [tone, setTone]                       = useState('casual');
+  const [mediaFiles, setMediaFiles]           = useState<any[]>([]);
+  const [selectedHashtags, setSelectedHashtags] = useState<string[]>([]);
+  const [variants, setVariants]               = useState<any[]>([]);
+  const [loading, setLoading]                 = useState(false);
+  const [hashtagLoading, setHashtagLoading]   = useState(false);
+  const [trendLoading, setTrendLoading]       = useState(false);
+  const [showAdvanced, setShowAdvanced]       = useState(false);
+  const [language, setLanguage]               = useState('english');
+  const [includeEmojis, setIncludeEmojis]     = useState(true);
+  const [activePreview, setActivePreview]     = useState(0);
+  const [error, setError]                     = useState('');
 
-  const generate = async () => {
-    if (selectedPlatforms.length === 0) return;
+  // AI-generated hashtag groups (replaces static HASHTAG_GROUPS)
+  const [hashtagGroups, setHashtagGroups] = useState([
+    {
+      label: 'Trending in Kenya',
+      color: '#C9A84C',
+      tags: [
+        { tag: '#NairobiTwitter', volume: '45K', trending: true },
+        { tag: '#KenyaTwitter', volume: '120K', trending: true },
+        { tag: '#MadeInKenya', volume: '38K', trending: false },
+        { tag: '#KenyanContent', volume: '22K', trending: true },
+      ],
+    },
+    {
+      label: 'Your niche',
+      color: '#E8C96A',
+      tags: [
+        { tag: '#ContentCreator', volume: '45M', trending: true },
+        { tag: '#DigitalMarketing', volume: '32M', trending: false },
+        { tag: '#SocialMediaTips', volume: '8.1M', trending: true },
+        { tag: '#MarketingKenya', volume: '2.1M', trending: false },
+      ],
+    },
+  ]);
+
+  // ── Generate captions via Claude ────────────────────────────────────────────
+  const handleGenerate = async () => {
+    if (!prompt.trim()) {
+      setError('Please describe what you want to post about');
+      return;
+    }
+    if (selectedPlatforms.length === 0) {
+      setError('Please select at least one platform');
+      return;
+    }
+
+    setError('');
     setLoading(true);
     setVariants([]);
-    await new Promise(r => setTimeout(r, 2000));
-    setVariants(MOCK_CAPTIONS(selectedPlatforms, tone, prompt));
-    setLoading(false);
+
+    try {
+      // Generate captions for all selected platforms in parallel
+      const results = await Promise.all(
+        selectedPlatforms.map(async (platformId) => {
+          const platform = PLATFORMS.find(p => p.id === platformId);
+          if (!platform) return null;
+
+          const caption = await fetchCaption({
+            platform: platform.label,
+            topic: prompt,
+            tone,
+            includeHashtags: false, // we handle hashtags separately
+            includeEmojis,
+            language,
+          });
+
+          return {
+            id: `${platformId}-${Date.now()}`,
+            platform: platform.label,
+            platformColor: platform.color,
+            platformInitial: platform.initial,
+            caption,
+            hashtags: selectedHashtags.slice(0, 5),
+            tone: tone.charAt(0).toUpperCase() + tone.slice(1),
+            charCount: caption.length,
+            score: Math.floor(72 + Math.random() * 26), // scoring is cosmetic for now
+          };
+        })
+      );
+
+      setVariants(results.filter(Boolean));
+
+      // Auto-fetch hashtags if none selected
+      if (selectedHashtags.length === 0) {
+        handleRefreshHashtags();
+      }
+    } catch (err: any) {
+      setError(err.response?.data?.error || 'Failed to generate captions. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const regenerateOne = async (id: string) => {
-    setVariants(prev => prev.map(v =>
-      v.id === id
-        ? { ...v, caption: v.caption + ' [Regenerated]', score: Math.floor(72 + Math.random() * 26) }
-        : v
-    ));
+  // ── Refresh hashtags via Claude ─────────────────────────────────────────────
+  const handleRefreshHashtags = async () => {
+    if (!prompt.trim() && selectedPlatforms.length === 0) return;
+    setHashtagLoading(true);
+    try {
+      const platform = PLATFORMS.find(p => p.id === selectedPlatforms[0])?.label || 'instagram';
+      const tags = await fetchHashtags(prompt || 'social media content', platform);
+
+      // Split into two groups: first 8 Kenyan-style, rest as niche
+      const kenyanTags = tags.slice(0, 7).map(t => ({ tag: t, volume: '', trending: true }));
+      const nicheTags = tags.slice(7).map(t => ({ tag: t, volume: '', trending: false }));
+
+      setHashtagGroups([
+        { label: 'AI suggested for your topic', color: '#C9A84C', tags: kenyanTags },
+        { label: 'Additional tags', color: '#E8C96A', tags: nicheTags },
+      ]);
+    } catch {
+      // keep existing hashtags on error
+    } finally {
+      setHashtagLoading(false);
+    }
   };
 
-  const handleSchedule = (variant: any) => {
-    alert(`Sending "${variant.platform}" post to scheduler...`);
+  // ── Fetch Kenyan trends ─────────────────────────────────────────────────────
+  const handleGetTrends = async () => {
+    setTrendLoading(true);
+    try {
+      const platform = PLATFORMS.find(p => p.id === selectedPlatforms[0])?.label || 'instagram';
+      const trends = await fetchTrends(platform.toLowerCase());
+
+      if (trends.hashtags?.length) {
+        setHashtagGroups([
+          {
+            label: `Trending on ${platform} in Kenya`,
+            color: '#C9A84C',
+            tags: trends.hashtags.slice(0, 8).map((t: string) => ({ tag: t, volume: '', trending: true })),
+          },
+          {
+            label: 'Suggested topics',
+            color: '#E8C96A',
+            tags: (trends.topics || []).slice(0, 4).map((t: string) => ({ tag: t, volume: '', trending: false })),
+          },
+        ]);
+      }
+
+      if (trends.bestTimes?.length) {
+        // Could surface best times somewhere in the UI
+      }
+    } catch {
+      // keep existing
+    } finally {
+      setTrendLoading(false);
+    }
   };
 
-  const previewCaption = variants[0]?.caption || '';
-  const previewMedia = mediaFiles[0]?.preview;
+  // ── Regenerate single caption ───────────────────────────────────────────────
+  const handleRegenerateCaption = async (index: number) => {
+    const variant = variants[index];
+    if (!variant) return;
 
+    const platform = PLATFORMS.find(p => p.label === variant.platform);
+    if (!platform) return;
+
+    try {
+      const caption = await fetchCaption({
+        platform: variant.platform,
+        topic: prompt,
+        tone,
+        includeHashtags: false,
+        includeEmojis,
+        language,
+      });
+
+      setVariants(prev => prev.map((v, i) => i === index ? { ...v, caption, charCount: caption.length } : v));
+    } catch {
+      // keep existing
+    }
+  };
+
+  // ── Render ──────────────────────────────────────────────────────────────────
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex items-center justify-between">
         <div>
           <h1 style={{ fontFamily: 'var(--font-display)' }}
             className="text-2xl sm:text-3xl font-bold text-white">
             Content Studio
           </h1>
-          <p className="text-white/40 text-sm mt-1">
-            AI-powered captions optimized for each platform
+          <p className="text-sm mt-1" style={{ color: 'rgba(255,255,255,0.4)' }}>
+            AI-powered content creation for all your platforms
           </p>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-2 px-3 py-2 rounded-xl glass border border-[#C9A84C]/20">
-            <Zap className="w-4 h-4 text-[#C9A84C]" />
-            <span className="text-xs text-white/60">
-              <span className="text-[#C9A84C] font-medium">247</span> captions generated today
-            </span>
-          </div>
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl border"
+          style={{ background: 'rgba(201,168,76,0.06)', borderColor: 'rgba(201,168,76,0.15)' }}>
+          <Zap className="w-3.5 h-3.5" style={{ color: '#C9A84C' }} />
+          <span className="text-xs font-medium" style={{ color: '#E8C96A' }}>
+            Powered by Claude
+          </span>
         </div>
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        {/* Left panel: Input */}
+        {/* Left column — inputs */}
         <div className="xl:col-span-2 space-y-5">
 
-          {/* Prompt input */}
-          <div className="glass rounded-2xl border border-white/[0.06] p-5">
-            <label className="text-sm font-medium text-white/70 block mb-3">
-              What are you posting about?
-            </label>
-            <div className="relative">
-              <textarea
-                value={prompt}
-                onChange={e => setPrompt(e.target.value)}
-                placeholder="Describe your post, product, announcement, or just give a topic... e.g. 'We just launched a new AI feature that automatically schedules posts at peak engagement times'"
-                rows={4}
-                className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 outline-none focus:border-[#C9A84C]/40 focus:bg-white/[0.06] transition-all resize-none leading-relaxed"
-              />
-              <div className="absolute bottom-3 right-3 text-xs text-white/20">
-                {prompt.length} chars
-              </div>
-            </div>
-
-            {/* Quick prompt chips */}
-            <div className="flex flex-wrap gap-2 mt-3">
-              {[
-                'Product launch announcement',
-                'Behind the scenes',
-                'Customer success story',
-                'Tips & tricks thread',
-                'Company milestone',
-              ].map(chip => (
-                <button
-                  key={chip}
-                  onClick={() => setPrompt(chip)}
-                  className="px-3 py-1.5 rounded-full text-xs border border-white/[0.08] text-white/40 hover:text-white/70 hover:border-white/20 transition-all"
-                >
-                  {chip}
-                </button>
-              ))}
-            </div>
-          </div>
-
           {/* Platform selector */}
-          <div className="glass rounded-2xl border border-white/[0.06] p-5">
+          <div className="glass rounded-2xl border p-5" style={{ borderColor: 'rgba(201,168,76,0.1)' }}>
+            <h3 style={{ fontFamily: 'var(--font-display)' }}
+              className="text-sm font-bold text-white mb-4">
+              Select platforms
+            </h3>
             <PlatformSelector
               selected={selectedPlatforms}
               onChange={setSelectedPlatforms}
             />
           </div>
 
-          {/* Tone */}
-          <div className="glass rounded-2xl border border-white/[0.06] p-5">
-            <ToneSelector value={tone} onChange={setTone} />
-          </div>
+          {/* Prompt input */}
+          <div className="glass rounded-2xl border p-5" style={{ borderColor: 'rgba(201,168,76,0.1)' }}>
+            <div className="flex items-center justify-between mb-3">
+              <h3 style={{ fontFamily: 'var(--font-display)' }}
+                className="text-sm font-bold text-white">
+                What do you want to post about?
+              </h3>
+              <span className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                {prompt.length}/500
+              </span>
+            </div>
+            <textarea
+              value={prompt}
+              onChange={e => setPrompt(e.target.value.slice(0, 500))}
+              placeholder="e.g. Launching our new Nairobi store this Saturday, special opening discounts, exciting new product range..."
+              rows={4}
+              className="w-full resize-none rounded-xl px-4 py-3 text-sm text-white outline-none border transition-all"
+              style={{
+                background: 'rgba(255,255,255,0.04)',
+                borderColor: 'rgba(201,168,76,0.15)',
+              }}
+            />
 
-          {/* Advanced options */}
-          <div className="glass rounded-2xl border border-white/[0.06] overflow-hidden">
+            {error && (
+              <p className="mt-2 text-xs" style={{ color: '#EF4444' }}>{error}</p>
+            )}
+
+            {/* Tone selector */}
+            <div className="mt-4">
+              <ToneSelector selected={tone} onChange={setTone} />
+            </div>
+
+            {/* Advanced options */}
             <button
               onClick={() => setShowAdvanced(!showAdvanced)}
-              className="w-full flex items-center justify-between px-5 py-4 text-sm font-medium text-white/60 hover:text-white transition-colors"
-            >
-              <div className="flex items-center gap-2">
-                <Settings2 className="w-4 h-4" />
-                Advanced options
-              </div>
-              {showAdvanced ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+              className="flex items-center gap-1.5 mt-4 text-xs transition-colors"
+              style={{ color: 'rgba(255,255,255,0.4)' }}>
+              <Settings2 className="w-3.5 h-3.5" />
+              Advanced options
+              {showAdvanced ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
             </button>
 
             {showAdvanced && (
-              <div className="px-5 pb-5 space-y-5 border-t border-white/[0.06]">
-                <div className="pt-4">
-                  <MediaUpload files={mediaFiles} onChange={setMediaFiles} />
-                </div>
-
-                {/* Variants count */}
+              <div className="mt-4 pt-4 border-t space-y-4" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+                {/* Language */}
                 <div>
-                  <label className="text-sm font-medium text-white/70 block mb-3">
-                    Variants per platform: <span className="text-[#C9A84C]">{postCount}</span>
+                  <label className="text-xs block mb-2" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                    Language
                   </label>
-                  <input
-                    type="range" min={1} max={5} value={postCount}
-                    onChange={e => setPostCount(Number(e.target.value))}
-                    className="w-full accent-[#C9A84C]"
-                  />
-                  <div className="flex justify-between text-xs text-white/25 mt-1">
-                    <span>1 variant</span>
-                    <span>5 variants</span>
+                  <div className="flex gap-2 flex-wrap">
+                    {[
+                      { id: 'english', label: 'English' },
+                      { id: 'swahili', label: 'Swahili' },
+                      { id: 'sheng', label: 'Sheng' },
+                    ].map(lang => (
+                      <button key={lang.id} onClick={() => setLanguage(lang.id)}
+                        className="px-3 py-1.5 rounded-xl text-xs border transition-all"
+                        style={{
+                          borderColor: language === lang.id ? 'rgba(201,168,76,0.5)' : 'rgba(255,255,255,0.08)',
+                          background: language === lang.id ? 'rgba(201,168,76,0.12)' : 'rgba(255,255,255,0.02)',
+                          color: language === lang.id ? '#E8C96A' : 'rgba(255,255,255,0.5)',
+                        }}>
+                        {lang.label}
+                      </button>
+                    ))}
                   </div>
                 </div>
 
-                {/* Hashtags */}
-                <HashtagSuggestions
-                  selected={selectedHashtags}
-                  onChange={setSelectedHashtags}
-                  groups={HASHTAG_GROUPS}
-                />
+                {/* Emojis toggle */}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs font-medium text-white">Include emojis</p>
+                    <p className="text-[10px] mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                      Add relevant emojis to your captions
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setIncludeEmojis(!includeEmojis)}
+                    className="w-10 h-6 rounded-full transition-all relative flex-shrink-0"
+                    style={{ background: includeEmojis ? 'linear-gradient(135deg,#C9A84C,#E8C96A)' : 'rgba(255,255,255,0.1)' }}>
+                    <div className="absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-all"
+                      style={{ left: includeEmojis ? '22px' : '4px' }} />
+                  </button>
+                </div>
               </div>
             )}
+          </div>
+
+          {/* Media upload */}
+          <div className="glass rounded-2xl border p-5" style={{ borderColor: 'rgba(201,168,76,0.1)' }}>
+            <h3 style={{ fontFamily: 'var(--font-display)' }}
+              className="text-sm font-bold text-white mb-4">
+              Media (optional)
+            </h3>
+            <MediaUpload files={mediaFiles} onChange={setMediaFiles} />
           </div>
 
           {/* Generate button */}
-          <Button
-            size="xl"
-            onClick={generate}
-            loading={loading}
-            disabled={selectedPlatforms.length === 0}
-            className="w-full rounded-2xl gap-2 glow-blue"
-          >
-            {!loading && (
+          <button
+            onClick={handleGenerate}
+            disabled={loading || !prompt.trim()}
+            className="w-full flex items-center justify-center gap-2.5 py-4 rounded-2xl text-base font-bold transition-all disabled:opacity-40"
+            style={{
+              background: 'linear-gradient(135deg,#C9A84C,#E8C96A)',
+              color: '#0A0A0A',
+              boxShadow: '0 8px 32px rgba(201,168,76,0.3)',
+            }}>
+            {loading ? (
               <>
-                <Sparkles className="w-5 h-5" />
-                Generate captions for {selectedPlatforms.length} platform{selectedPlatforms.length !== 1 ? 's' : ''}
+                <RefreshCw className="w-5 h-5 animate-spin" />
+                Generating {selectedPlatforms.length} caption{selectedPlatforms.length !== 1 ? 's' : ''}...
+              </>
+            ) : (
+              <>
+                <Wand2 className="w-5 h-5" />
+                Generate AI captions
               </>
             )}
-          </Button>
+          </button>
+
+          {/* Caption variants */}
+          {variants.length > 0 && (
+            <div className="glass rounded-2xl border overflow-hidden" style={{ borderColor: 'rgba(201,168,76,0.1)' }}>
+              <div className="px-5 py-4 border-b flex items-center justify-between"
+                style={{ borderColor: 'rgba(201,168,76,0.08)' }}>
+                <h3 style={{ fontFamily: 'var(--font-display)' }} className="text-base font-bold text-white">
+                  Generated captions
+                </h3>
+                <button
+                  onClick={handleGenerate}
+                  disabled={loading}
+                  className="flex items-center gap-1.5 text-xs transition-colors disabled:opacity-40"
+                  style={{ color: '#C9A84C' }}>
+                  <RefreshCw className="w-3.5 h-3.5" /> Regenerate all
+                </button>
+              </div>
+              <CaptionVariants
+                variants={variants}
+                selectedHashtags={selectedHashtags}
+                onRegenerateCaption={handleRegenerateCaption}
+              />
+            </div>
+          )}
         </div>
 
-        {/* Right panel: Results + Preview */}
-        <div className="xl:col-span-1 space-y-5">
-
+        {/* Right column — preview and hashtags */}
+        <div className="space-y-5">
           {/* Post preview */}
-          <div className="glass rounded-2xl border border-white/[0.06] p-5">
-            <PostPreview
-              caption={previewCaption}
-              hashtags={selectedHashtags}
-              mediaUrl={previewMedia}
-            />
+          {variants.length > 0 && (
+            <div className="glass rounded-2xl border overflow-hidden" style={{ borderColor: 'rgba(201,168,76,0.1)' }}>
+              <div className="px-5 py-4 border-b" style={{ borderColor: 'rgba(201,168,76,0.08)' }}>
+                <h3 style={{ fontFamily: 'var(--font-display)' }} className="text-sm font-bold text-white">
+                  Preview
+                </h3>
+                {variants.length > 1 && (
+                  <div className="flex gap-1 mt-3 flex-wrap">
+                    {variants.map((v, i) => (
+                      <button key={v.id} onClick={() => setActivePreview(i)}
+                        className="px-2.5 py-1 rounded-lg text-[10px] font-medium border transition-all"
+                        style={{
+                          borderColor: activePreview === i ? 'rgba(201,168,76,0.4)' : 'rgba(255,255,255,0.06)',
+                          background: activePreview === i ? 'rgba(201,168,76,0.1)' : 'transparent',
+                          color: activePreview === i ? '#E8C96A' : 'rgba(255,255,255,0.4)',
+                        }}>
+                        {v.platform}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="p-4">
+                {variants[activePreview] && (
+                  <PostPreview variant={variants[activePreview]} />
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Hashtags */}
+          <div className="glass rounded-2xl border overflow-hidden" style={{ borderColor: 'rgba(201,168,76,0.1)' }}>
+            <div className="px-5 py-4 border-b flex items-center justify-between"
+              style={{ borderColor: 'rgba(201,168,76,0.08)' }}>
+              <h3 style={{ fontFamily: 'var(--font-display)' }} className="text-sm font-bold text-white">
+                Hashtags
+              </h3>
+              <div className="flex gap-2">
+                <button
+                  onClick={handleGetTrends}
+                  disabled={trendLoading}
+                  className="text-xs transition-colors disabled:opacity-40 flex items-center gap-1"
+                  style={{ color: '#C9A84C' }}>
+                  {trendLoading && <RefreshCw className="w-3 h-3 animate-spin" />}
+                  🇰🇪 KE trends
+                </button>
+                <button
+                  onClick={handleRefreshHashtags}
+                  disabled={hashtagLoading}
+                  className="text-xs transition-colors disabled:opacity-40 flex items-center gap-1"
+                  style={{ color: 'rgba(255,255,255,0.4)' }}>
+                  {hashtagLoading && <RefreshCw className="w-3 h-3 animate-spin" />}
+                  Refresh
+                </button>
+              </div>
+            </div>
+            <div className="p-4">
+              <HashtagSuggestions
+                groups={hashtagGroups}
+                selected={selectedHashtags}
+                onChange={setSelectedHashtags}
+              />
+              {selectedHashtags.length > 0 && (
+                <div className="mt-4 pt-4 border-t" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+                  <p className="text-[10px] mb-2" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                    Selected ({selectedHashtags.length})
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {selectedHashtags.map(tag => (
+                      <span key={tag}
+                        className="text-[10px] px-2 py-1 rounded-full cursor-pointer transition-all"
+                        style={{ background: 'rgba(201,168,76,0.15)', color: '#E8C96A' }}
+                        onClick={() => setSelectedHashtags(prev => prev.filter(t => t !== tag))}>
+                        {tag} ×
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* AI tip */}
-          <div className="rounded-2xl border border-[#E8C96A]/20 p-4"
-            style={{ background: 'linear-gradient(135deg, rgba(0,212,170,0.06), rgba(0,102,255,0.04))' }}>
-            <div className="flex items-start gap-3">
-              <Wand2 className="w-4 h-4 text-[#E8C96A] mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="text-xs font-medium text-white/70 mb-1">AI tip</p>
-                <p className="text-xs text-white/40 leading-relaxed">
-                  Posts with 3–5 hashtags get 18% more reach on Instagram. TikTok performs best with trending sounds and 3–4 niche hashtags.
-                </p>
-              </div>
+          {/* Kenyan timing tip */}
+          <div className="rounded-2xl border p-4"
+            style={{ background: 'rgba(201,168,76,0.04)', borderColor: 'rgba(201,168,76,0.15)' }}>
+            <div className="flex items-center gap-2 mb-2">
+              <Sparkles className="w-4 h-4" style={{ color: '#C9A84C' }} />
+              <span className="text-xs font-semibold" style={{ color: '#E8C96A' }}>
+                Best times for Kenyan audience
+              </span>
+            </div>
+            <div className="space-y-1.5">
+              {[
+                { platform: 'Instagram', time: '7am – 9am & 7pm – 9pm EAT' },
+                { platform: 'TikTok', time: '6pm – 10pm EAT' },
+                { platform: 'Twitter/X', time: '8am – 10am & 12pm – 1pm EAT' },
+                { platform: 'LinkedIn', time: 'Tue–Thu, 8am – 10am EAT' },
+              ].map(item => (
+                <div key={item.platform} className="flex justify-between text-[10px]">
+                  <span style={{ color: 'rgba(255,255,255,0.5)' }}>{item.platform}</span>
+                  <span style={{ color: 'rgba(255,255,255,0.35)' }}>{item.time}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
-
-      {/* Generated variants */}
-      {(variants.length > 0 || loading) && (
-        <div>
-          <div className="flex items-center gap-3 mb-4">
-            <h2 style={{ fontFamily: 'var(--font-display)' }} className="text-xl font-bold text-white">
-              Generated captions
-            </h2>
-            {variants.length > 0 && (
-              <span className="text-xs px-2.5 py-1 rounded-full bg-[#E8C96A]/15 text-[#E8C96A] border border-[#E8C96A]/20">
-                {variants.length} variants ready
-              </span>
-            )}
-          </div>
-          <CaptionVariants
-            variants={variants}
-            loading={loading}
-            onRegenerate={regenerateOne}
-            onSchedule={handleSchedule}
-          />
-        </div>
-      )}
     </div>
   );
 }

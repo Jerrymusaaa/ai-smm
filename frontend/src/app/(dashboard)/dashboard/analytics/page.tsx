@@ -1,4 +1,6 @@
 'use client';
+import { usePlan } from '@/hooks/usePlan';
+import { FeatureGate, UpgradePrompt } from '@/components/ui/FeatureGate';
 
 import { useState } from 'react';
 import { BarChart3, Calendar, Download, Sparkles } from 'lucide-react';
