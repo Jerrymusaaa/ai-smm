@@ -409,3 +409,53 @@
 2026-07-08 21:59:29 [[32minfo[39m]: ::ffff:127.0.0.1 - - [08/Jul/2026:18:59:29 +0000] "POST /api/auth/logout HTTP/1.1" 200 52 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
 2026-07-08 21:59:31 [[32minfo[39m]: ::ffff:127.0.0.1 - - [08/Jul/2026:18:59:31 +0000] "GET /api/auth/google HTTP/1.1" 302 0 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
 2026-07-08 21:59:37 [[32minfo[39m]: ::ffff:127.0.0.1 - - [08/Jul/2026:18:59:37 +0000] "GET /api/auth/google/callback?iss=https%3A%2F%2Faccounts.google.com&code=4%2F0AdkVLPyYEBCM_ti_GMLhGQ9F8PpL27BkNlYaeh7akCR-CHTDSQW5DbqU3nifrtUhPvoOgw&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&authuser=1&prompt=none HTTP/1.1" 302 953 "https://accounts.google.com/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 13:42:59 [[32minfo[39m]: ✅ Database connected successfully
+2026-07-09 13:42:59 [[32minfo[39m]: ✅ Redis connected
+2026-07-09 13:42:59 [[32minfo[39m]: 🚀 Yoyzie AI API running on http://localhost:5000
+2026-07-09 13:42:59 [[32minfo[39m]: 📊 Environment: development
+2026-07-09 13:51:16 [[32minfo[39m]: ✅ Database connected successfully
+2026-07-09 13:51:16 [[32minfo[39m]: ✅ Redis connected
+2026-07-09 13:51:16 [[32minfo[39m]: 🚀 Yoyzie AI API running on http://localhost:5000
+2026-07-09 13:51:16 [[32minfo[39m]: 📊 Environment: development
+2026-07-09 13:51:30 [[32minfo[39m]: ✅ Database connected successfully
+2026-07-09 13:51:30 [[32minfo[39m]: ✅ Redis connected
+2026-07-09 13:51:30 [[32minfo[39m]: 🚀 Yoyzie AI API running on http://localhost:5000
+2026-07-09 13:51:30 [[32minfo[39m]: 📊 Environment: development
+2026-07-09 13:52:26 [[32minfo[39m]: ✅ Database connected successfully
+2026-07-09 13:52:26 [[32minfo[39m]: ✅ Redis connected
+2026-07-09 13:52:26 [[32minfo[39m]: 🚀 Yoyzie AI API running on http://localhost:5000
+2026-07-09 13:52:26 [[32minfo[39m]: 📊 Environment: development
+2026-07-09 13:55:13 [[32minfo[39m]: ✅ Database connected successfully
+2026-07-09 13:55:13 [[32minfo[39m]: ✅ Redis connected
+2026-07-09 13:55:13 [[32minfo[39m]: 🚀 Yoyzie AI API running on http://localhost:5000
+2026-07-09 13:55:13 [[32minfo[39m]: 📊 Environment: development
+2026-07-09 13:55:17 [[32minfo[39m]: ✅ Database connected successfully
+2026-07-09 13:55:17 [[32minfo[39m]: ✅ Redis connected
+2026-07-09 13:56:03 [[32minfo[39m]: ::1 - - [09/Jul/2026:10:56:03 +0000] "POST /api/auth/login HTTP/1.1" 200 667 "-" "curl/8.5.0"
+2026-07-09 13:56:05 [[32minfo[39m]: ::1 - - [09/Jul/2026:10:56:05 +0000] "GET /api/analytics/overview HTTP/1.1" 200 2542 "-" "curl/8.5.0"
+2026-07-09 13:56:54 [[32minfo[39m]: ::1 - - [09/Jul/2026:10:56:54 +0000] "POST /api/auth/login HTTP/1.1" 200 667 "-" "curl/8.5.0"
+2026-07-09 13:56:54 [[32minfo[39m]: ::1 - - [09/Jul/2026:10:56:54 +0000] "GET /api/analytics/overview HTTP/1.1" 200 2542 "-" "curl/8.5.0"
+2026-07-09 13:58:52 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:10:58:52 +0000] "GET /favicon.ico HTTP/1.1" 404 60 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 13:59:04 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:10:59:04 +0000] "GET / HTTP/1.1" 404 49 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 13:59:08 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:10:59:08 +0000] "GET / HTTP/1.1" 404 49 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 13:59:10 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:10:59:10 +0000] "GET /favicon.ico HTTP/1.1" 404 60 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 13:59:15 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:10:59:15 +0000] "GET / HTTP/1.1" 404 49 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 13:59:15 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:10:59:15 +0000] "GET /favicon.ico HTTP/1.1" 404 60 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 14:01:10 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:11:01:10 +0000] "GET /api/analytics/overview?days=30 HTTP/1.1" 401 41 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 14:01:10 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:11:01:10 +0000] "GET /api/analytics/posts/top?days=30&limit=5 HTTP/1.1" 401 41 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 14:01:10 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:11:01:10 +0000] "GET /api/analytics/posts/top?days=30&limit=5 HTTP/1.1" 401 41 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 14:01:10 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:11:01:10 +0000] "GET /api/analytics/ai-insights?days=30 HTTP/1.1" 401 41 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 14:01:10 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:11:01:10 +0000] "GET /api/analytics/overview?days=30 HTTP/1.1" 401 41 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 14:01:10 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:11:01:10 +0000] "GET /api/analytics/ai-insights?days=30 HTTP/1.1" 401 41 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 14:01:12 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:11:01:12 +0000] "POST /api/auth/refresh HTTP/1.1" 200 500 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 14:01:12 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:11:01:12 +0000] "GET /api/analytics/overview?days=30 HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 14:01:12 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:11:01:12 +0000] "POST /api/auth/refresh HTTP/1.1" 200 500 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 14:01:12 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:11:01:12 +0000] "GET /api/analytics/posts/top?days=30&limit=5 HTTP/1.1" 200 26 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 14:01:12 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:11:01:12 +0000] "POST /api/auth/refresh HTTP/1.1" 200 500 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 14:01:12 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:11:01:12 +0000] "GET /api/analytics/posts/top?days=30&limit=5 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 14:01:12 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:11:01:12 +0000] "POST /api/auth/refresh HTTP/1.1" 200 500 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 14:01:12 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:11:01:12 +0000] "GET /api/analytics/ai-insights?days=30 HTTP/1.1" 200 140 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 14:01:12 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:11:01:12 +0000] "POST /api/auth/refresh HTTP/1.1" 200 500 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 14:01:12 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:11:01:12 +0000] "GET /api/analytics/overview?days=30 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 14:01:13 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:11:01:13 +0000] "POST /api/auth/refresh HTTP/1.1" 200 500 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+2026-07-09 14:01:13 [[32minfo[39m]: ::ffff:127.0.0.1 - - [09/Jul/2026:11:01:13 +0000] "GET /api/analytics/ai-insights?days=30 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
