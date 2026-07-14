@@ -1,4 +1,5 @@
 'use client';
+import { useThemeStore } from '@/hooks/useTheme';
 
 import { useState } from 'react';
 import { Check, Monitor, Moon, Sun } from 'lucide-react';
@@ -17,7 +18,7 @@ const FONT_SIZES = ['Small', 'Default', 'Large', 'Extra large'];
 const SIDEBAR_STYLES = ['Expanded', 'Collapsed', 'Auto'];
 
 export function AppearanceSettings() {
-  const [theme, setTheme] = useState('dark');
+  const { theme, setTheme } = useThemeStore();
   const [accent, setAccent] = useState('blue');
   const [fontSize, setFontSize] = useState('Default');
   const [sidebarStyle, setSidebarStyle] = useState('Expanded');

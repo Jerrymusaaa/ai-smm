@@ -112,3 +112,44 @@ input:focus, textarea:focus, select:focus {
 .nav-active {
   box-shadow: 0 0 20px rgba(201, 168, 76, 0.1);
 }
+
+/* ── Light mode overrides ─────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg-primary: #F5F0E8;
+  --bg-secondary: #EDE8DC;
+  --text-primary: #1A1208;
+  --text-secondary: #4A3F2A;
+  --border-color: rgba(201,168,76,0.25);
+}
+
+[data-theme="light"] body {
+  background: #F5F0E8;
+  color: #1A1208;
+}
+
+[data-theme="light"] .glass {
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(20px);
+}
+
+[data-theme="light"] nav,
+[data-theme="light"] aside,
+[data-theme="light"] header {
+  background: rgba(245,240,232,0.95) !important;
+  border-color: rgba(201,168,76,0.2) !important;
+}
+
+[data-theme="light"] .text-white { color: #1A1208 !important; }
+[data-theme="light"] [style*="color: rgba(255,255,255"] { color: rgba(26,18,8,0.7) !important; }
+[data-theme="light"] [style*="background: #0A0A0A"],
+[data-theme="light"] [style*="background: #070A0F"],
+[data-theme="light"] [style*="background: #0D0D0F"] {
+  background: #EDE8DC !important;
+}
+[data-theme="light"] input,
+[data-theme="light"] textarea,
+[data-theme="light"] select {
+  background: rgba(255,255,255,0.8) !important;
+  color: #1A1208 !important;
+  border-color: rgba(201,168,76,0.3) !important;
+}

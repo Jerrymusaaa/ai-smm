@@ -1,0 +1,106 @@
+import Link from 'next/link';
+import Image from 'next/image';
+
+export const metadata = { title: 'Terms of Service — Yoyzie AI' };
+
+export default function TermsPage() {
+  const updated = 'July 14, 2026';
+
+  return (
+    <div style={{ background: '#070A0F', minHeight: '100vh' }}>
+      <nav className="border-b px-6 py-4 flex items-center justify-between"
+        style={{ borderColor: 'rgba(201,168,76,0.12)', background: 'rgba(7,10,15,0.95)' }}>
+        <Link href="/" className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-xl overflow-hidden" style={{ border: '1px solid rgba(201,168,76,0.35)' }}>
+            <Image src="/images/yoyzie-logo.jpg" alt="Yoyzie AI" width={32} height={32} className="object-cover" />
+          </div>
+          <span style={{ fontFamily: 'var(--font-display)', color: '#E8C96A' }} className="text-lg font-bold">Yoyzie AI</span>
+        </Link>
+        <Link href="/" className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>← Back to home</Link>
+      </nav>
+
+      <div className="max-w-3xl mx-auto px-6 py-16">
+        <h1 style={{ fontFamily: 'var(--font-display)', color: '#E8C96A' }} className="text-4xl font-bold mb-2">
+          Terms of Service
+        </h1>
+        <p className="text-sm mb-12" style={{ color: 'rgba(255,255,255,0.4)' }}>Last updated: {updated}</p>
+
+        {[
+          {
+            title: '1. Acceptance of Terms',
+            content: `By creating an account or using Yoyzie AI (yoyzie.ai), you agree to be bound by these Terms of Service ("Terms") and our Privacy Policy. If you do not agree, do not use our services.\n\nThese Terms constitute a legally binding agreement between you and Yoyzie AI Ltd ("Yoyzie AI", "we", "us"). We reserve the right to update these Terms at any time, and your continued use constitutes acceptance of updated Terms.`,
+          },
+          {
+            title: '2. Eligibility',
+            content: `You must be at least 18 years old to use Yoyzie AI. By using our services, you represent that you are 18 or older and have the legal capacity to enter into this agreement. If you are registering on behalf of a company, you represent that you have authority to bind that company to these Terms.`,
+          },
+          {
+            title: '3. Account Registration',
+            content: `You agree to:\n\n• Provide accurate, current, and complete information during registration\n• Maintain the security of your password and not share it with others\n• Notify us immediately of any unauthorised use of your account\n• Be responsible for all activities that occur under your account\n\nWe reserve the right to suspend or terminate accounts that violate these Terms or our Community Guidelines.`,
+          },
+          {
+            title: '4. Subscription Plans and Billing',
+            content: `Yoyzie AI offers Free and paid subscription plans. Paid plans are billed in Kenyan Shillings (KES) on a monthly, quarterly, 6-month, or annual basis depending on your selection.\n\n**Free Plans:** Free plans are provided "as is" with limited features. We may change or discontinue free plan features with notice.\n\n**Paid Plans:** Paid subscriptions auto-renew unless cancelled before the renewal date. No refunds are provided for partial billing periods except where required by Kenyan law.\n\n**Influencer Commission:** For influencer accounts, Yoyzie AI charges a commission on campaign earnings as specified in your plan. This commission is deducted automatically before funds are released to your wallet.\n\n**M-Pesa Payments:** M-Pesa transactions are subject to Safaricom's terms and applicable transaction fees.\n\n**Price Changes:** We will notify you at least 30 days before any price changes. Your continued use after the change constitutes acceptance.`,
+          },
+          {
+            title: '5. Acceptable Use',
+            content: `You agree NOT to use Yoyzie AI to:\n\n• Post illegal, defamatory, threatening, harassing, or abusive content\n• Violate the terms of service of any connected social media platform\n• Spread misinformation, fake news, or deceptive content\n• Spam, phish, or conduct any fraudulent activity\n• Use bot services or artificial means to inflate follower counts or engagement\n• Infringe on intellectual property rights of others\n• Upload malware, viruses, or harmful code\n• Attempt to gain unauthorised access to our systems\n• Use the platform for any illegal purpose under Kenyan law\n• Harass, impersonate, or harm other users\n\nViolation of these rules may result in immediate account suspension or termination.`,
+          },
+          {
+            title: '6. Content Ownership and Licence',
+            content: `**Your Content:** You retain full ownership of content you create using Yoyzie AI. By using our service, you grant us a limited, non-exclusive licence to store and process your content solely to provide the service.\n\n**AI-Generated Content:** Content generated by our AI tools is provided to you for your use. You are responsible for reviewing AI-generated content before publishing. We do not guarantee accuracy, originality, or fitness for any particular purpose.\n\n**Yoyzie AI Content:** Our platform, branding, logos, and non-user content are owned by Yoyzie AI Ltd and may not be reproduced without written permission.`,
+          },
+          {
+            title: '7. Social Media Platform Compliance',
+            content: `When using Yoyzie AI to post to social media platforms, you must comply with the terms and policies of those platforms (Meta, TikTok, Twitter/X, LinkedIn, etc.).\n\nYoyzie AI is not responsible for actions taken by social media platforms against your accounts, including suspension, content removal, or restriction of API access. We cannot guarantee continued API access to any third-party platform.`,
+          },
+          {
+            title: '8. Influencer Marketplace Rules',
+            content: `For businesses and influencers using our marketplace:\n\n• Both parties must honour agreements made through the platform\n• Campaign payments must be made through the Yoyzie AI wallet system\n• Circumventing the platform to avoid commission charges is a violation of these Terms and may result in account termination\n• Yoyzie AI acts as a platform, not as a party to agreements between businesses and influencers\n• Disputes are handled through our dispute resolution process; Yoyzie AI's decision is final in platform-mediated disputes\n• Yoyzie AI is not liable for the quality, delivery, or outcome of influencer campaigns`,
+          },
+          {
+            title: '9. Wallet and Payouts',
+            content: `For influencer wallet accounts:\n\n• Funds are held in trust pending campaign completion and approval\n• Withdrawals are subject to minimum amounts and processing times per payment method\n• We reserve the right to freeze wallet funds pending investigation of suspected fraud\n• Yoyzie AI is not a bank or financial institution. Wallet balances are not covered by the Deposit Protection Fund\n• We are not liable for delays caused by third-party payment processors (Safaricom, PayPal, banks)`,
+          },
+          {
+            title: '10. Disclaimers and Limitation of Liability',
+            content: `Yoyzie AI is provided "as is" without warranties of any kind. We do not guarantee:\n\n• Uninterrupted or error-free service\n• That AI-generated content will be accurate, original, or appropriate for your needs\n• Specific results from using our platform (follower growth, engagement increase, etc.)\n• Continued access to third-party social media platform APIs\n\nTo the maximum extent permitted by law, Yoyzie AI Ltd shall not be liable for indirect, incidental, special, or consequential damages arising from your use of the service, even if we have been advised of the possibility of such damages. Our total liability shall not exceed the amount you paid us in the 3 months preceding the claim.`,
+          },
+          {
+            title: '11. Termination',
+            content: `You may cancel your account at any time from the Settings → Billing page or by emailing support@yoyzie.ai.\n\nWe may suspend or terminate your account immediately if you violate these Terms, engage in fraudulent activity, or if required by law. Upon termination, your access to the service ends immediately. We will retain your data as specified in our Privacy Policy.`,
+          },
+          {
+            title: '12. Governing Law and Disputes',
+            content: `These Terms are governed by the laws of Kenya. Any disputes shall be resolved by the courts of Kenya in Nairobi.\n\nBefore resorting to legal action, both parties agree to attempt resolution through good-faith negotiation. Disputes may be submitted to mediation under the Nairobi Centre for International Arbitration rules before litigation.`,
+          },
+          {
+            title: '13. Contact',
+            content: `For questions about these Terms:\n\n• Email: legal@yoyzie.ai\n• General support: support@yoyzie.ai\n• Address: Yoyzie AI Ltd, Nairobi, Kenya`,
+          },
+        ].map(section => (
+          <section key={section.title} className="mb-10">
+            <h2 style={{ fontFamily: 'var(--font-display)', color: '#E8C96A' }}
+              className="text-xl font-bold mb-4">{section.title}</h2>
+            <div className="text-sm leading-relaxed space-y-3" style={{ color: 'rgba(255,255,255,0.7)' }}>
+              {section.content.split('\n').map((line, i) => (
+                <p key={i} className={line.startsWith('•') ? 'ml-4' : ''}
+                  dangerouslySetInnerHTML={{
+                    __html: line
+                      .replace(/\*\*(.*?)\*\*/g, '<strong style="color:rgba(255,255,255,0.9)">$1</strong>')
+                  }} />
+              ))}
+            </div>
+          </section>
+        ))}
+
+        <div className="mt-12 pt-8 border-t flex flex-wrap gap-4 text-sm"
+          style={{ borderColor: 'rgba(201,168,76,0.1)', color: 'rgba(255,255,255,0.4)' }}>
+          <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+          <Link href="/data-deletion" className="hover:text-white transition-colors">Data Deletion</Link>
+          <Link href="/" className="hover:text-white transition-colors">Back to Yoyzie AI</Link>
+        </div>
+      </div>
+    </div>
+  );
+}
