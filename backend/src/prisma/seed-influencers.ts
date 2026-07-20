@@ -107,7 +107,7 @@ async function seed() {
             create: {
               niches: inf.niches,
               botScore: inf.botScore,
-              audienceAuthPct: inf.botScore,
+              audienceAuthenticityPct: inf.botScore,
               clickToViewRatio: inf.ctv,
               avgEngagementRate: inf.engagement,
               commissionRate: 25,

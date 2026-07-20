@@ -6,8 +6,8 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "db:generate": "./node_modules/.bin/prisma generate --schema=src/prisma/schema.prisma",
-    "db:migrate": "./node_modules/.bin/prisma migrate dev --schema=src/prisma/schema.prisma",
+    "db:generate": "npx prisma generate --schema=src/prisma/schema.prisma",
+    "db:migrate": "npx prisma migrate deploy --schema=src/prisma/schema.prisma",
     "db:studio": "./node_modules/.bin/prisma studio --schema=src/prisma/schema.prisma",
     "db:push": "./node_modules/.bin/prisma db push --schema=src/prisma/schema.prisma"
   },

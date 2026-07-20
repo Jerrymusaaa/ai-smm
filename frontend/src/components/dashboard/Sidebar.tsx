@@ -11,7 +11,7 @@ import {
   LayoutDashboard, PenSquare, Megaphone, Calendar,
   BarChart3, Users, CreditCard, Settings,
   ChevronLeft, ChevronRight, Wallet, Star,
-  Briefcase, X, Zap, Link
+  Briefcase, X, Zap, Link2
 } from 'lucide-react';
 
 interface NavItem {

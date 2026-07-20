@@ -282,7 +282,7 @@ export default function ContentStudioPage() {
 
             {/* Tone selector */}
             <div className="mt-4">
-              <ToneSelector selected={tone} onChange={setTone} />
+              <ToneSelector value={tone} onChange={setTone} />
             </div>
 
             {/* Advanced options */}

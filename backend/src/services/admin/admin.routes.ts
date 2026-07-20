@@ -89,7 +89,6 @@ router.get('/users', adminAuth, async (req: Request, res: Response) => {
       orderBy: { createdAt: 'desc' },
       take: Number(limit),
       skip: (Number(page) - 1) * Number(limit),
-      select: { id: true, name: true, email: true, accountType: true, emailVerified: true, createdAt: true, lastLoginAt: true, subscription: true },
     });
 
     res.json({

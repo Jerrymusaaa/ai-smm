@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Check, Link, Unlink, RefreshCw, ExternalLink, Shield, AlertCircle, ChevronRight } from 'lucide-react';
+import { Check, Link2, Unlink, RefreshCw, ExternalLink, Shield, AlertCircle } from 'lucide-react';
 import Image from 'next/image';
 import api from '@/lib/api';
 
@@ -262,7 +262,7 @@ export default function IntegrationsPage() {
                     }}>
                     {isConnecting
                       ? <><RefreshCw className="w-3.5 h-3.5 animate-spin" /> Connecting...</>
-                      : <><Link className="w-3.5 h-3.5" /> Connect {platform.name}</>}
+                      : <><Link2 className="w-3.5 h-3.5" /> Connect {platform.name}</>}
                   </button>
                 )}
               </div>

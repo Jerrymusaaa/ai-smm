@@ -21,16 +21,10 @@ import { postsRouter } from './services/scheduling/posts.routes';
 import { campaignRouter } from './services/campaign/campaign.routes';
 import { analyticsRouter } from './services/analytics/analytics.routes';
 import { socialRouter } from './services/social/social.routes';
-import { adminRouter } from './services/admin/admin.routes';
-import { influencerRouter } from './services/influencer/influencer.routes';
-import { aiRouter } from './services/ai/ai.routes';
-import { adminRouter } from './services/admin/admin.routes';
-import { influencerRouter } from './services/influencer/influencer.routes';
-import { aiRouter } from './services/ai/ai.routes';
-import { adminRouter } from './services/admin/admin.routes';
-import { influencerRouter } from './services/influencer/influencer.routes';
-import { aiRouter } from './services/ai/ai.routes';
 import { walletRouter } from './services/wallet/wallet.routes';
+import { aiRouter } from './services/ai/ai.routes';
+import { influencerRouter } from './services/influencer/influencer.routes';
+import { adminRouter } from './services/admin/admin.routes';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -53,16 +47,16 @@ app.get('/health', (_, res) => {
   res.json({ success: true, message: 'Yoyzie AI API running', version: '2.0.0', timestamp: new Date().toISOString() });
 });
 
-app.use('/api/auth',      authRouter);
-app.use('/api/users',     userRouter);
-app.use('/api/posts',     postsRouter);
-app.use('/api/campaigns', campaignRouter);
-app.use('/api/analytics', analyticsRouter);
-app.use('/api/social',    socialRouter);
-app.use('/api/wallet',    walletRouter);
-app.use('/api/admin', adminRouter);
+app.use('/api/auth',        authRouter);
+app.use('/api/users',       userRouter);
+app.use('/api/posts',       postsRouter);
+app.use('/api/campaigns',   campaignRouter);
+app.use('/api/analytics',   analyticsRouter);
+app.use('/api/social',      socialRouter);
+app.use('/api/wallet',      walletRouter);
+app.use('/api/ai',          aiRouter);
 app.use('/api/influencers', influencerRouter);
-app.use('/api/ai',        aiRouter);
+app.use('/api/admin',       adminRouter);
 
 app.use(notFound);
 app.use(errorHandler);
@@ -72,7 +66,6 @@ async function bootstrap() {
   await connectRedis();
   app.listen(PORT, () => {
     logger.info(`🚀 Yoyzie AI API running on http://localhost:${PORT}`);
-    logger.info(`📊 Environment: ${process.env.NODE_ENV}`);
   });
 }
 

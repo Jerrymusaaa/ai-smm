@@ -222,7 +222,7 @@ router.get('/:id', optionalAuth, async (req: Request, res: Response) => {
         niches: profile.niches,
         socialAccounts: user.socialAccounts,
         botScore: profile.botScore,
-        audienceAuthPct: profile.audienceAuthPct,
+        audienceAuthPct: profile.audienceAuthenticityPct,
         clickToViewRatio: profile.clickToViewRatio,
         avgEngagementRate: profile.avgEngagementRate,
         verifiedBadge: profile.verifiedBadge,
