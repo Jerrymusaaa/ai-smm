@@ -13,6 +13,10 @@ services:
     startCommand: npm run db:migrate && npm run start
     healthCheckPath: /health
     envVars:
+      # Pin Node: Render's default is a much newer major that ships a global
+      # TypeScript which rejects options removed in TS7 (e.g. baseUrl).
+      - key: NODE_VERSION
+        value: "20"
       - key: NODE_ENV
         value: production
       # NODE_ENV=production makes npm skip devDependencies, but the build needs
