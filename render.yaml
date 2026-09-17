@@ -15,6 +15,10 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      # NODE_ENV=production makes npm skip devDependencies, but the build needs
+      # them (typescript/tsc, prisma CLI) — force them to install.
+      - key: NPM_CONFIG_PRODUCTION
+        value: "false"
       - key: DATABASE_URL
         sync: false
       - key: REDIS_URL

@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "AccountType" AS ENUM ('INDIVIDUAL', 'STARTUP', 'CORPORATE', 'AGENCY');
+CREATE TYPE "AccountType" AS ENUM ('INDIVIDUAL', 'INFLUENCER', 'BUSINESS', 'ENTERPRISE');
 
 -- CreateEnum
 CREATE TYPE "PlanType" AS ENUM ('FREE', 'PRO', 'BUSINESS', 'ENTERPRISE');
@@ -272,6 +272,103 @@ CREATE TABLE "TrendData" (
     CONSTRAINT "TrendData_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "InfluencerProfile" (
+    "id" TEXT NOT NULL,
+    "botScore" DOUBLE PRECISION NOT NULL DEFAULT 0,
+    "audienceAuthenticityPct" DOUBLE PRECISION NOT NULL DEFAULT 0,
+    "clickToViewRatio" DOUBLE PRECISION NOT NULL DEFAULT 0,
+    "totalEarnings" DOUBLE PRECISION NOT NULL DEFAULT 0,
+    "walletBalance" DOUBLE PRECISION NOT NULL DEFAULT 0,
+    "pendingBalance" DOUBLE PRECISION NOT NULL DEFAULT 0,
+    "commissionRate" INTEGER NOT NULL DEFAULT 25,
+    "verifiedBadge" BOOLEAN NOT NULL DEFAULT false,
+    "priorityLevel" INTEGER NOT NULL DEFAULT 1,
+    "niches" TEXT[],
+    "followerBracket" TEXT NOT NULL DEFAULT 'nano',
+    "avgEngagementRate" DOUBLE PRECISION NOT NULL DEFAULT 0,
+    "totalCampaigns" INTEGER NOT NULL DEFAULT 0,
+    "rating" DOUBLE PRECISION NOT NULL DEFAULT 0,
+    "portfolioUrl" TEXT,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "userId" TEXT NOT NULL,
+
+    CONSTRAINT "InfluencerProfile_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "WalletTransaction" (
+    "id" TEXT NOT NULL,
+    "type" TEXT NOT NULL,
+    "amount" DOUBLE PRECISION NOT NULL,
+    "currency" TEXT NOT NULL DEFAULT 'KES',
+    "status" TEXT NOT NULL DEFAULT 'pending',
+    "description" TEXT,
+    "campaignId" TEXT,
+    "reference" TEXT,
+    "withdrawalMethod" TEXT,
+    "mpesaNumber" TEXT,
+    "paypalEmail" TEXT,
+    "processedAt" TIMESTAMP(3),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "influencerId" TEXT NOT NULL,
+
+    CONSTRAINT "WalletTransaction_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "CampaignBrief" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "budget" DOUBLE PRECISION NOT NULL,
+    "currency" TEXT NOT NULL DEFAULT 'KES',
+    "platforms" TEXT[],
+    "category" TEXT NOT NULL,
+    "niche" TEXT,
+    "deliverables" TEXT NOT NULL,
+    "timeline" TEXT,
+    "minFollowers" INTEGER NOT NULL DEFAULT 0,
+    "targetLocation" TEXT,
+    "status" TEXT NOT NULL DEFAULT 'OPEN',
+    "applicationsCount" INTEGER NOT NULL DEFAULT 0,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "companyUserId" TEXT NOT NULL,
+
+    CONSTRAINT "CampaignBrief_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "CampaignApplication" (
+    "id" TEXT NOT NULL,
+    "proposalText" TEXT NOT NULL,
+    "proposedRate" DOUBLE PRECISION NOT NULL,
+    "estimatedReach" INTEGER NOT NULL DEFAULT 0,
+    "status" TEXT NOT NULL DEFAULT 'PENDING',
+    "appliedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "respondedAt" TIMESTAMP(3),
+    "briefId" TEXT NOT NULL,
+    "influencerId" TEXT NOT NULL,
+
+    CONSTRAINT "CampaignApplication_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "BotDetectionReport" (
+    "id" TEXT NOT NULL,
+    "botScore" DOUBLE PRECISION NOT NULL,
+    "realFollowerPct" DOUBLE PRECISION NOT NULL,
+    "engagementAuthenticityPct" DOUBLE PRECISION NOT NULL,
+    "suspiciousGrowthDetected" BOOLEAN NOT NULL DEFAULT false,
+    "commentQualityScore" DOUBLE PRECISION NOT NULL,
+    "reportData" JSONB,
+    "lastAnalyzedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "socialAccountId" TEXT NOT NULL,
+
+    CONSTRAINT "BotDetectionReport_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
@@ -371,6 +468,27 @@ CREATE INDEX "TrendData_platform_idx" ON "TrendData"("platform");
 -- CreateIndex
 CREATE INDEX "TrendData_fetchedAt_idx" ON "TrendData"("fetchedAt");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "InfluencerProfile_userId_key" ON "InfluencerProfile"("userId");
+
+-- CreateIndex
+CREATE INDEX "WalletTransaction_influencerId_idx" ON "WalletTransaction"("influencerId");
+
+-- CreateIndex
+CREATE INDEX "CampaignBrief_status_idx" ON "CampaignBrief"("status");
+
+-- CreateIndex
+CREATE INDEX "CampaignBrief_category_idx" ON "CampaignBrief"("category");
+
+-- CreateIndex
+CREATE INDEX "CampaignApplication_briefId_idx" ON "CampaignApplication"("briefId");
+
+-- CreateIndex
+CREATE INDEX "CampaignApplication_influencerId_idx" ON "CampaignApplication"("influencerId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "BotDetectionReport_socialAccountId_key" ON "BotDetectionReport"("socialAccountId");
+
 -- AddForeignKey
 ALTER TABLE "User" ADD CONSTRAINT "User_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
@@ -415,3 +533,15 @@ ALTER TABLE "Notification" ADD CONSTRAINT "Notification_userId_fkey" FOREIGN KEY
 
 -- AddForeignKey
 ALTER TABLE "AIMemory" ADD CONSTRAINT "AIMemory_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "InfluencerProfile" ADD CONSTRAINT "InfluencerProfile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "WalletTransaction" ADD CONSTRAINT "WalletTransaction_influencerId_fkey" FOREIGN KEY ("influencerId") REFERENCES "InfluencerProfile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "CampaignApplication" ADD CONSTRAINT "CampaignApplication_briefId_fkey" FOREIGN KEY ("briefId") REFERENCES "CampaignBrief"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "CampaignApplication" ADD CONSTRAINT "CampaignApplication_influencerId_fkey" FOREIGN KEY ("influencerId") REFERENCES "InfluencerProfile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
