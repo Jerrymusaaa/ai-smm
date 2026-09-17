@@ -30,6 +30,11 @@ import { adminRouter } from './services/admin/admin.routes';
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Behind Render's reverse proxy we must trust the first proxy hop so that
+// express-rate-limit keys on the REAL client IP (X-Forwarded-For). Without
+// this every visitor shares one bucket and legit traffic gets 429s.
+app.set('trust proxy', 1);
+
 app.use(helmet());
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:3000',
