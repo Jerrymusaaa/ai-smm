@@ -2,7 +2,19 @@ import { Resend } from 'resend';
 import { NextRequest, NextResponse } from 'next/server';
 import { verificationEmailHtml } from '@/lib/emails';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazily instantiate the Resend client so builds don't require RESEND_API_KEY;
+// it is only needed when this route actually handles a request.
+let _resend: Resend | null = null;
+function getResend(): Resend {
+  if (!_resend) {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      throw new Error('RESEND_API_KEY is not set');
+    }
+    _resend = new Resend(apiKey);
+  }
+  return _resend;
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -17,7 +29,7 @@ export async function POST(req: NextRequest) {
 
     const isDev = process.env.NODE_ENV === 'development';
 
-    const { data, error } = await resend.emails.send({
+    const { data, error } = await getResend().emails.send({
       from: 'Yoyzie AI <onboarding@resend.dev>',
       // In development, Resend only delivers to your own verified email
       // Replace the line below with your Resend account email while testing locally

@@ -1,15 +1,18 @@
 [build]
   base = "frontend"
   command = "pnpm build"
-  publish = ".next"
+  # Next.js runtime publishes the build output itself; publish dir must be empty.
+  publish = ""
 
 [build.environment]
   NODE_VERSION = "20"
-  PNPM_VERSION = "8"
+  # Must match the lockfile version (pnpm-lock.yaml is lockfileVersion 9.0).
+  PNPM_VERSION = "9"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
+# SPA-style fallback for client-side routes; does not shadow files or Netlify functions.
 [[redirects]]
   from = "/*"
   to = "/index.html"

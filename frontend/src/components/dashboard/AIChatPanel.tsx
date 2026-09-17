@@ -10,7 +10,7 @@ const QUICK_ACTIONS = [
   { label: 'New campaign', icon: Megaphone, color: '#FF6B35', prompt: 'Help me create a new marketing campaign' },
 ];
 
-const INITIAL_MESSAGES = [
+const INITIAL_MESSAGES: Message[] = [
   {
     id: 1, role: 'ai',
     text: "Hi! I'm your AI social media manager. I can create content, analyze your performance, schedule posts, and run campaigns across all your connected platforms. What would you like to do today?",

@@ -2,15 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { AuthInput } from '@/components/auth/AuthInput';
 import { Mail, Lock, ArrowRight } from 'lucide-react';
 import { useAuthStore } from '@/store/auth.store';
 
 export default function LoginPage() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
   const { login, isLoading } = useAuthStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -32,8 +29,9 @@ export default function LoginPage() {
     setErrors({});
     try {
       await login(email, password);
-      // Get redirect param or default to dashboard
-      const redirect = searchParams.get('redirect') || '/dashboard';
+      // Get redirect param or default to dashboard (read at submit time so the
+      // page can still be statically prerendered)
+      const redirect = new URLSearchParams(window.location.search).get('redirect') || '/dashboard';
       // Use window.location for a hard redirect so the cookie is picked up by middleware
       window.location.href = redirect;
     } catch (error: any) {

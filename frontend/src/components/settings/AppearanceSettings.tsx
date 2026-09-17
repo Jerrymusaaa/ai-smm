@@ -34,11 +34,11 @@ export function AppearanceSettings() {
           Theme
         </h3>
         <div className="grid grid-cols-3 gap-3">
-          {[
+          {([
             { id: 'light', label: 'Light', icon: Sun, preview: 'bg-white' },
             { id: 'dark', label: 'Dark', icon: Moon, preview: 'bg-[#050A14]' },
             { id: 'system', label: 'System', icon: Monitor, preview: 'bg-gradient-to-r from-white to-[#050A14]' },
-          ].map(t => (
+          ] as const).map(t => (
             <button key={t.id} onClick={() => setTheme(t.id)}
               className={`relative p-4 rounded-2xl border transition-all text-center ${
                 theme === t.id ? 'border-[#C9A84C]/50 bg-[#C9A84C]/08' : 'border-white/[0.06] hover:border-white/20'

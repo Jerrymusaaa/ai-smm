@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Sparkles, Wand2, Settings2, ChevronDown, ChevronUp, Zap, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { PlatformSelector, PLATFORMS } from '@/components/content/PlatformSelector';
@@ -38,6 +39,7 @@ async function fetchTrends(platform: string): Promise<any> {
 // ── Main page ─────────────────────────────────────────────────────────────────
 
 export default function ContentStudioPage() {
+  const router = useRouter();
   const [prompt, setPrompt]                   = useState('');
   const [selectedPlatforms, setSelectedPlatforms] = useState(['instagram', 'tiktok', 'linkedin', 'twitter']);
   const [tone, setTone]                       = useState('casual');
@@ -191,7 +193,8 @@ export default function ContentStudioPage() {
   };
 
   // ── Regenerate single caption ───────────────────────────────────────────────
-  const handleRegenerateCaption = async (index: number) => {
+  const handleRegenerateCaption = async (id: string) => {
+    const index = variants.findIndex(v => v.id === id);
     const variant = variants[index];
     if (!variant) return;
 
@@ -212,6 +215,11 @@ export default function ContentStudioPage() {
     } catch {
       // keep existing
     }
+  };
+
+  // ── Schedule: hand off to the scheduler ─────────────────────────────────────
+  const handleSchedule = () => {
+    router.push('/dashboard/scheduler');
   };
 
   // ── Render ──────────────────────────────────────────────────────────────────
@@ -374,7 +382,7 @@ export default function ContentStudioPage() {
           </button>
 
           {/* Caption variants */}
-          {variants.length > 0 && (
+          {(loading || variants.length > 0) && (
             <div className="glass rounded-2xl border overflow-hidden" style={{ borderColor: 'rgba(201,168,76,0.1)' }}>
               <div className="px-5 py-4 border-b flex items-center justify-between"
                 style={{ borderColor: 'rgba(201,168,76,0.08)' }}>
@@ -391,8 +399,9 @@ export default function ContentStudioPage() {
               </div>
               <CaptionVariants
                 variants={variants}
-                selectedHashtags={selectedHashtags}
-                onRegenerateCaption={handleRegenerateCaption}
+                loading={loading}
+                onRegenerate={handleRegenerateCaption}
+                onSchedule={handleSchedule}
               />
             </div>
           )}
@@ -425,7 +434,11 @@ export default function ContentStudioPage() {
               </div>
               <div className="p-4">
                 {variants[activePreview] && (
-                  <PostPreview variant={variants[activePreview]} />
+                  <PostPreview
+                    caption={variants[activePreview].caption}
+                    hashtags={variants[activePreview].hashtags || []}
+                    mediaUrl={mediaFiles[0]?.preview}
+                  />
                 )}
               </div>
             </div>

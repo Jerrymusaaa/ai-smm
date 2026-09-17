@@ -1,6 +1,6 @@
 'use client';
 
-import { Clock, Instagram, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { Clock, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 
 const POSTS = [
   {

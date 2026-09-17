@@ -1,15 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Lock, Check, ArrowRight } from 'lucide-react';
 import { AuthInput } from '@/components/auth/AuthInput';
 import { Button } from '@/components/ui/Button';
 
 export default function ResetPasswordPage() {
-  const searchParams = useSearchParams();
   const router = useRouter();
-  const token = searchParams.get('token') || '';
+  // Read at submit time so the page can be statically prerendered.
+  const token = typeof window === 'undefined' ? '' : new URLSearchParams(window.location.search).get('token') || '';
 
   const [password, setPassword]   = useState('');
   const [confirm, setConfirm]     = useState('');

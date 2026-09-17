@@ -1,13 +1,13 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
 import { useAuthStore } from '@/store/auth.store';
 
 export default function OAuthCallback() {
-  const searchParams = useSearchParams();
-
   useEffect(() => {
+    // Read params at effect time; useSearchParams() would require a Suspense
+    // boundary and breaks static prerendering at build time.
+    const searchParams = new URLSearchParams(window.location.search);
     const accessToken  = searchParams.get('accessToken');
     const refreshToken = searchParams.get('refreshToken');
     const userParam    = searchParams.get('user');
@@ -37,7 +37,7 @@ export default function OAuthCallback() {
     } catch {
       window.location.href = '/login?error=parse_failed';
     }
-  }, [searchParams]);
+  }, []);
 
   return (
     <div className="flex h-screen items-center justify-center" style={{ background: '#070A0F' }}>
