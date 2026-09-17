@@ -19,7 +19,9 @@ router.get('/profile', async (req: AuthRequest, res: Response) => {
       _count: { select: { posts: true, campaigns: true } },
     },
   });
-  res.json({ success: true, data: user });
+  // Never send the password hash to the client
+  const { password: _password, ...safeUser } = user ?? {} as any;
+  res.json({ success: true, data: safeUser });
 });
 
 // PATCH /api/users/profile

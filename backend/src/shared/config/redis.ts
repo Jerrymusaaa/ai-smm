@@ -27,36 +27,65 @@ export async function connectRedis() {
   }
 }
 
+// All helpers fail safe: when Redis is unavailable (not connected or mid-
+// disconnect) they log and no-op instead of throwing, so features that use
+// Redis for caching/OAuth state degrade gracefully rather than failing
+// requests (e.g. user registration used to 500 with "The client is closed").
 export const redisHelpers = {
   async set(key: string, value: any, ttlSeconds?: number) {
-    const serialized = JSON.stringify(value);
-    if (ttlSeconds) {
-      await redis.setEx(key, ttlSeconds, serialized);
-    } else {
-      await redis.set(key, serialized);
+    if (!redis.isReady) {
+      logger.warn(`Redis unavailable — skipped set for "${key}"`);
+      return;
+    }
+    try {
+      const serialized = JSON.stringify(value);
+      if (ttlSeconds) {
+        await redis.setEx(key, ttlSeconds, serialized);
+      } else {
+        await redis.set(key, serialized);
+      }
+    } catch (error) {
+      logger.error(`Redis set failed for "${key}":`, error);
     }
   },
 
   async get<T>(key: string): Promise<T | null> {
-    const value = await redis.get(key);
-    if (!value) return null;
+    if (!redis.isReady) return null;
     try {
-      return JSON.parse(value) as T;
-    } catch {
-      return value as unknown as T;
+      const value = await redis.get(key);
+      if (!value) return null;
+      try {
+        return JSON.parse(value) as T;
+      } catch {
+        return value as unknown as T;
+      }
+    } catch (error) {
+      logger.error(`Redis get failed for "${key}":`, error);
+      return null;
     }
   },
 
   async del(key: string) {
-    await redis.del(key);
+    if (!redis.isReady) return;
+    try {
+      await redis.del(key);
+    } catch (error) {
+      logger.error(`Redis del failed for "${key}":`, error);
+    }
   },
 
   async exists(key: string): Promise<boolean> {
-    const result = await redis.exists(key);
-    return result === 1;
+    if (!redis.isReady) return false;
+    try {
+      const result = await redis.exists(key);
+      return result === 1;
+    } catch (error) {
+      logger.error(`Redis exists failed for "${key}":`, error);
+      return false;
+    }
   },
 
   async setWithExpiry(key: string, value: any, ttlSeconds: number) {
-    await redis.setEx(key, ttlSeconds, JSON.stringify(value));
+    await this.set(key, value, ttlSeconds);
   },
 };

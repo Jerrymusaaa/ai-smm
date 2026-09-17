@@ -285,7 +285,9 @@ router.get('/me', authenticate, async (req: AuthRequest, res: Response) => {
       },
     });
     if (!user) { res.status(404).json({ success: false, error: 'User not found' }); return; }
-    res.json({ success: true, data: user });
+    // Never send the password hash to the client
+    const { password: _password, ...safeUser } = user;
+    res.json({ success: true, data: safeUser });
   } catch {
     res.status(500).json({ success: false, error: 'Failed to fetch user' });
   }
