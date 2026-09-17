@@ -105,6 +105,7 @@ model User {
   subscription      Subscription?
   notifications     Notification[]
   aiMemory          AIMemory?
+  competitors       Competitor[]
   sessions          Session[]
   apiKeys           ApiKey[]
   teamMemberships   TeamMember[]
@@ -472,4 +473,33 @@ model BotDetectionReport {
   lastAnalyzedAt            DateTime @default(now())
 
   socialAccountId String @unique
+}
+
+// Simple key-value store for admin-configurable platform settings
+model PlatformSetting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+  updatedBy String?
+}
+
+// Public competitor profiles a user tracks for benchmarking
+model Competitor {
+  id             String    @id @default(cuid())
+  platform       Platform
+  handle         String
+  displayName    String?
+  followers      Int       @default(0)
+  postCount      Int?
+  engagementRate Float     @default(0)
+  lastSyncedAt   DateTime?
+  notes          String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  @@unique([userId, platform, handle])
+  @@index([userId])
 }

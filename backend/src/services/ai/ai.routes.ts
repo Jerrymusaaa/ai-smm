@@ -34,9 +34,10 @@ router.post('/caption', async (req: AuthRequest, res: Response) => {
       platform: z.string(), topic: z.string().min(1), tone: z.string().default('engaging'),
       brandName: z.string().optional(), includeHashtags: z.boolean().default(true),
       includeEmojis: z.boolean().default(true), language: z.string().default('english'),
+      useStyle: z.boolean().default(false),
     });
     const params = schema.parse(req.body) as Parameters<typeof aiService.generateCaption>[0];
-    const caption = await aiService.generateCaption(params);
+    const caption = await aiService.generateCaption({ ...params, userId: req.user!.id });
     res.json({ success: true, data: { caption } });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message || 'AI request failed' });
@@ -63,6 +64,66 @@ router.get('/trends', async (req: AuthRequest, res: Response) => {
     const niche = req.query.niche as string | undefined;
     const trends = await aiService.getKenyanTrendSuggestions({ platform, niche });
     res.json({ success: true, data: trends });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message || 'AI request failed' });
+  }
+});
+
+// ── Style learning: AI studies the user's own posts to learn their voice ────
+
+router.post('/style/learn', async (req: AuthRequest, res: Response) => {
+  try {
+    const result = await aiService.learnUserStyle(req.user!.id);
+    res.json({ success: true, data: result });
+  } catch (error: any) {
+    res.status(400).json({ success: false, error: error.message || 'Failed to learn style' });
+  }
+});
+
+router.get('/style', async (req: AuthRequest, res: Response) => {
+  try {
+    res.json({ success: true, data: await aiService.getStoredStyle(req.user!.id) });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message || 'Failed to fetch style' });
+  }
+});
+
+// ── Trending sounds (TikTok / Reels) ────────────────────────────────────────
+
+router.get('/sounds', async (req: AuthRequest, res: Response) => {
+  try {
+    const platform = (req.query.platform as string) || 'tiktok';
+    const niche = req.query.niche as string | undefined;
+    const data = await aiService.getTrendingSounds({ platform, niche });
+    res.json({ success: true, data });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message || 'AI request failed' });
+  }
+});
+
+// ── A/B test variations ─────────────────────────────────────────────────────
+
+router.post('/ab-variations', async (req: AuthRequest, res: Response) => {
+  try {
+    const schema = z.object({
+      platform: z.string(), topic: z.string().min(1), count: z.number().min(2).max(4).default(3),
+    });
+    const { platform, topic, count } = schema.parse(req.body);
+    const variations = await aiService.generateABVariations({ platform, topic, count, userId: req.user!.id });
+    res.json({ success: true, data: { variations } });
+  } catch (error: any) {
+    if (error.name === 'ZodError') { res.status(400).json({ success: false, error: 'Invalid A/B request' }); return; }
+    res.status(500).json({ success: false, error: error.message || 'AI request failed' });
+  }
+});
+
+// ── Best posting times (Kenyan rhythms + user's own engagement data) ────────
+
+router.get('/best-times', async (req: AuthRequest, res: Response) => {
+  try {
+    const platform = req.query.platform as string | undefined;
+    const data = await aiService.getBestPostingTimes(req.user!.id, platform);
+    res.json({ success: true, data });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message || 'AI request failed' });
   }

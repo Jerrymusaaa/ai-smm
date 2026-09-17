@@ -113,43 +113,127 @@ input:focus, textarea:focus, select:focus {
   box-shadow: 0 0 20px rgba(201, 168, 76, 0.1);
 }
 
-/* ── Light mode overrides ─────────────────────────────────────────── */
+/* ── Light mode — full golden-theme support ─────────────────────────
+   Ivory surfaces, warm-ink text, gold borders. The organisation's
+   golden brand palette stays identical; only surfaces invert.        */
 [data-theme="light"] {
-  --bg-primary: #F5F0E8;
-  --bg-secondary: #EDE8DC;
-  --text-primary: #1A1208;
-  --text-secondary: #4A3F2A;
-  --border-color: rgba(201,168,76,0.25);
+  --bg-primary: #FAF6EC;
+  --bg-secondary: #F1EADA;
+  --bg-card: #FFFFFF;
+  --text-primary: #201A0E;
+  --text-secondary: #5C5236;
+  --border-color: rgba(139,105,20,0.18);
+  color-scheme: light;
 }
 
 [data-theme="light"] body {
-  background: #F5F0E8;
-  color: #1A1208;
+  background: #FAF6EC;
+  color: #201A0E;
 }
 
+/* Text: every white/opacity utility maps to warm ink */
+[data-theme="light"] .text-white            { color: #201A0E !important; }
+[data-theme="light"] .text-white \/10        { color: rgba(32,26,14,0.16) !important; }
+[data-theme="light"] .text-white \/20        { color: rgba(32,26,14,0.26) !important; }
+[data-theme="light"] .text-white \/25        { color: rgba(32,26,14,0.30) !important; }
+[data-theme="light"] .text-white \/30        { color: rgba(32,26,14,0.36) !important; }
+[data-theme="light"] .text-white \/35        { color: rgba(32,26,14,0.40) !important; }
+[data-theme="light"] .text-white \/40        { color: rgba(32,26,14,0.46) !important; }
+[data-theme="light"] .text-white \/50        { color: rgba(32,26,14,0.56) !important; }
+[data-theme="light"] .text-white \/60        { color: rgba(32,26,14,0.66) !important; }
+[data-theme="light"] .text-white \/70        { color: rgba(32,26,14,0.76) !important; }
+[data-theme="light"] .text-white \/80        { color: rgba(32,26,14,0.86) !important; }
+
+/* Surfaces: translucent white panels become warm gold-tinted tints */
+[data-theme="light"] .bg-white\/\[0\.02\],
+[data-theme="light"] .bg-white\/5           { background-color: rgba(139,105,20,0.04) !important; }
+[data-theme="light"] .bg-white\/\[0\.03\]     { background-color: rgba(139,105,20,0.05) !important; }
+[data-theme="light"] .bg-white\/\[0\.04\]     { background-color: rgba(139,105,20,0.06) !important; }
+[data-theme="light"] .bg-white\/\[0\.05\]     { background-color: rgba(139,105,20,0.07) !important; }
+[data-theme="light"] .bg-white\/\[0\.06\],
+[data-theme="light"] .bg-white\/10           { background-color: rgba(139,105,20,0.08) !important; }
+[data-theme="light"] .bg-white\/\[0\.07\]     { background-color: rgba(139,105,20,0.09) !important; }
+[data-theme="light"] .bg-white\/\[0\.08\]     { background-color: rgba(139,105,20,0.10) !important; }
+[data-theme="light"] .bg-white\/20           { background-color: rgba(139,105,20,0.16) !important; }
+[data-theme="light"] .bg-white\/40           { background-color: rgba(139,105,20,0.28) !important; }
+[data-theme="light"] .bg-white\/50           { background-color: rgba(139,105,20,0.34) !important; }
+/* Solid white stays white (badges, chips, text on gold buttons) */
+[data-theme="light"] .bg-white               { background-color: #FFFFFF !important; }
+
+/* Borders */
+[data-theme="light"] .border-white           { border-color: rgba(139,105,20,0.45) !important; }
+[data-theme="light"] .border-white\/10       { border-color: rgba(139,105,20,0.16) !important; }
+[data-theme="light"] .border-white\/15       { border-color: rgba(139,105,20,0.20) !important; }
+[data-theme="light"] .border-white\/20       { border-color: rgba(139,105,20,0.26) !important; }
+[data-theme="light"] .border-white\/30       { border-color: rgba(139,105,20,0.36) !important; }
+[data-theme="light"] .border-white\/40       { border-color: rgba(139,105,20,0.46) !important; }
+[data-theme="light"] .divide-white\/10 > :not([hidden]) ~ :not([hidden]) { border-color: rgba(139,105,20,0.14) !important; }
+
+/* Glass & chrome */
 [data-theme="light"] .glass {
-  background: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.78);
   backdrop-filter: blur(20px);
 }
 
 [data-theme="light"] nav,
 [data-theme="light"] aside,
 [data-theme="light"] header {
-  background: rgba(245,240,232,0.95) !important;
-  border-color: rgba(201,168,76,0.2) !important;
+  background: rgba(250,246,236,0.96) !important;
+  border-color: rgba(139,105,20,0.18) !important;
 }
 
-[data-theme="light"] .text-white { color: #1A1208 !important; }
-[data-theme="light"] [style*="color: rgba(255,255,255"] { color: rgba(26,18,8,0.7) !important; }
-[data-theme="light"] [style*="background: #0A0A0A"],
-[data-theme="light"] [style*="background: #070A0F"],
-[data-theme="light"] [style*="background: #0D0D0F"] {
-  background: #EDE8DC !important;
-}
+/* Form controls */
 [data-theme="light"] input,
 [data-theme="light"] textarea,
 [data-theme="light"] select {
-  background: rgba(255,255,255,0.8) !important;
-  color: #1A1208 !important;
-  border-color: rgba(201,168,76,0.3) !important;
+  background: #FFFFFF !important;
+  color: #201A0E !important;
+  border-color: rgba(139,105,20,0.28) !important;
+}
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder { color: rgba(32,26,14,0.38) !important; }
+[data-theme="light"] .placeholder-white\/20::placeholder { color: rgba(32,26,14,0.30) !important; }
+[data-theme="light"] .placeholder-white\/25::placeholder { color: rgba(32,26,14,0.34) !important; }
+[data-theme="light"] .placeholder-white\/30::placeholder { color: rgba(32,26,14,0.38) !important; }
+[data-theme="light"] select option { background: #FFFFFF; color: #201A0E; }
+
+/* Inline dark backgrounds (React emits no space after the colon) */
+[data-theme="light"] [style*="background:#070A0F"],
+[data-theme="light"] [style*="background:#0A0A0A"],
+[data-theme="light"] [style*="background:#0B0B0D"],
+[data-theme="light"] [style*="background:#0D0D0F"],
+[data-theme="light"] [style*="background:#0D1117"],
+[data-theme="light"] [style*="background:#111827"],
+[data-theme="light"] [style*="background: #070A0F"],
+[data-theme="light"] [style*="background: #0A0A0A"],
+[data-theme="light"] [style*="background: #0D0D0F"],
+[data-theme="light"] [style*="background: #0D1117"],
+[data-theme="light"] [style*="background: #111827"] {
+  background-color: #F1EADA !important;
+}
+[data-theme="light"] [style*="color:rgba(255,255,255"],
+[data-theme="light"] [style*="color: rgba(255,255,255"] { color: rgba(32,26,14,0.75) !important; }
+[data-theme="light"] [style*="color:'#fff'"],
+[data-theme="light"] [style*="color:'#ffffff'"],
+[data-theme="light"] [style*="color: '#fff'"],
+[data-theme="light"] [style*="color: '#ffffff'"] { color: #201A0E !important; }
+
+/* Charts */
+[data-theme="light"] .recharts-tooltip-wrapper .recharts-default-tooltip {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(139,105,20,0.25) !important;
+  border-radius: 12px !important;
+}
+[data-theme="light"] .recharts-cartesian-axis-tick text { fill: #5C5236; }
+[data-theme="light"] .recharts-cartesian-grid line { stroke: rgba(139,105,20,0.12); }
+[data-theme="light"] .recharts-default-legend { color: #201A0E; }
+
+/* Scrollbar & misc */
+[data-theme="light"] ::-webkit-scrollbar-thumb { background: rgba(139,105,20,0.30); }
+[data-theme="light"] ::selection { background: rgba(201,168,76,0.35); }
+[data-theme="light"] .stat-card:hover {
+  box-shadow: 0 8px 32px rgba(139,105,20,0.10) !important;
+}
+[data-theme="light"] .gold-glow {
+  box-shadow: 0 0 30px rgba(201,168,76,0.25), 0 0 60px rgba(201,168,76,0.12);
 }

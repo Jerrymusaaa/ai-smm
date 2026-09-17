@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { AuthInput } from '@/components/auth/AuthInput';
-import { Mail, Lock, User, Building2, ArrowRight, ArrowLeft, Check } from 'lucide-react';
+import { Mail, Lock, User, Building2, ArrowRight, ArrowLeft, Check, FileText, ShieldCheck } from 'lucide-react';
 import { useAuthStore } from '@/store/auth.store';
 
 const ACCOUNT_CATEGORIES = [
@@ -66,6 +66,10 @@ export default function SignupPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [apiError, setApiError] = useState('');
   const [done, setDone] = useState(false);
+  const [emailsSent, setEmailsSent] = useState(true);
+  const [legalModal, setLegalModal] = useState<'privacy' | 'terms' | null>(null);
+  const [legalRead, setLegalRead] = useState<{ privacy: boolean; terms: boolean }>({ privacy: false, terms: false });
+  const [accepted, setAccepted] = useState(false);
 
   const selectedCategory = ACCOUNT_CATEGORIES.find(c => c.id === category);
   const update = (field: string, value: string) => {
@@ -86,6 +90,9 @@ export default function SignupPage() {
       if (!form.password) e.password = 'Password is required';
       else if (form.password.length < 8) e.password = 'At least 8 characters required';
       if (form.password !== form.confirm) e.confirm = 'Passwords do not match';
+      if (!legalRead.privacy) e.legal = 'Please open and review the Privacy Policy first';
+      else if (!legalRead.terms) e.legal = 'Please open and review the Terms of Service first';
+      else if (!accepted) e.legal = 'Please tick the box to confirm you have read and agree to the Terms of Service and Privacy Policy';
     }
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -96,11 +103,21 @@ export default function SignupPage() {
     if (step < 3) { setStep(s => s + 1); return; }
     setApiError('');
     try {
-      await register({ email: form.email, password: form.password, name: form.name, accountType: category });
+      const result = await register({ email: form.email, password: form.password, name: form.name, accountType: category, acceptedTerms: true });
+      setEmailsSent(result?.emailsSent !== false);
       setDone(true);
     } catch (error: any) {
       setApiError(error.message || 'Registration failed. Please try again.');
     }
+  };
+
+  const openLegal = (doc: 'privacy' | 'terms') => {
+    setLegalModal(doc);
+  };
+
+  const closeLegal = (doc: 'privacy' | 'terms') => {
+    setLegalModal(null);
+    setLegalRead(prev => ({ ...prev, [doc]: true }));
   };
 
   if (done) {
@@ -109,11 +126,64 @@ export default function SignupPage() {
         <div className="w-16 h-16 rounded-full bg-[#E8C96A]/20 border border-[#E8C96A]/30 flex items-center justify-center mx-auto mb-6">
           <Check className="w-8 h-8 text-[#E8C96A]" />
         </div>
-        <h2 style={{ fontFamily: 'var(--font-display)' }} className="text-2xl font-bold text-white mb-3">Check your email</h2>
-        <p className="text-white/50 text-sm mb-2">We sent a verification link to</p>
-        <p className="text-white font-medium text-sm mb-6">{form.email}</p>
-        <p className="text-white/30 text-xs mb-8 max-w-xs mx-auto">Click the link to activate your account. Check your spam folder if you don't see it.</p>
+        <h2 style={{ fontFamily: 'var(--font-display)' }} className="text-2xl font-bold text-white mb-3">Account created!</h2>
+        {emailsSent ? (
+          <>
+            <p className="text-white/50 text-sm mb-2">We sent a verification link to</p>
+            <p className="text-white font-medium text-sm mb-6">{form.email}</p>
+            <p className="text-white/30 text-xs mb-8 max-w-xs mx-auto">Click the link to activate your account. Check your spam folder if you don't see it.</p>
+          </>
+        ) : (
+          <>
+            <p className="text-white/50 text-sm mb-6 max-w-sm mx-auto">
+              Email delivery isn&apos;t set up yet, so we couldn&apos;t send a verification link — but you don&apos;t need it. You can log in right away.
+            </p>
+          </>
+        )}
         <Button variant="outline" size="md" onClick={() => router.push('/login')} className="rounded-xl">Go to login</Button>
+      </div>
+    );
+  }
+
+  if (legalModal) {
+    const isPrivacy = legalModal === 'privacy';
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          {isPrivacy ? <ShieldCheck className="w-6 h-6 text-[#E8C96A]" /> : <FileText className="w-6 h-6 text-[#E8C96A]" />}
+          <h2 style={{ fontFamily: 'var(--font-display)' }} className="text-xl font-bold text-white">
+            {isPrivacy ? 'Privacy Policy' : 'Terms of Service'}
+          </h2>
+          <span className="ml-auto text-xs text-white/30">Please review before accepting</span>
+        </div>
+        <div
+          className="rounded-2xl border border-white/10 p-5 max-h-[55vh] overflow-y-auto text-sm leading-relaxed text-white/70"
+          style={{ background: 'rgba(255,255,255,0.02)' }}
+        >
+          <iframe
+            src={isPrivacy ? '/privacy' : '/terms'}
+            title={isPrivacy ? 'Privacy Policy' : 'Terms of Service'}
+            className="w-full h-[50vh] rounded-xl"
+            style={{ border: 'none', background: 'transparent' }}
+          />
+        </div>
+        <div className="flex items-center justify-between gap-3">
+          <Link
+            href={isPrivacy ? '/privacy' : '/terms'}
+            target="_blank"
+            className="text-xs text-[#C9A84C] hover:text-[#E8C96A]"
+          >
+            Open in new tab instead
+          </Link>
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm" onClick={() => setLegalModal(null)} className="rounded-xl">
+              Close without marking read
+            </Button>
+            <Button size="sm" onClick={() => closeLegal(legalModal)} className="rounded-xl gap-1.5">
+              <Check className="w-3.5 h-3.5" /> I&apos;ve read this
+            </Button>
+          </div>
+        </div>
       </div>
     );
   }
@@ -232,6 +302,53 @@ export default function SignupPage() {
           {apiError && (
             <div className="px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-sm text-red-400">{apiError}</div>
           )}
+
+          {/* Legal agreements — must read before accepting */}
+          <div className="rounded-2xl border border-white/10 p-4 space-y-3" style={{ background: 'rgba(201,168,76,0.04)' }}>
+            <p className="text-xs text-white/50 leading-relaxed">
+              Before you create an account, please review our legal documents. Use the links below to read each one, then confirm:
+            </p>
+            <div className="flex flex-col sm:flex-row gap-2">
+              <button
+                type="button"
+                onClick={() => openLegal('privacy')}
+                className="flex-1 flex items-center gap-2.5 px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] hover:border-[#C9A84C]/40 transition-all text-left"
+              >
+                <ShieldCheck className="w-4 h-4 text-[#E8C96A] flex-shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-medium text-white">Privacy Policy</div>
+                  <div className="text-[11px] text-white/40">How we collect, use &amp; protect your data</div>
+                </div>
+                {legalRead.privacy && <Check className="w-4 h-4 text-[#E8C96A] flex-shrink-0" />}
+              </button>
+              <button
+                type="button"
+                onClick={() => openLegal('terms')}
+                className="flex-1 flex items-center gap-2.5 px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] hover:border-[#C9A84C]/40 transition-all text-left"
+              >
+                <FileText className="w-4 h-4 text-[#E8C96A] flex-shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-medium text-white">Terms of Service</div>
+                  <div className="text-[11px] text-white/40">Rules for using Yoyzie AI</div>
+                </div>
+                {legalRead.terms && <Check className="w-4 h-4 text-[#E8C96A] flex-shrink-0" />}
+              </button>
+            </div>
+            <label className="flex items-start gap-3 cursor-pointer select-none pt-1">
+              <input
+                type="checkbox"
+                checked={accepted}
+                onChange={e => { setAccepted(e.target.checked); if (errors.legal) setErrors(p => ({ ...p, legal: '' })); }}
+                className="mt-0.5 w-4 h-4 rounded border-white/20 accent-[#C9A84C] cursor-pointer"
+              />
+              <span className="text-xs text-white/60 leading-relaxed">
+                I confirm I have read and agree to the{' '}
+                <span className="text-[#C9A84C]">Terms of Service</span> and the{' '}
+                <span className="text-[#C9A84C]">Privacy Policy</span>, including how my data is collected, used, shared, and protected.
+              </span>
+            </label>
+            {errors.legal && <p className="text-xs text-red-400">{errors.legal}</p>}
+          </div>
         </div>
       )}
 
@@ -246,6 +363,16 @@ export default function SignupPage() {
           className={`rounded-xl gap-2 ${step === 0 ? 'w-full' : 'flex-1'}`}>
           {!isLoading && <>{step === 3 ? 'Create account' : 'Continue'}<ArrowRight className="w-4 h-4" /></>}
         </Button>
+      </div>
+
+      {/* Footer legal links (visible on every step) */}
+      <div className="mt-8 text-center">
+        <p className="text-[11px] text-white/25">
+          By continuing you acknowledge our{' '}
+          <Link href="/terms" target="_blank" className="text-[#C9A84C]/70 hover:text-[#C9A84C] underline underline-offset-2">Terms of Service</Link>
+          {' '}and{' '}
+          <Link href="/privacy" target="_blank" className="text-[#C9A84C]/70 hover:text-[#C9A84C] underline underline-offset-2">Privacy Policy</Link>.
+        </p>
       </div>
     </div>
   );

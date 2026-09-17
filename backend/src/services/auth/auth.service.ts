@@ -58,11 +58,15 @@ export class AuthService {
       86400
     );
 
-    // Send welcome + verification emails
-    await emailService.sendWelcome(user.email, user.name);
-    await emailService.sendEmailVerification(user.email, user.name, verificationToken);
+    // Send welcome + verification emails. Track actual delivery so the UI
+    // can tell the truth: when Resend is not configured (or the send fails)
+    // the API reports emailsSent=false instead of claiming an email was sent.
+    const [welcomeSent, verificationSent] = await Promise.all([
+      emailService.sendWelcome(user.email, user.name),
+      emailService.sendEmailVerification(user.email, user.name, verificationToken),
+    ]);
 
-    return { user, verificationToken };
+    return { user, verificationToken, emailsSent: welcomeSent && verificationSent };
   }
 
   async login(data: {

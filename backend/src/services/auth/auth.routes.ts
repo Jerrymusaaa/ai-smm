@@ -68,6 +68,22 @@ passport.use(new GoogleStrategy(
 
 router.use(passport.initialize());
 
+// GET /api/auth/google/status — diagnostic for redirect_uri_mismatch.
+// The callbackUrl reported here must be added EXACTLY (scheme, host, path)
+// in Google Cloud Console → Credentials → the OAuth client →
+// 'Authorized redirect URIs'.
+router.get('/google/status', (req: Request, res: Response) => {
+  const callbackUrl = `${process.env.API_URL || 'http://localhost:5000'}/api/auth/google/callback`;
+  res.json({
+    success: true,
+    data: {
+      googleConfigured: !!(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET),
+      callbackUrl,
+      frontendUrl: FRONTEND_URL,
+    },
+  });
+});
+
 router.get('/google',
   passport.authenticate('google', { scope: ['profile', 'email'], session: false })
 );
@@ -138,13 +154,18 @@ router.post('/register', authRateLimit, async (req: Request, res: Response) => {
       password: z.string().min(8, 'Password must be at least 8 characters'),
       name: z.string().min(1, 'Name is required').max(100),
       accountType: z.enum(['individual', 'influencer', 'business', 'enterprise']).optional(),
+      acceptedTerms: z.boolean().refine(v => v === true, {
+        message: 'You must review and accept the Terms of Service and Privacy Policy to create an account',
+      }),
     }).parse(req.body);
 
     const result = await authService.register(data as Parameters<typeof authService.register>[0]);
     res.status(201).json({
       success: true,
-      message: 'Account created! Check your email to verify your account.',
-      data: result.user,
+      message: result.emailsSent
+        ? 'Account created! Check your email to verify your account.'
+        : 'Account created! Email delivery is not configured yet, but you can log in right away.',
+      data: { ...result.user, emailsSent: result.emailsSent },
     });
   } catch (error: any) {
     if (error.name === 'ZodError') {

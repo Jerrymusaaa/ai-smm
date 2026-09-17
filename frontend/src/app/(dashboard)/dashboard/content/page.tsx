@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Sparkles, Wand2, Settings2, ChevronDown, ChevronUp, Zap, RefreshCw } from 'lucide-react';
+import { Sparkles, Wand2, Settings2, ChevronDown, ChevronUp, Zap, RefreshCw, GraduationCap, Music2, FlaskConical, Clock, Check } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { PlatformSelector, PLATFORMS } from '@/components/content/PlatformSelector';
 import { MediaUpload } from '@/components/content/MediaUpload';
@@ -17,6 +17,7 @@ import api from '@/lib/api';
 async function fetchCaption(params: {
   platform: string; topic: string; tone: string;
   includeHashtags: boolean; includeEmojis: boolean; language: string;
+  useStyle?: boolean;
 }): Promise<string> {
   const res = await api.instance.post('/api/ai/caption', params);
   return res.data?.data?.caption || '';
@@ -55,29 +56,31 @@ export default function ContentStudioPage() {
   const [activePreview, setActivePreview]     = useState(0);
   const [error, setError]                     = useState('');
 
-  // AI-generated hashtag groups (replaces static HASHTAG_GROUPS)
-  const [hashtagGroups, setHashtagGroups] = useState([
-    {
-      label: 'Trending in Kenya',
-      color: '#C9A84C',
-      tags: [
-        { tag: '#NairobiTwitter', volume: '45K', trending: true },
-        { tag: '#KenyaTwitter', volume: '120K', trending: true },
-        { tag: '#MadeInKenya', volume: '38K', trending: false },
-        { tag: '#KenyanContent', volume: '22K', trending: true },
-      ],
-    },
-    {
-      label: 'Your niche',
-      color: '#E8C96A',
-      tags: [
-        { tag: '#ContentCreator', volume: '45M', trending: true },
-        { tag: '#DigitalMarketing', volume: '32M', trending: false },
-        { tag: '#SocialMediaTips', volume: '8.1M', trending: true },
-        { tag: '#MarketingKenya', volume: '2.1M', trending: false },
-      ],
-    },
-  ]);
+  // AI-generated hashtag groups (loaded live — no static samples)
+  const [hashtagGroups, setHashtagGroups] = useState<any[]>([]);
+
+  // Style learning / sounds / A/B / best times
+  const [styleInfo, setStyleInfo] = useState<any>(null);
+  const [styleLoading, setStyleLoading] = useState(false);
+  const [useStyle, setUseStyle] = useState(false);
+  const [sounds, setSounds] = useState<any[]>([]);
+  const [soundsLoading, setSoundsLoading] = useState(false);
+  const [abVariations, setAbVariations] = useState<any[]>([]);
+  const [abLoading, setAbLoading] = useState(false);
+  const [bestTimes, setBestTimes] = useState<any>(null);
+
+  // Load learned style + best posting times on mount
+  useEffect(() => {
+    api.instance.get('/api/ai/style')
+      .then(res => {
+        const d = res.data?.data;
+        if (d?.style) { setStyleInfo(d); setUseStyle(true); }
+      })
+      .catch(() => {});
+    api.instance.get('/api/ai/best-times')
+      .then(res => setBestTimes(res.data?.data ?? null))
+      .catch(() => {});
+  }, []);
 
   // ── Generate captions via Claude ────────────────────────────────────────────
   const handleGenerate = async () => {
@@ -108,6 +111,7 @@ export default function ContentStudioPage() {
             includeHashtags: false, // we handle hashtags separately
             includeEmojis,
             language,
+            useStyle,
           });
 
           return {
@@ -222,6 +226,49 @@ export default function ContentStudioPage() {
     router.push('/dashboard/scheduler');
   };
 
+  // ── AI style learning ────────────────────────────────────────────────
+  const handleLearnStyle = async () => {
+    setStyleLoading(true);
+    try {
+      const res = await api.instance.post('/api/ai/style/learn', {});
+      setStyleInfo(res.data?.data ?? null);
+      setUseStyle(true);
+    } catch (err: any) {
+      setError(err.response?.data?.error || 'Could not learn your style yet');
+    } finally {
+      setStyleLoading(false);
+    }
+  };
+
+  // ── Trending sounds ──────────────────────────────────────────────────
+  const handleGetSounds = async () => {
+    setSoundsLoading(true);
+    try {
+      const platform = selectedPlatforms.includes('tiktok') ? 'tiktok' : 'reels';
+      const res = await api.instance.get(`/api/ai/sounds?platform=${platform}`);
+      setSounds(res.data?.data?.sounds ?? []);
+    } catch {
+      setSounds([]);
+    } finally {
+      setSoundsLoading(false);
+    }
+  };
+
+  // ── A/B variations ───────────────────────────────────────────────────
+  const handleGenerateAB = async () => {
+    if (!prompt.trim()) { setError('Describe your post first, then generate A/B variations'); return; }
+    setAbLoading(true);
+    try {
+      const platform = PLATFORMS.find(p => p.id === selectedPlatforms[0])?.label || 'Instagram';
+      const res = await api.instance.post('/api/ai/ab-variations', { platform, topic: prompt, count: 3 });
+      setAbVariations(res.data?.data?.variations ?? []);
+    } catch (err: any) {
+      setError(err.response?.data?.error || 'Failed to generate A/B variations');
+    } finally {
+      setAbLoading(false);
+    }
+  };
+
   // ── Render ──────────────────────────────────────────────────────────────────
   return (
     <div className="space-y-6">
@@ -240,7 +287,7 @@ export default function ContentStudioPage() {
           style={{ background: 'rgba(201,168,76,0.06)', borderColor: 'rgba(201,168,76,0.15)' }}>
           <Zap className="w-3.5 h-3.5" style={{ color: '#C9A84C' }} />
           <span className="text-xs font-medium" style={{ color: '#E8C96A' }}>
-            Powered by Claude
+            AI-Powered
           </span>
         </div>
       </div>
@@ -291,6 +338,43 @@ export default function ContentStudioPage() {
             {/* Tone selector */}
             <div className="mt-4">
               <ToneSelector value={tone} onChange={setTone} />
+            </div>
+
+            {/* AI style personalisation */}
+            <div className="mt-4 rounded-xl border p-3.5" style={{ borderColor: 'rgba(201,168,76,0.12)', background: 'rgba(201,168,76,0.03)' }}>
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2 min-w-0">
+                  <GraduationCap className="w-4 h-4 flex-shrink-0" style={{ color: '#C9A84C' }} />
+                  <div className="min-w-0">
+                    <p className="text-xs font-medium text-white">
+                      Write like me {useStyle && styleInfo?.style?.summary ? '✓' : ''}
+                    </p>
+                    <p className="text-[10px] truncate" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                      {styleInfo?.style?.summary
+                        ? styleInfo.style.summary
+                        : 'Let the AI study your published posts and mimic your authentic voice'}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  {styleInfo && (
+                    <button
+                      onClick={() => setUseStyle(!useStyle)}
+                      className="w-10 h-6 rounded-full transition-all relative flex-shrink-0"
+                      style={{ background: useStyle ? 'linear-gradient(135deg,#C9A84C,#E8C96A)' : 'rgba(255,255,255,0.1)' }}
+                      title={useStyle ? 'Style matching ON' : 'Style matching OFF'}>
+                      <div className="absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-all"
+                        style={{ left: useStyle ? '22px' : '4px' }} />
+                    </button>
+                  )}
+                  <button onClick={handleLearnStyle} disabled={styleLoading}
+                    className="text-[10px] px-2.5 py-1.5 rounded-lg border font-medium disabled:opacity-40 flex items-center gap-1"
+                    style={{ borderColor: 'rgba(201,168,76,0.3)', color: '#E8C96A' }}>
+                    {styleLoading ? <RefreshCw className="w-3 h-3 animate-spin" /> : <GraduationCap className="w-3 h-3" />}
+                    {styleInfo ? 'Re-learn' : 'Learn my style'}
+                  </button>
+                </div>
+              </div>
             </div>
 
             {/* Advanced options */}
@@ -380,6 +464,49 @@ export default function ContentStudioPage() {
               </>
             )}
           </button>
+
+          {/* A/B variations */}
+          <div className="glass rounded-2xl border p-5" style={{ borderColor: 'rgba(201,168,76,0.1)' }}>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <FlaskConical className="w-4 h-4" style={{ color: '#C9A84C' }} />
+                <h3 style={{ fontFamily: 'var(--font-display)' }} className="text-sm font-bold text-white">
+                  A/B Test Variations
+                </h3>
+              </div>
+              <button onClick={handleGenerateAB} disabled={abLoading || !prompt.trim()}
+                className="text-xs font-medium disabled:opacity-40 flex items-center gap-1.5"
+                style={{ color: '#C9A84C' }}>
+                {abLoading ? <RefreshCw className="w-3 h-3 animate-spin" /> : <FlaskConical className="w-3 h-3" />}
+                Generate variations
+              </button>
+            </div>
+            {abVariations.length === 0 ? (
+              <p className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                Generate distinct strategic versions of your post (hook, story, CTA-led) and publish them to see which performs best.
+              </p>
+            ) : (
+              <div className="space-y-3">
+                {abVariations.map((v: any, i: number) => (
+                  <div key={i} className="rounded-xl border p-3.5" style={{ borderColor: 'rgba(201,168,76,0.12)', background: 'rgba(201,168,76,0.03)' }}>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-bold" style={{ color: '#E8C96A' }}>{v.label}</span>
+                      <button
+                        onClick={() => { setPrompt(v.caption); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                        className="text-[10px] px-2 py-1 rounded-lg border"
+                        style={{ borderColor: 'rgba(201,168,76,0.25)', color: 'rgba(255,255,255,0.5)' }}>
+                        Use this
+                      </button>
+                    </div>
+                    <p className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.7)' }}>{v.caption}</p>
+                    {v.hypothesis && (
+                      <p className="text-[10px] mt-2 italic" style={{ color: 'rgba(255,255,255,0.35)' }}>💡 {v.hypothesis}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
 
           {/* Caption variants */}
           {(loading || variants.length > 0) && (
@@ -496,28 +623,87 @@ export default function ContentStudioPage() {
             </div>
           </div>
 
-          {/* Kenyan timing tip */}
+          {/* Best posting times — AI windows + user's real engagement data */}
           <div className="rounded-2xl border p-4"
             style={{ background: 'rgba(201,168,76,0.04)', borderColor: 'rgba(201,168,76,0.15)' }}>
             <div className="flex items-center gap-2 mb-2">
-              <Sparkles className="w-4 h-4" style={{ color: '#C9A84C' }} />
+              <Clock className="w-4 h-4" style={{ color: '#C9A84C' }} />
               <span className="text-xs font-semibold" style={{ color: '#E8C96A' }}>
-                Best times for Kenyan audience
+                Best posting times (Kenyan audience, EAT)
               </span>
             </div>
-            <div className="space-y-1.5">
-              {[
-                { platform: 'Instagram', time: '7am – 9am & 7pm – 9pm EAT' },
-                { platform: 'TikTok', time: '6pm – 10pm EAT' },
-                { platform: 'Twitter/X', time: '8am – 10am & 12pm – 1pm EAT' },
-                { platform: 'LinkedIn', time: 'Tue–Thu, 8am – 10am EAT' },
-              ].map(item => (
-                <div key={item.platform} className="flex justify-between text-[10px]">
-                  <span style={{ color: 'rgba(255,255,255,0.5)' }}>{item.platform}</span>
-                  <span style={{ color: 'rgba(255,255,255,0.35)' }}>{item.time}</span>
+            {bestTimes?.windows?.length > 0 ? (
+              <div className="space-y-1.5">
+                {bestTimes.windows.map((w: any, i: number) => (
+                  <div key={i} className="flex justify-between text-[10px]">
+                    <span style={{ color: 'rgba(255,255,255,0.5)' }}>{w.platform}</span>
+                    <span style={{ color: 'rgba(255,255,255,0.4)' }} title={w.why}>{w.times}</span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                Loading Kenyan engagement windows…
+              </p>
+            )}
+            {bestTimes?.personalData?.postsAnalyzed > 0 && (
+              <div className="mt-3 pt-3 border-t" style={{ borderColor: 'rgba(201,168,76,0.12)' }}>
+                <p className="text-[10px] mb-1" style={{ color: '#E8C96A' }}>
+                  ★ Your best hour: {bestTimes.personalData.yourBestHour}:00 EAT
+                  (from {bestTimes.personalData.postsAnalyzed} of your posts)
+                </p>
+                <div className="flex items-end gap-0.5 h-8">
+                  {bestTimes.personalData.hourly.map((h: any) => {
+                    const max = Math.max(...bestTimes.personalData.hourly.map((x: any) => x.engagement), 1);
+                    return (
+                      <div key={h.hour} className="flex-1 rounded-t"
+                        title={`${h.hour}:00 — ${h.engagement} avg engagement (${h.posts} posts)`}
+                        style={{ height: `${Math.max((h.engagement / max) * 100, 6)}%`, background: '#C9A84C', opacity: 0.75 }} />
+                    );
+                  })}
                 </div>
-              ))}
+              </div>
+            )}
+            {bestTimes?.personalData?.postsAnalyzed === 0 && (
+              <p className="text-[10px] mt-2" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                Publish through Yoyzie and your personal best hours will be computed from real engagement.
+              </p>
+            )}
+          </div>
+
+          {/* Trending sounds */}
+          <div className="glass rounded-2xl border p-5" style={{ borderColor: 'rgba(201,168,76,0.1)' }}>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <Music2 className="w-4 h-4" style={{ color: '#C9A84C' }} />
+                <h3 style={{ fontFamily: 'var(--font-display)' }} className="text-sm font-bold text-white">
+                  Trending Sounds
+                </h3>
+              </div>
+              <button onClick={handleGetSounds} disabled={soundsLoading}
+                className="text-xs font-medium disabled:opacity-40 flex items-center gap-1.5"
+                style={{ color: '#C9A84C' }}>
+                {soundsLoading ? <RefreshCw className="w-3 h-3 animate-spin" /> : <Music2 className="w-3 h-3" />}
+                {selectedPlatforms.includes('tiktok') ? 'TikTok' : 'Reels'} sounds
+              </button>
             </div>
+            {sounds.length === 0 ? (
+              <p className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                Get trending TikTok/Reels sounds popular with Kenyan creators, matched to your niche.
+              </p>
+            ) : (
+              <div className="space-y-2">
+                {sounds.map((s: any, i: number) => (
+                  <div key={i} className="rounded-xl border p-3" style={{ borderColor: 'rgba(201,168,76,0.1)', background: 'rgba(255,255,255,0.02)' }}>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-semibold text-white">🎵 {s.name}</span>
+                      <span className="text-[10px]" style={{ color: 'rgba(255,255,255,0.35)' }}>{s.artist}</span>
+                    </div>
+                    {s.useFor && <p className="text-[10px] mt-1" style={{ color: 'rgba(255,255,255,0.4)' }}>{s.useFor}</p>}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

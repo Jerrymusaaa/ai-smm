@@ -93,7 +93,7 @@ export class EmailService {
     }
   }
 
-  async sendWelcome(to: string, name: string) {
+  async sendWelcome(to: string, name: string): Promise<boolean> {
     try {
       await getResend().emails.send({
         from: `${APP_NAME} <${FROM}>`,
@@ -139,12 +139,14 @@ export class EmailService {
       `,
       });
       logger.info(`Welcome email sent to ${to}`);
+      return true;
     } catch (error) {
       logger.error('Failed to send welcome email:', error);
+      return false;
     }
   }
 
-  async sendEmailVerification(to: string, name: string, token: string) {
+  async sendEmailVerification(to: string, name: string, token: string): Promise<boolean> {
     const verifyUrl = `${FRONTEND_URL}/verify-email?token=${token}`;
     try {
       await getResend().emails.send({
@@ -181,8 +183,11 @@ export class EmailService {
 </html>
       `,
       });
+      logger.info(`Verification email sent to ${to}`);
+      return true;
     } catch (error) {
       logger.error('Failed to send verification email:', error);
+      return false;
     }
   }
 }

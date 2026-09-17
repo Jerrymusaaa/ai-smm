@@ -1,24 +1,36 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Menu, Search, Bell, Plus, Sparkles,
   ChevronDown, LogOut, User, Settings
 } from 'lucide-react';
 import { useAuthStore } from '@/store/auth.store';
+import { api as apiClient } from '@/lib/api';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 interface TopBarProps {
   onMenuClick: () => void;
   sidebarCollapsed: boolean;
 }
 
-const NOTIFICATIONS = [
-  { id: 1, text: 'Your post reached 10,000 impressions', time: '2m ago', dot: '#C9A84C' },
-  { id: 2, text: 'Scheduled post published successfully', time: '14m ago', dot: '#E8C96A' },
-  { id: 3, text: 'New follower milestone: 5,000 on LinkedIn', time: '1h ago', dot: '#C9A84C' },
-  { id: 4, text: 'AI generated 5 new caption variants', time: '2h ago', dot: '#E8C96A' },
-];
+interface Notification {
+  id: string;
+  title?: string;
+  message?: string;
+  body?: string;
+  read: boolean;
+  createdAt: string;
+}
+
+function timeAgo(iso: string) {
+  const s = Math.floor((Date.now() - new Date(iso).getTime()) / 1000);
+  if (s < 60) return 'just now';
+  if (s < 3600) return `${Math.floor(s / 60)}m ago`;
+  if (s < 86400) return `${Math.floor(s / 3600)}h ago`;
+  return `${Math.floor(s / 86400)}d ago`;
+}
 
 export function TopBar({ onMenuClick }: TopBarProps) {
   const router = useRouter();
@@ -27,6 +39,22 @@ export function TopBar({ onMenuClick }: TopBarProps) {
   const [notifOpen, setNotifOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    apiClient.users.getNotifications()
+      .then((res: any) => { if (!cancelled) setNotifications((res.data?.data ?? []).slice(0, 10)); })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, [notifOpen]);
+
+  const markAllRead = async () => {
+    try {
+      await apiClient.users.markAllNotificationsRead();
+      setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+    } catch {}
+  };
 
   const handleLogout = async () => {
     await logout();
@@ -110,6 +138,9 @@ export function TopBar({ onMenuClick }: TopBarProps) {
           <Sparkles className="w-3.5 h-3.5" /> Ask AI
         </button>
 
+        {/* Theme toggle */}
+        <ThemeToggle compact />
+
         {/* Notifications */}
         <div className="relative">
           <button
@@ -134,26 +165,34 @@ export function TopBar({ onMenuClick }: TopBarProps) {
                 style={{ borderColor: 'rgba(201,168,76,0.1)' }}
               >
                 <span className="text-sm font-medium text-white">Notifications</span>
-                <button className="text-xs" style={{ color: '#C9A84C' }}>Mark all read</button>
+                <button className="text-xs" style={{ color: '#C9A84C' }} onClick={markAllRead}>Mark all read</button>
               </div>
               <div className="divide-y max-h-72 overflow-y-auto"
                 style={{ '--tw-divide-opacity': 1 } as React.CSSProperties}>
-                {NOTIFICATIONS.map(n => (
+                {notifications.length === 0 && (
+                  <div className="px-4 py-8 text-center">
+                    <Bell className="w-6 h-6 mx-auto mb-2" style={{ color: 'rgba(201,168,76,0.4)' }} />
+                    <p className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                      No notifications yet — activity from your posts and campaigns will show up here.
+                    </p>
+                  </div>
+                )}
+                {notifications.map(n => (
                   <div
                     key={n.id}
                     className="flex items-start gap-3 px-4 py-3 cursor-pointer transition-colors"
-                    style={{ borderColor: 'rgba(255,255,255,0.04)' }}
+                    style={{ borderColor: 'rgba(255,255,255,0.04)', opacity: n.read ? 0.55 : 1 }}
                     onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'rgba(201,168,76,0.04)'}
                     onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}
                   >
                     <div className="w-2 h-2 rounded-full mt-1.5 flex-shrink-0"
-                      style={{ background: n.dot }} />
+                      style={{ background: n.read ? 'rgba(255,255,255,0.2)' : '#C9A84C' }} />
                     <div className="flex-1 min-w-0">
                       <p className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.7)' }}>
-                        {n.text}
+                        {n.title || n.message || n.body || 'Notification'}
                       </p>
                       <p className="text-[10px] mt-1" style={{ color: 'rgba(255,255,255,0.3)' }}>
-                        {n.time}
+                        {timeAgo(n.createdAt)}
                       </p>
                     </div>
                   </div>

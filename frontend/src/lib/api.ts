@@ -53,7 +53,7 @@ class ApiClient {
 
   // ── Auth ──────────────────────────────────────────────────────
   auth = {
-    register: (data: { email: string; password: string; name: string; accountType?: string }) =>
+    register: (data: { email: string; password: string; name: string; accountType?: string; acceptedTerms: boolean }) =>
       this.client.post('/api/auth/register', data),
 
     login: (data: { email: string; password: string }) =>
@@ -120,6 +120,7 @@ class ApiClient {
     topPosts: (params?: { limit?: number; days?: number }) =>
       this.client.get('/api/analytics/posts/top', { params }),
     platforms: () => this.client.get('/api/analytics/platforms'),
+    socialMedia: () => this.client.get('/api/analytics/social-media'),
   };
 }
 

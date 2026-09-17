@@ -13,7 +13,7 @@ import {
 } from 'recharts';
 import api from '@/lib/api';
 import { usePlan } from '@/hooks/usePlan';
-import { FeatureGate } from '@/components/ui/FeatureGate';
+import { CompetitorTracking } from '@/components/analytics/CompetitorTracking';
 
 const PERIODS = ['7', '30', '90'];
 
@@ -91,7 +91,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 export default function AnalyticsPage() {
-  const { can, plan } = usePlan();
+  const plan = usePlan().plan;
   const [period, setPeriod] = useState('30');
   const [data, setData] = useState<any>(null);
   const [topPosts, setTopPosts] = useState<any[]>([]);
@@ -212,17 +212,17 @@ export default function AnalyticsPage() {
         </div>
       ) : (
         <>
-          {/* Stats overview */}
+          {/* Stats overview — all values are real API data (no fake deltas) */}
           <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
             <StatCard label="Total followers" value={formatNum(data.totalFollowers)}
               sub={`Across ${data.connectedAccounts} platforms`}
-              icon={Users} change={2.4} color="#C9A84C" />
+              icon={Users} color="#C9A84C" />
             <StatCard label="Total impressions" value={formatNum(data.totalImpressions)}
-              sub={data.period} icon={Eye} change={8.1} color="#E8C96A" />
+              sub={data.period} icon={Eye} color="#E8C96A" />
             <StatCard label="Total engagements" value={formatNum(data.totalEngagements)}
-              sub={`${data.engagementRate}% rate`} icon={Heart} change={-1.2} color="#C9A84C" />
+              sub={`${data.engagementRate}% rate`} icon={Heart} color="#C9A84C" />
             <StatCard label="Total reach" value={formatNum(data.totalReach)}
-              sub={`${data.postsCount} posts published`} icon={TrendingUp} change={5.6} color="#E8C96A" />
+              sub={`${data.postsCount} posts published`} icon={TrendingUp} color="#E8C96A" />
           </div>
 
           {/* Growth chart */}
@@ -375,20 +375,8 @@ export default function AnalyticsPage() {
             </div>
           )}
 
-          {/* Competitor analysis gate */}
-          <FeatureGate
-            locked={!can('botDetection')}
-            message="Upgrade to Creator to see competitor benchmarking and advanced audience demographics."
-            neededPlan="Creator"
-            blurred={false}>
-            <div className="glass rounded-2xl border p-8 text-center" style={{ borderColor: 'rgba(201,168,76,0.1)' }}>
-              <BarChart3 className="w-8 h-8 mx-auto mb-3" style={{ color: 'rgba(201,168,76,0.4)' }} />
-              <p className="text-sm font-medium text-white">Competitor benchmarking</p>
-              <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                See how your performance compares to similar accounts in Kenya
-              </p>
-            </div>
-          </FeatureGate>
+          {/* Competitor tracking — real public metrics + AI benchmarking */}
+          <CompetitorTracking />
         </>
       )}
     </div>
