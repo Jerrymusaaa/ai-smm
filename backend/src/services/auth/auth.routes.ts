@@ -13,6 +13,10 @@ import { logger } from '../../shared/utils/logger';
 const router = Router();
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000';
 
+// passport-oauth2 throws in its constructor when clientID is missing, which
+// would crash boot on a fresh deploy before GOOGLE_CLIENT_ID is configured.
+// Register the strategy only when credentials are present.
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
 passport.use(new GoogleStrategy(
   {
     clientID:     process.env.GOOGLE_CLIENT_ID!,
@@ -58,6 +62,9 @@ passport.use(new GoogleStrategy(
     }
   }
 ));
+} else {
+  logger.warn('GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET not set — Google OAuth routes will be unavailable');
+}
 
 router.use(passport.initialize());
 
@@ -133,7 +140,7 @@ router.post('/register', authRateLimit, async (req: Request, res: Response) => {
       accountType: z.enum(['individual', 'influencer', 'business', 'enterprise']).optional(),
     }).parse(req.body);
 
-    const result = await authService.register(data);
+    const result = await authService.register(data as Parameters<typeof authService.register>[0]);
     res.status(201).json({
       success: true,
       message: 'Account created! Check your email to verify your account.',
@@ -151,7 +158,7 @@ router.post('/register', authRateLimit, async (req: Request, res: Response) => {
 router.post('/login', authRateLimit, async (req: Request, res: Response) => {
   try {
     const data = z.object({ email: z.string().email(), password: z.string().min(1) }).parse(req.body);
-    const result = await authService.login({ ...data, device: req.headers['user-agent'], ip: req.ip });
+    const result = await authService.login({ ...data, device: req.headers['user-agent'], ip: req.ip } as Parameters<typeof authService.login>[0]);
 
     res.cookie('refreshToken', result.refreshToken, {
       httpOnly: true,

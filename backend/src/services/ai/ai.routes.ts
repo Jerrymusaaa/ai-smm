@@ -20,7 +20,7 @@ router.post('/chat', async (req: AuthRequest, res: Response) => {
         connectedPlatforms: z.array(z.string()).optional(),
       }).optional(),
     });
-    const params = schema.parse(req.body);
+    const params = schema.parse(req.body) as Parameters<typeof aiService.chat>[0];
     const reply = await aiService.chat(params);
     res.json({ success: true, data: { reply } });
   } catch (error: any) {
@@ -35,7 +35,7 @@ router.post('/caption', async (req: AuthRequest, res: Response) => {
       brandName: z.string().optional(), includeHashtags: z.boolean().default(true),
       includeEmojis: z.boolean().default(true), language: z.string().default('english'),
     });
-    const params = schema.parse(req.body);
+    const params = schema.parse(req.body) as Parameters<typeof aiService.generateCaption>[0];
     const caption = await aiService.generateCaption(params);
     res.json({ success: true, data: { caption } });
   } catch (error: any) {
@@ -49,7 +49,7 @@ router.post('/hashtags', async (req: AuthRequest, res: Response) => {
       topic: z.string().min(1), platform: z.string(), niche: z.string().optional(),
       includeKenyan: z.boolean().default(true),
     });
-    const params = schema.parse(req.body);
+    const params = schema.parse(req.body) as Parameters<typeof aiService.suggestHashtags>[0];
     const hashtags = await aiService.suggestHashtags(params);
     res.json({ success: true, data: { hashtags } });
   } catch (error: any) {

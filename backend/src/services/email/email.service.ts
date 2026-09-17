@@ -1,7 +1,21 @@
 import { Resend } from 'resend';
 import { logger } from '../../shared/utils/logger';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazily instantiate the Resend client so the server can boot without
+// RESEND_API_KEY set (e.g. in CI or a fresh deploy); it is only required
+// when an email is actually sent.
+let _resend: Resend | null = null;
+function getResend(): Resend {
+  if (!_resend) {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      throw new Error('RESEND_API_KEY is not set');
+    }
+    _resend = new Resend(apiKey);
+  }
+  return _resend;
+}
+
 const FROM = process.env.FROM_EMAIL || 'noreply@yoyzie.ai';
 const APP_NAME = process.env.APP_NAME || 'Yoyzie AI';
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000';
@@ -12,7 +26,7 @@ export class EmailService {
     const resetUrl = `${FRONTEND_URL}/reset-password?token=${token}`;
 
     try {
-      await resend.emails.send({
+      await getResend().emails.send({
         from: `${APP_NAME} <${FROM}>`,
         to,
         subject: 'Reset your Yoyzie AI password',
@@ -81,7 +95,7 @@ export class EmailService {
 
   async sendWelcome(to: string, name: string) {
     try {
-      await resend.emails.send({
+      await getResend().emails.send({
         from: `${APP_NAME} <${FROM}>`,
         to,
         subject: `Welcome to Yoyzie AI, ${name}! 🎉`,
@@ -133,7 +147,7 @@ export class EmailService {
   async sendEmailVerification(to: string, name: string, token: string) {
     const verifyUrl = `${FRONTEND_URL}/verify-email?token=${token}`;
     try {
-      await resend.emails.send({
+      await getResend().emails.send({
         from: `${APP_NAME} <${FROM}>`,
         to,
         subject: 'Verify your Yoyzie AI email address',

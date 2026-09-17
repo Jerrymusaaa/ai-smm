@@ -47,7 +47,7 @@ router.get('/', async (req: AuthRequest, res: Response) => {
 router.post('/', async (req: AuthRequest, res: Response) => {
   const data = postSchema.parse(req.body);
   const post = await prisma.post.create({
-    data: { ...data, userId: req.user!.id, platform: data.platform as any },
+    data: { ...data, userId: req.user!.id, platform: data.platform as any } as any,
   });
   res.status(201).json({ success: true, data: post });
 });

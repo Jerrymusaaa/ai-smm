@@ -37,7 +37,7 @@ router.get('/', async (req: AuthRequest, res: Response) => {
 router.post('/', async (req: AuthRequest, res: Response) => {
   const data = campaignSchema.parse(req.body);
   const campaign = await prisma.campaign.create({
-    data: { ...data, userId: req.user!.id, platforms: data.platforms as any[] },
+    data: { ...data, userId: req.user!.id, platforms: data.platforms as any[] } as any,
   });
   res.status(201).json({ success: true, data: campaign });
 });
