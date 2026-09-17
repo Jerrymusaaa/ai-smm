@@ -689,3 +689,36 @@ Please make sure to provide valid database credentials for the database server a
 2026-09-17 19:02:35 [[31merror[39m]: Error: connect ECONNREFUSED 127.0.0.1:59999
     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
 2026-09-17 19:02:36 [[32minfo[39m]: ::1 - - [17/Sep/2026:16:02:36 +0000] "GET /health HTTP/1.1" 200 107 "-" "curl/8.5.0"
+2026-09-17 20:12:14 [[33mwarn[39m]: GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET not set — Google OAuth routes will be unavailable
+2026-09-17 20:12:14 [[32minfo[39m]: AI Provider: DeepSeek (deepseek-chat)
+2026-09-17 20:12:14 [[32minfo[39m]: ✅ Database connected successfully
+2026-09-17 20:12:14 [[32minfo[39m]: 🚀 Yoyzie AI API running on http://localhost:5097
+2026-09-17 20:12:14 [[31merror[39m]: Error: connect ECONNREFUSED 127.0.0.1:59999
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+2026-09-17 20:12:15 [[31merror[39m]: Error: connect ECONNREFUSED 127.0.0.1:59999
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+2026-09-17 20:12:16 [[31merror[39m]: Error: connect ECONNREFUSED 127.0.0.1:59999
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+2026-09-17 20:12:17 [[31merror[39m]: Error: connect ECONNREFUSED 127.0.0.1:59999
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+2026-09-17 20:12:17 [[31merror[39m]: Error: Redis reconnect limit reached — continuing without Redis
+    at RedisSocket._RedisSocket_shouldReconnect (/home/jerry-musa/ai-smm/ai-smm/backend/node_modules/@redis/client/dist/lib/client/socket.js:140:16)
+    at RedisSocket._RedisSocket_connect (/home/jerry-musa/ai-smm/ai-smm/backend/node_modules/@redis/client/dist/lib/client/socket.js:162:117)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Commander.connect (/home/jerry-musa/ai-smm/ai-smm/backend/node_modules/@redis/client/dist/lib/client/index.js:185:9)
+    at async connectRedis (/home/jerry-musa/ai-smm/ai-smm/backend/dist/shared/config/redis.js:25:9)
+2026-09-17 20:12:23 [[33mwarn[39m]: Redis unavailable — skipped set for "verify:0d5916c3-5392-4402-9afc-326cc0a2c50a"
+2026-09-17 20:12:23 [[31merror[39m]: Error: RESEND_API_KEY is not set
+    at getResend (/home/jerry-musa/ai-smm/ai-smm/backend/dist/services/email/email.service.js:14:19)
+    at EmailService.sendWelcome (/home/jerry-musa/ai-smm/ai-smm/backend/dist/services/email/email.service.js:96:19)
+    at AuthService.register (/home/jerry-musa/ai-smm/ai-smm/backend/dist/services/auth/auth.service.js:44:44)
+    at async /home/jerry-musa/ai-smm/ai-smm/backend/dist/services/auth/auth.routes.js:120:24
+2026-09-17 20:12:23 [[31merror[39m]: Error: RESEND_API_KEY is not set
+    at getResend (/home/jerry-musa/ai-smm/ai-smm/backend/dist/services/email/email.service.js:14:19)
+    at EmailService.sendEmailVerification (/home/jerry-musa/ai-smm/ai-smm/backend/dist/services/email/email.service.js:146:19)
+    at AuthService.register (/home/jerry-musa/ai-smm/ai-smm/backend/dist/services/auth/auth.service.js:45:44)
+    at async /home/jerry-musa/ai-smm/ai-smm/backend/dist/services/auth/auth.routes.js:120:24
+2026-09-17 20:12:23 [[32minfo[39m]: ::1 - - [17/Sep/2026:17:12:23 +0000] "POST /api/auth/register HTTP/1.1" 201 254 "-" "curl/8.5.0"
+2026-09-17 20:12:23 [[32minfo[39m]: ::1 - - [17/Sep/2026:17:12:23 +0000] "POST /api/auth/login HTTP/1.1" 200 705 "-" "curl/8.5.0"
+2026-09-17 20:12:23 [[32minfo[39m]: ::1 - - [17/Sep/2026:17:12:23 +0000] "GET /api/auth/me HTTP/1.1" 200 965 "-" "curl/8.5.0"
+2026-09-17 20:12:24 [[32minfo[39m]: ::1 - - [17/Sep/2026:17:12:24 +0000] "GET /api/users/profile HTTP/1.1" 200 975 "-" "curl/8.5.0"
