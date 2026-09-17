@@ -63,10 +63,12 @@ app.use(errorHandler);
 
 async function bootstrap() {
   await connectDatabase();
-  await connectRedis();
+  // Listen FIRST so the service is reachable even if Redis is unavailable;
+  // Redis connects in the background with bounded retries (non-fatal).
   app.listen(PORT, () => {
     logger.info(`🚀 Yoyzie AI API running on http://localhost:${PORT}`);
   });
+  connectRedis();
 }
 
 bootstrap().catch(err => {

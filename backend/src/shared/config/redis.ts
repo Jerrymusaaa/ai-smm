@@ -3,6 +3,16 @@ import { logger } from '../utils/logger';
 
 export const redis = createClient({
   url: process.env.REDIS_URL || 'redis://localhost:6379',
+  socket: {
+    // Bound reconnection attempts so a missing/unreachable Redis can never
+    // hang the boot sequence (default behavior retries forever).
+    reconnectStrategy: (retries) => {
+      if (retries >= 3) {
+        return new Error('Redis reconnect limit reached — continuing without Redis');
+      }
+      return 1000;
+    },
+  },
 });
 
 redis.on('error', (err) => logger.error('Redis error:', err));
@@ -13,7 +23,7 @@ export async function connectRedis() {
   try {
     await redis.connect();
   } catch (error) {
-    logger.error('❌ Redis connection failed:', error);
+    logger.error('❌ Redis connection failed — app continuing without Redis:', error);
   }
 }
 
