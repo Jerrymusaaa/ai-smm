@@ -663,3 +663,18 @@
 2026-08-10 16:50:59 [[32minfo[39m]: ✅ Database connected successfully
 2026-08-10 16:50:59 [[32minfo[39m]: ✅ Redis connected
 2026-08-10 16:50:59 [[32minfo[39m]: 🚀 Yoyzie AI API running on http://localhost:5000
+2026-09-17 15:16:58 [[32minfo[39m]: AI Provider: DeepSeek (deepseek-chat)
+2026-09-17 15:17:00 [[31merror[39m]: PrismaClientInitializationError: Authentication failed against database server at `localhost`, the provided database credentials for `x` are not valid.
+
+Please make sure to provide valid database credentials for the database server at `localhost`.
+    at t (/home/jerry-musa/ai-smm/ai-smm/backend/node_modules/@prisma/client/runtime/library.js:112:2488)
+    at async connectDatabase (/home/jerry-musa/ai-smm/ai-smm/backend/dist/shared/config/database.js:18:9)
+    at async bootstrap (/home/jerry-musa/ai-smm/ai-smm/backend/dist/index.js:61:5)
+2026-09-17 15:17:54 [[33mwarn[39m]: GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET not set — Google OAuth routes will be unavailable
+2026-09-17 15:17:54 [[32minfo[39m]: AI Provider: DeepSeek (deepseek-chat)
+2026-09-17 15:17:54 [[31merror[39m]: PrismaClientInitializationError: Authentication failed against database server at `localhost`, the provided database credentials for `x` are not valid.
+
+Please make sure to provide valid database credentials for the database server at `localhost`.
+    at t (/home/jerry-musa/ai-smm/ai-smm/backend/node_modules/@prisma/client/runtime/library.js:112:2488)
+    at async connectDatabase (/home/jerry-musa/ai-smm/ai-smm/backend/dist/shared/config/database.js:18:9)
+    at async bootstrap (/home/jerry-musa/ai-smm/ai-smm/backend/dist/index.js:61:5)

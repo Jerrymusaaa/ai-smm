@@ -34,3 +34,15 @@
     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
 2026-05-02 01:40:04 [[31merror[39m]: Error: connect ECONNREFUSED 127.0.0.1:6379
     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+2026-09-17 15:17:00 [[31merror[39m]: PrismaClientInitializationError: Authentication failed against database server at `localhost`, the provided database credentials for `x` are not valid.
+
+Please make sure to provide valid database credentials for the database server at `localhost`.
+    at t (/home/jerry-musa/ai-smm/ai-smm/backend/node_modules/@prisma/client/runtime/library.js:112:2488)
+    at async connectDatabase (/home/jerry-musa/ai-smm/ai-smm/backend/dist/shared/config/database.js:18:9)
+    at async bootstrap (/home/jerry-musa/ai-smm/ai-smm/backend/dist/index.js:61:5)
+2026-09-17 15:17:54 [[31merror[39m]: PrismaClientInitializationError: Authentication failed against database server at `localhost`, the provided database credentials for `x` are not valid.
+
+Please make sure to provide valid database credentials for the database server at `localhost`.
+    at t (/home/jerry-musa/ai-smm/ai-smm/backend/node_modules/@prisma/client/runtime/library.js:112:2488)
+    at async connectDatabase (/home/jerry-musa/ai-smm/ai-smm/backend/dist/shared/config/database.js:18:9)
+    at async bootstrap (/home/jerry-musa/ai-smm/ai-smm/backend/dist/index.js:61:5)
