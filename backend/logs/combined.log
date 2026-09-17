@@ -722,3 +722,7 @@ Please make sure to provide valid database credentials for the database server a
 2026-09-17 20:12:23 [[32minfo[39m]: ::1 - - [17/Sep/2026:17:12:23 +0000] "POST /api/auth/login HTTP/1.1" 200 705 "-" "curl/8.5.0"
 2026-09-17 20:12:23 [[32minfo[39m]: ::1 - - [17/Sep/2026:17:12:23 +0000] "GET /api/auth/me HTTP/1.1" 200 965 "-" "curl/8.5.0"
 2026-09-17 20:12:24 [[32minfo[39m]: ::1 - - [17/Sep/2026:17:12:24 +0000] "GET /api/users/profile HTTP/1.1" 200 975 "-" "curl/8.5.0"
+2026-09-18 01:28:36 [[32minfo[39m]: AI Provider: DeepSeek (deepseek-chat)
+2026-09-18 01:28:37 [[32minfo[39m]: ✅ Database connected successfully
+2026-09-18 01:28:37 [[32minfo[39m]: 🚀 Yoyzie AI API running on http://localhost:5077
+2026-09-18 01:28:37 [[32minfo[39m]: ✅ Redis connected
